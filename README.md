@@ -16,6 +16,8 @@ idk
 ## Description
 
 - RPG (a la zelda i guess ?)
+- niveau
+- mécanique de craft
 - arbre de compétence
 - monde ouvert
 - graphisqme a la  core keeper
@@ -25,5 +27,5 @@ idk
 - inventaire
 - potentiellement cronstruction de base 
 - avec minage, couper du bois et autre
-- pour les intér
+- mécanique de survie potentiellement (température, nouritture, eau)
 
