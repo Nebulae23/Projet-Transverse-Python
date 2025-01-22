@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dj6dvcmvs681u"
+path="res://.godot/imported/tree_thin_dark.obj-62aafebb381c7a5cf9219799bdc3ac66.mesh"
+
+[deps]
+
+files=["res://.godot/imported/tree_thin_dark.obj-62aafebb381c7a5cf9219799bdc3ac66.mesh"]
+
+source_file="res://Assets/kenney_nature-kit/Models/OBJ format/tree_thin_dark.obj"
+dest_files=["res://.godot/imported/tree_thin_dark.obj-62aafebb381c7a5cf9219799bdc3ac66.mesh", "res://.godot/imported/tree_thin_dark.obj-62aafebb381c7a5cf9219799bdc3ac66.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

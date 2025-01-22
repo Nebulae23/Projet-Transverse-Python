@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://0i5woinlmui"
+path="res://.godot/imported/ground_riverSide.obj-438313ab2956307994321424e180fdbf.mesh"
+
+[deps]
+
+files=["res://.godot/imported/ground_riverSide.obj-438313ab2956307994321424e180fdbf.mesh"]
+
+source_file="res://Assets/kenney_nature-kit/Models/OBJ format/ground_riverSide.obj"
+dest_files=["res://.godot/imported/ground_riverSide.obj-438313ab2956307994321424e180fdbf.mesh", "res://.godot/imported/ground_riverSide.obj-438313ab2956307994321424e180fdbf.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

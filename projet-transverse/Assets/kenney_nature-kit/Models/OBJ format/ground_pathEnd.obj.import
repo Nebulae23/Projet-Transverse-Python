@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://6p71jlu2l24v"
+path="res://.godot/imported/ground_pathEnd.obj-45825f84755b70b42132433e6ba518da.mesh"
+
+[deps]
+
+files=["res://.godot/imported/ground_pathEnd.obj-45825f84755b70b42132433e6ba518da.mesh"]
+
+source_file="res://Assets/kenney_nature-kit/Models/OBJ format/ground_pathEnd.obj"
+dest_files=["res://.godot/imported/ground_pathEnd.obj-45825f84755b70b42132433e6ba518da.mesh", "res://.godot/imported/ground_pathEnd.obj-45825f84755b70b42132433e6ba518da.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
