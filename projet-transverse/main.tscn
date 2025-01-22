@@ -1,0 +1,49 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjdb1xbltfvcw"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_4q0ly"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_4q0ly")
+
+[node name="NEw game" type="Button" parent="."]
+clip_contents = true
+offset_left = 450.0
+offset_top = 350.0
+offset_right = 683.0
+offset_bottom = 393.0
+text = "New Game"
+
+[node name="Quit" type="Button" parent="."]
+clip_contents = true
+offset_left = 450.0
+offset_top = 500.0
+offset_right = 684.0
+offset_bottom = 544.0
+text = "Quit"
+
+[node name="Option" type="Button" parent="."]
+clip_contents = true
+offset_left = 450.0
+offset_top = 450.0
+offset_right = 684.0
+offset_bottom = 494.0
+text = "Options"
+
+[node name="Load game" type="Button" parent="."]
+clip_contents = true
+offset_left = 450.0
+offset_top = 400.0
+offset_right = 683.0
+offset_bottom = 443.0
+text = "Load Game"
+
+[node name="Continue game" type="Button" parent="."]
+clip_contents = true
+offset_left = 450.0
+offset_top = 300.0
+offset_right = 683.0
+offset_bottom = 343.0
+text = "Continue"
+
+[connection signal="pressed" from="Quit" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="Continue game" to="." method="_on_continue_game_pressed"]

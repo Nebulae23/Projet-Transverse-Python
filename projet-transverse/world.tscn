@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://b705elwpk73l4"]
+
+[node name="World" type="Node3D"]
+transform = Transform3D(0.533068, 0, 0.846072, 0, 1, 0, -0.846072, 0, 0.533068, 0, 0, 0)
