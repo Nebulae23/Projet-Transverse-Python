@@ -24,14 +24,15 @@ func _physics_process(delta: float) -> void:
 		if velocity.x<0:
 			anim.play("Run_left")
 		if velocity.z>0:
-			anim.play("Run_up")
+			anim.play("Run_down")
 		if velocity.x>0:
 			anim.play("Run_right")
 		if velocity.z<0:
-			anim.play("Run_down")
+			anim.play("Run_up")
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 		anim.play("Idle_down")
-
+	
+	
 	move_and_slide()
