@@ -1,27 +1,27 @@
 [gd_scene load_steps=109 format=3 uid="uid://cf7ttycd781n8"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_31qfq"]
-[ext_resource type="Texture2D" path="res://PNG/Unarmed_Hurt/Unarmed_Hurt_full.png" id="1_g6xir"]
-[ext_resource type="Texture2D" path="res://PNG/Unarmed_Run/Unarmed_Run_full.png" id="2_l0nhm"]
-[ext_resource type="Texture2D" path="res://PNG/Unarmed_Idle/Unarmed_Idle_full.png" id="3_at4c5"]
+[ext_resource type="Texture2D" uid="uid://dfbckr4xcqb7v" path="res://Assets/PNG/Unarmed_Hurt/Unarmed_Hurt_full.png" id="1_g6xir"]
+[ext_resource type="Texture2D" uid="uid://dqcsapv0glwsl" path="res://Assets/PNG/Unarmed_Run/Unarmed_Run_full.png" id="2_l0nhm"]
+[ext_resource type="Texture2D" uid="uid://baw2xf2tckdo2" path="res://Assets/PNG/Unarmed_Idle/Unarmed_Idle_full.png" id="3_at4c5"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ipnc4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfnvf"]
 atlas = ExtResource("1_g6xir")
 region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4w56t"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_b40vj"]
 atlas = ExtResource("1_g6xir")
 region = Rect2(64, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_u3ww0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sp31o"]
 atlas = ExtResource("1_g6xir")
 region = Rect2(128, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hys6b"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgdqn"]
 atlas = ExtResource("1_g6xir")
 region = Rect2(192, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bvau8"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7s6pu"]
 atlas = ExtResource("1_g6xir")
 region = Rect2(256, 0, 64, 64)
 
@@ -377,19 +377,19 @@ region = Rect2(192, 192, 64, 64)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ipnc4")
+"texture": SubResource("AtlasTexture_tfnvf")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4w56t")
+"texture": SubResource("AtlasTexture_b40vj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_u3ww0")
+"texture": SubResource("AtlasTexture_sp31o")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hys6b")
+"texture": SubResource("AtlasTexture_jgdqn")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bvau8")
+"texture": SubResource("AtlasTexture_7s6pu")
 }],
 "loop": true,
 "name": &"Hurt_down",
@@ -827,7 +827,7 @@ _data = {
 script = ExtResource("1_31qfq")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.0903978, -1, 0)
+transform = Transform3D(0.353553, 0, -0.353553, 0, 0.5, 0, 0.353553, 0, 0.353553, 0.0903978, -1, 0)
 gi_mode = 2
 gi_lightmap_scale = 2
 pixel_size = 0.5
@@ -836,13 +836,12 @@ animation = &"idle_down"
 frame = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+transform = Transform3D(0.176777, 0, -0.176777, 0, 0.25, 0, 0.176777, 0, 0.176777, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_s346s")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.942502, 0.334202, 0, -0.334202, 0.942502, -0.171212, 3.15752, 29.0566)
-current = true
-fov = 70.0
+transform = Transform3D(0.707107, 0.241845, -0.664463, 0, 0.939693, 0.34202, 0.707107, -0.241845, 0.664463, -5.55851, 4.17686, 5.97079)
+fov = 90.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
