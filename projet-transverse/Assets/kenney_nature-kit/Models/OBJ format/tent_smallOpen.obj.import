@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bl5xljc4mny5c"
+path="res://.godot/imported/tent_smallOpen.obj-66758f0870ac46cc2f66de3935a1973d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/tent_smallOpen.obj-66758f0870ac46cc2f66de3935a1973d.mesh"]
+
+source_file="res://Assets/kenney_nature-kit/Models/OBJ format/tent_smallOpen.obj"
+dest_files=["res://.godot/imported/tent_smallOpen.obj-66758f0870ac46cc2f66de3935a1973d.mesh", "res://.godot/imported/tent_smallOpen.obj-66758f0870ac46cc2f66de3935a1973d.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
