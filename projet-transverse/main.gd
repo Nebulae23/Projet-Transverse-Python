@@ -10,7 +10,8 @@ func _ready() -> void:
 
 
 func _on_quit_pressed() -> void:
-	get_tree().quit
+	get_tree().auto_accept_quit
+	
 	
 func _on_options_pressed() -> void:
 	get_tree().change_scene_to_file("res://options.tscn")

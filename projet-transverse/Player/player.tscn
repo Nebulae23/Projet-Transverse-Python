@@ -1,4 +1,4 @@
-[gd_scene load_steps=109 format=3 uid="uid://cf7ttycd781n8"]
+[gd_scene load_steps=111 format=3 uid="uid://cf7ttycd781n8"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_31qfq"]
 [ext_resource type="Texture2D" uid="uid://dfbckr4xcqb7v" path="res://Assets/PNG/Unarmed_Hurt/Unarmed_Hurt_full.png" id="1_g6xir"]
@@ -716,6 +716,11 @@ animations = [{
 radius = 8.8282
 height = 33.4101
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xhjm5"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_goj6l"]
+specular_color = Color(0.136201, 0.158161, 0.140807, 1)
+
 [sub_resource type="Animation" id="Animation_x25h3"]
 resource_name = "Idle_down"
 tracks/0/type = "value"
@@ -985,6 +990,27 @@ shape = SubResource("CapsuleShape3D_s346s")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939692, 0, 4, 11)
 fov = 90.0
+
+[node name="ItemList" type="ItemList" parent="Camera3D"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Camera3D/ItemList"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 1.0
+offset_top = -437.0
+offset_right = 520.0
+offset_bottom = -397.0
+grow_vertical = 2
+texture_under = SubResource("PlaceholderTexture2D_xhjm5")
+texture_over = SubResource("CanvasTexture_goj6l")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
