@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b705elwpk73l4"]
+[gd_scene load_steps=11 format=3 uid="uid://b705elwpk73l4"]
 
 [ext_resource type="PackedScene" uid="uid://cf7ttycd781n8" path="res://Player/player.tscn" id="1_2r2la"]
 [ext_resource type="MeshLibrary" uid="uid://cerxpc7ejgjo6" path="res://Assets/Tiles.tres" id="2_yidjl"]
@@ -35,17 +35,23 @@ process_mode = 1
 radiance_size = 4
 
 [sub_resource type="Environment" id="Environment_hfg10"]
+background_mode = 2
 sky = SubResource("Sky_p6wo8")
-reflected_light_source = 2
+ambient_light_source = 3
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 0.0
+reflected_light_source = 1
 fog_mode = 1
 fog_density = 1.0
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.01
 
+[sub_resource type="BoxOccluder3D" id="BoxOccluder3D_sxbsy"]
+
 [node name="World" type="Node3D"]
 metadata/_edit_horizontal_guides_ = [2737.0]
 
-[node name="Node3D" parent="." instance=ExtResource("1_2r2la")]
+[node name="Player" parent="." instance=ExtResource("1_2r2la")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 1.89882, 1.50528, 0)
 
 [node name="GridMap" type="GridMap" parent="."]
@@ -60,9 +66,5 @@ metadata/_editor_floor_ = Vector3(2, 2, 0)
 environment = SubResource("Environment_hfg10")
 camera_attributes = null
 
-[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.173648, 0.984808, 0, -0.984808, -0.173648, 0, 200, 0)
-light_color = Color(0.933588, 0.971452, 1, 1)
-light_indirect_energy = 5.0
-shadow_enabled = true
-directional_shadow_mode = 0
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="."]
+occluder = SubResource("BoxOccluder3D_sxbsy")

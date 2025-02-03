@@ -973,10 +973,10 @@ script = ExtResource("1_31qfq")
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(0.499999, 0, 0, 0, 0.5, 0, 0, 0, 0.499999, 0.0903978, -1, 0)
 gi_mode = 2
-gi_lightmap_scale = 2
 pixel_size = 0.5
 sprite_frames = SubResource("SpriteFrames_htn4h")
 animation = &"idle_down"
+frame = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
