@@ -6,7 +6,7 @@ extends Control
 
 
 
-var health =0 : set = _set_Health
+var health =10 : set = _set_Health
 
 func _set_Health(new_Health):
 	var prev_health=health

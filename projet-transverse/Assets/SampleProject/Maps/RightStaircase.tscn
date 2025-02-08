@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://doae46einc26s"]
 
-[ext_resource type="TileSet" uid="uid://bwpcg2opya34n" path="res://SampleProject/Resources/Tileset.tres" id="1_1mtk5"]
-[ext_resource type="PackedScene" uid="uid://bsg0351mx3b4u" path="res://Assets/addons/MetroidvaniaSystem/Nodes/RoomInstance.tscn" id="2_y78dk"]
-[ext_resource type="PackedScene" uid="uid://d0hyimq1tkfa2" path="res://SampleProject/Objects/MapItem.tscn" id="3_j1w80"]
+[ext_resource type="TileSet" uid="uid://bwpcg2opya34n" path="res://Assets/SampleProject/Resources/Tileset.tres" id="1_1mtk5"]
+[ext_resource type="PackedScene" uid="uid://bsg0351mx3b4u" path="res://addons/MetroidvaniaSystem/Nodes/RoomInstance.tscn" id="2_y78dk"]
+[ext_resource type="PackedScene" uid="uid://d0hyimq1tkfa2" path="res://Assets/SampleProject/Objects/MapItem.tscn" id="3_j1w80"]
 
 [sub_resource type="GDScript" id="GDScript_ecs00"]
 resource_name = "TileMap"

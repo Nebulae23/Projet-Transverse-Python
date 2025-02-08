@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CollectionNames" load_steps=2 format=3 uid="uid://dbhwaw8xc2j4n"]
 
-[ext_resource type="Script" path="res://Assets/addons/SceneBuilder/scene_builder_collections.gd" id="1_tnhjg"]
+[ext_resource type="Script" path="res://addons/SceneBuilder/scene_builder_collections.gd" id="1_tnhjg"]
 
 [resource]
 script = ExtResource("1_tnhjg")
