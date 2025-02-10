@@ -1,4 +1,4 @@
-[gd_scene load_steps=112 format=3 uid="uid://cf7ttycd781n8"]
+[gd_scene load_steps=114 format=3 uid="uid://cf7ttycd781n8"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_31qfq"]
 [ext_resource type="Texture2D" uid="uid://dfbckr4xcqb7v" path="res://Assets/PNG/Unarmed_Hurt/Unarmed_Hurt_full.png" id="1_g6xir"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://dqf2ir5irdwgu" path="res://scenes/menus/hud.tscn" id="5_ukm5v"]
 [ext_resource type="Script" path="res://Assets/Component/HealthComponent.gd" id="6_cq6i5"]
 [ext_resource type="Script" path="res://scenes/player/Hitbox_component.gd" id="7_dd8ow"]
+[ext_resource type="Script" path="res://scenes/player/status_component.gd" id="8_sgaui"]
+[ext_resource type="Script" path="res://scenes/player/stats_component.gd" id="9_qrqn4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tfnvf"]
 atlas = ExtResource("1_g6xir")
@@ -1017,5 +1019,13 @@ shape = SubResource("CapsuleShape3D_s346s")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.35, 0, 0, 0, 0.5, 0, 0, 0, 0.25, 0, -1.26381, 0)
 shape = SubResource("CapsuleShape3D_s346s")
+
+[node name="Status_Component" type="Node" parent="."]
+script = ExtResource("8_sgaui")
+
+[node name="Timer" type="Timer" parent="Status_Component"]
+
+[node name="Stats_component" type="Node" parent="."]
+script = ExtResource("9_qrqn4")
 
 [connection signal="health_changed" from="Health_Component" to="Camera3D/CanvasLayer/HUD" method="_on_health_component_health_changed"]
