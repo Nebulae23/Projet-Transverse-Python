@@ -1,4 +1,4 @@
-[gd_scene load_steps=113 format=3 uid="uid://cf7ttycd781n8"]
+[gd_scene load_steps=112 format=3 uid="uid://cf7ttycd781n8"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_31qfq"]
 [ext_resource type="Texture2D" uid="uid://dfbckr4xcqb7v" path="res://Assets/PNG/Unarmed_Hurt/Unarmed_Hurt_full.png" id="1_g6xir"]
@@ -6,8 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://baw2xf2tckdo2" path="res://Assets/PNG/Unarmed_Idle/Unarmed_Idle_full.png" id="3_at4c5"]
 [ext_resource type="PackedScene" uid="uid://dqf2ir5irdwgu" path="res://scenes/menus/hud.tscn" id="5_ukm5v"]
 [ext_resource type="Script" path="res://Assets/Component/HealthComponent.gd" id="6_cq6i5"]
-[ext_resource type="Script" path="res://scenes/player/movement_compoment.gd" id="7_070yk"]
-[ext_resource type="Script" path="res://scenes/player/input_component.gd" id="8_oafkm"]
+[ext_resource type="Script" path="res://scenes/player/Hitbox_component.gd" id="7_dd8ow"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tfnvf"]
 atlas = ExtResource("1_g6xir")
@@ -716,10 +715,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s346s"]
-radius = 8.8282
-height = 33.4101
-
 [sub_resource type="Animation" id="Animation_x25h3"]
 resource_name = "Idle_down"
 tracks/0/type = "value"
@@ -971,6 +966,10 @@ _data = {
 "Run_up": SubResource("Animation_uld4h")
 }
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s346s"]
+radius = 5.8511
+height = 12.4903
+
 [node name="Node3D" type="CharacterBody3D"]
 script = ExtResource("1_31qfq")
 
@@ -990,10 +989,6 @@ sprite_frames = SubResource("SpriteFrames_htn4h")
 animation = &"idle_down"
 frame = 1
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
-shape = SubResource("CapsuleShape3D_s346s")
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_b8day")
@@ -1007,10 +1002,20 @@ script = ExtResource("6_cq6i5")
 max_health = 50
 exceed_maximum_health = true
 
-[node name="Movement_Compoment" type="Node" parent="."]
-script = ExtResource("7_070yk")
+[node name="Stamina_Component" type="Node" parent="."]
+script = ExtResource("6_cq6i5")
+max_health = 50
+exceed_maximum_health = true
 
-[node name="Input_Component" type="Node" parent="."]
-script = ExtResource("8_oafkm")
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(0.3, 0, 0, 0, 0.5, 0, 0, 0, 0.25, 0, -1.27298, 0)
+script = ExtResource("7_dd8ow")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CapsuleShape3D_s346s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.35, 0, 0, 0, 0.5, 0, 0, 0, 0.25, 0, -1.26381, 0)
+shape = SubResource("CapsuleShape3D_s346s")
 
 [connection signal="health_changed" from="Health_Component" to="Camera3D/CanvasLayer/HUD" method="_on_health_component_health_changed"]

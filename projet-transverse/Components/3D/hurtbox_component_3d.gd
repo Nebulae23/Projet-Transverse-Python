@@ -7,7 +7,6 @@ class_name HurtBoxComponent3D
 ## Amount of damage to deal to a [HitBoxComponent3D]'s [HealthComponent],[br]
 ##[b](if specified inside [HitBoxComponent3D])[/b].
 @export var damage := 10
-
 func _init() -> void:
 	monitoring = false
 	collision_mask = 0
