@@ -1,14 +1,14 @@
-[gd_scene load_steps=114 format=3 uid="uid://cf7ttycd781n8"]
+[gd_scene load_steps=115 format=3 uid="uid://cf7ttycd781n8"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_31qfq"]
 [ext_resource type="Texture2D" uid="uid://dfbckr4xcqb7v" path="res://Assets/PNG/Unarmed_Hurt/Unarmed_Hurt_full.png" id="1_g6xir"]
 [ext_resource type="Texture2D" uid="uid://dqcsapv0glwsl" path="res://Assets/PNG/Unarmed_Run/Unarmed_Run_full.png" id="2_l0nhm"]
 [ext_resource type="Texture2D" uid="uid://baw2xf2tckdo2" path="res://Assets/PNG/Unarmed_Idle/Unarmed_Idle_full.png" id="3_at4c5"]
 [ext_resource type="PackedScene" uid="uid://dqf2ir5irdwgu" path="res://scenes/menus/hud.tscn" id="5_ukm5v"]
+[ext_resource type="PackedScene" uid="uid://bcoei5cx0ucm4" path="res://Components/hitbox_component.tscn" id="6_12t0i"]
 [ext_resource type="Script" path="res://Assets/Component/HealthComponent.gd" id="6_cq6i5"]
-[ext_resource type="Script" path="res://scenes/player/Hitbox_component.gd" id="7_dd8ow"]
-[ext_resource type="Script" path="res://scenes/player/status_component.gd" id="8_sgaui"]
-[ext_resource type="Script" path="res://scenes/player/stats_component.gd" id="9_qrqn4"]
+[ext_resource type="PackedScene" uid="uid://ce4gchwl5gky5" path="res://Components/damage_calculator_component.tscn" id="8_p1dnn"]
+[ext_resource type="Script" path="res://Components/stats_component.gd" id="9_qrqn4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tfnvf"]
 atlas = ExtResource("1_g6xir")
@@ -717,6 +717,14 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s346s"]
+radius = 5.8511
+height = 12.4903
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_su8be"]
+radius = 7.0
+height = 16.0
+
 [sub_resource type="Animation" id="Animation_x25h3"]
 resource_name = "Idle_down"
 tracks/0/type = "value"
@@ -968,11 +976,7 @@ _data = {
 "Run_up": SubResource("Animation_uld4h")
 }
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s346s"]
-radius = 5.8511
-height = 12.4903
-
-[node name="Node3D" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_31qfq")
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -990,6 +994,16 @@ pixel_size = 0.5
 sprite_frames = SubResource("SpriteFrames_htn4h")
 animation = &"idle_down"
 frame = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.35, 0, 0, 0, 0.5, 0, 0, 0, 0.25, 0, -1.26381, 0)
+shape = SubResource("CapsuleShape3D_s346s")
+
+[node name="Hitbox_component" parent="." instance=ExtResource("6_12t0i")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox_component"]
+transform = Transform3D(1, 0, 0, 0, 0.75, 0, 0, 0, 1, 0, 0.0532814, 0)
+shape = SubResource("CapsuleShape3D_su8be")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1009,21 +1023,7 @@ script = ExtResource("6_cq6i5")
 max_health = 50
 exceed_maximum_health = true
 
-[node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(0.3, 0, 0, 0, 0.5, 0, 0, 0, 0.25, 0, -1.27298, 0)
-script = ExtResource("7_dd8ow")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource("CapsuleShape3D_s346s")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.35, 0, 0, 0, 0.5, 0, 0, 0, 0.25, 0, -1.26381, 0)
-shape = SubResource("CapsuleShape3D_s346s")
-
-[node name="Status_Component" type="Node" parent="."]
-script = ExtResource("8_sgaui")
-
-[node name="Timer" type="Timer" parent="Status_Component"]
+[node name="Status_Component" parent="." instance=ExtResource("8_p1dnn")]
 
 [node name="Stats_component" type="Node" parent="."]
 script = ExtResource("9_qrqn4")

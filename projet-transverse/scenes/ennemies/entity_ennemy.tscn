@@ -1,0 +1,40 @@
+[gd_scene load_steps=10 format=3 uid="uid://e34m1dmcnaji"]
+
+[ext_resource type="PackedScene" uid="uid://c8wn8otphxap2" path="res://Components/health_component.tscn" id="1_8d2me"]
+[ext_resource type="Script" path="res://scenes/ennemies/entity_ennemy.gd" id="1_t13qi"]
+[ext_resource type="PackedScene" uid="uid://bcoei5cx0ucm4" path="res://Components/hitbox_component.tscn" id="2_7lj33"]
+[ext_resource type="PackedScene" uid="uid://ce4gchwl5gky5" path="res://Components/damage_calculator_component.tscn" id="3_u3o3b"]
+[ext_resource type="Script" path="res://addons/3dEnemyToolkit/SimpleVision3D.gd" id="4_8tisw"]
+[ext_resource type="Script" path="res://addons/3dEnemyToolkit/RandomTarget3D.gd" id="5_mhtdt"]
+[ext_resource type="Script" path="res://addons/3dEnemyToolkit/FollowTarget.gd" id="6_y0lxf"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_flyyj"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yy5ob"]
+
+[node name="Entity_ennemy" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.569, 0.704083, 0)
+script = ExtResource("1_t13qi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_flyyj")
+
+[node name="HealthComponent" parent="." instance=ExtResource("1_8d2me")]
+
+[node name="damage_calculator_Component" parent="." instance=ExtResource("3_u3o3b")]
+
+[node name="Hitbox_component" parent="." instance=ExtResource("2_7lj33")]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Hitbox_component"]
+transform = Transform3D(3.33333, 0, 0, 0, 2, 0, 0, 0, 4, 0, 2.54596, 0)
+shape = SubResource("CapsuleShape3D_yy5ob")
+
+[node name="SimpleVision3D" type="Node3D" parent="."]
+script = ExtResource("4_8tisw")
+
+[node name="RandomTarget3D" type="Node3D" parent="."]
+script = ExtResource("5_mhtdt")
+
+[node name="FollowTarget3D" type="NavigationAgent3D" parent="."]
+script = ExtResource("6_y0lxf")
+ReachTargetMinDistance = 4.0
