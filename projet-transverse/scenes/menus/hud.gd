@@ -6,30 +6,13 @@ extends Control
 
 
 
-var health =10 : set = _set_Health
-
-func _set_Health(new_Health):
-	var prev_health=health
-	health=min(HealthBar.max_value ,new_Health)
-	
-	if health <=0:
-		queue_free()
-	
-	if health < prev_health:
-		timer.start()
-	else:
-		damageBar.value=health
 
 
 
-func init_Health(_health):
-	health=_health
-	HealthBar.max_value=health
+func _on_health_component_health_changed(current_amount: int, max_amount: int) -> void:
+	var health=current_amount
+	var max_health=max_amount
+	HealthBar.max_value=max_health
 	HealthBar.value=health
 	damageBar.value=health
-	damageBar.max_value=health
-
-
-	
-func _on_timer_timeout() -> void:
-	damageBar.value = health
+	damageBar.max_value=max_health

@@ -1,10 +1,13 @@
-[gd_scene load_steps=110 format=3 uid="uid://cf7ttycd781n8"]
+[gd_scene load_steps=113 format=3 uid="uid://cf7ttycd781n8"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_31qfq"]
 [ext_resource type="Texture2D" uid="uid://dfbckr4xcqb7v" path="res://Assets/PNG/Unarmed_Hurt/Unarmed_Hurt_full.png" id="1_g6xir"]
 [ext_resource type="Texture2D" uid="uid://dqcsapv0glwsl" path="res://Assets/PNG/Unarmed_Run/Unarmed_Run_full.png" id="2_l0nhm"]
 [ext_resource type="Texture2D" uid="uid://baw2xf2tckdo2" path="res://Assets/PNG/Unarmed_Idle/Unarmed_Idle_full.png" id="3_at4c5"]
 [ext_resource type="PackedScene" uid="uid://dqf2ir5irdwgu" path="res://scenes/menus/hud.tscn" id="5_ukm5v"]
+[ext_resource type="Script" path="res://Assets/Component/HealthComponent.gd" id="6_cq6i5"]
+[ext_resource type="Script" path="res://scenes/player/movement_compoment.gd" id="7_070yk"]
+[ext_resource type="Script" path="res://scenes/player/input_component.gd" id="8_oafkm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tfnvf"]
 atlas = ExtResource("1_g6xir")
@@ -998,3 +1001,16 @@ libraries = {
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 anim_player = NodePath("../AnimationPlayer")
+
+[node name="Health_Component" type="Node" parent="."]
+script = ExtResource("6_cq6i5")
+max_health = 50
+exceed_maximum_health = true
+
+[node name="Movement_Compoment" type="Node" parent="."]
+script = ExtResource("7_070yk")
+
+[node name="Input_Component" type="Node" parent="."]
+script = ExtResource("8_oafkm")
+
+[connection signal="health_changed" from="Health_Component" to="Camera3D/CanvasLayer/HUD" method="_on_health_component_health_changed"]

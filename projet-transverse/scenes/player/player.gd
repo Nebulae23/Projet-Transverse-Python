@@ -3,17 +3,16 @@ extends CharacterBody3D
 @onready var anim = get_node("AnimationPlayer")
 
 @onready var healthbar=$Camera3D/CanvasLayer/HUD
+@onready var health_component= $Health_Component
 
 @onready var speed:int =5
-@onready var maxHealth:int=30
-@onready var currenthealth:int = maxHealth
+
 
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
-func _ready():
-	healthbar.init_Health(currenthealth)
+
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -46,9 +45,7 @@ func _physics_process(delta: float) -> void:
 		anim.play("Idle_down")
 	
 	if Input.is_action_just_pressed("ui_e"):
-		currenthealth-=5
-		healthbar.health=currenthealth
-		
+		health_component.take_damage(5)
 		
 	move_and_slide()
 
