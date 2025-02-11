@@ -1,4 +1,4 @@
-extends Area2D
+extends Area3D
 
 @onready var status_component=$damage_calculator_component
 @export var damage : int = 5
@@ -6,15 +6,20 @@ extends Area2D
 @export var effect : String = "none"
 @export var duration : int = 0
 @export var level : int = 0
-signal hit(damage: int,type: String, effect: String,duration:int,level:int)
+var velocity: Vector3 = Vector3.ZERO
+var speed: float = 20.0
 
 
+func set_velocity(new_velocity: Vector3):
+	velocity = new_velocity * speed
 
 
-var speed = 750
 
 func _physics_process(delta):
-	position += transform.x * speed * delta
+	velocity.y -= gravity * delta
+	# Move the projectile
+	global_transform.origin += velocity * delta
+	position += transform * speed * delta
 
 func _on_projectile_body_entered(body):
 	# Check if the body has a hitbox_component

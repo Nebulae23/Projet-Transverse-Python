@@ -38,3 +38,6 @@ script = ExtResource("5_mhtdt")
 [node name="FollowTarget3D" type="NavigationAgent3D" parent="."]
 script = ExtResource("6_y0lxf")
 ReachTargetMinDistance = 4.0
+
+[node name="Muzzle" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.625372)

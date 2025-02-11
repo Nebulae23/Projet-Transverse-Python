@@ -4,7 +4,6 @@ extends Area3D
 @onready var damage_component = $damage_calculator_Component
 
 func _ready() -> void:
-	# Connect the area_entered signal to detect collisions
 	pass
 
 func _on_body_entered(body: Node):
