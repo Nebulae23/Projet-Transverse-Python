@@ -128,7 +128,10 @@ func get_current_question_info() -> Dictionary:
 			choice_info['visited_before'] = dialogic.History.has_event_been_visited(choice_index)
 
 		question_info['choices'].append(choice_info)
+<<<<<<< Updated upstream
 		last_question_info['choices'].append(choice_info['text'])
+=======
+>>>>>>> Stashed changes
 
 	return question_info
 

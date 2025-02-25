@@ -134,8 +134,11 @@ func _on_field_focus_entered() -> void:
 func _on_field_focus_exited() -> void:
 	$FocusStyle.hide()
 	var field_text: String = %Field.text
+<<<<<<< Updated upstream
 	if current_value == field_text or (file_mode != EditorFileDialog.FILE_MODE_OPEN_DIR and current_value.get_file() == field_text):
 		return
+=======
+>>>>>>> Stashed changes
 	_on_file_dialog_selected(field_text)
 
 #endregion

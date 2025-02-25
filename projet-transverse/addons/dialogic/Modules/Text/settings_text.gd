@@ -237,3 +237,7 @@ func _on_remove_autopauses_set_pressed(index: int) -> void:
 	for key in autopause_sets[index]:
 		autopause_sets[index][key].queue_free()
 	autopause_sets.erase(index)
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes

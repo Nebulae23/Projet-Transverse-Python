@@ -165,7 +165,10 @@ func _ready() -> void:
 	## Add general tabs
 	add_settings_section(load("res://addons/dialogic/Editor/CharacterEditor/char_edit_section_general.tscn").instantiate(), %MainSettingsSections)
 	add_settings_section(load("res://addons/dialogic/Editor/CharacterEditor/char_edit_section_portraits.tscn").instantiate(), %MainSettingsSections)
+<<<<<<< Updated upstream
 	add_settings_section(load("res://addons/dialogic/Editor/CharacterEditor/character_prefix_suffix.tscn").instantiate(), %MainSettingsSections)
+=======
+>>>>>>> Stashed changes
 
 
 	add_settings_section(load("res://addons/dialogic/Editor/CharacterEditor/char_edit_p_section_main_exports.tscn").instantiate(), %PortraitSettingsSection)
@@ -189,12 +192,18 @@ func _ready() -> void:
 func add_settings_section(edit:Control, parent:Node) ->  void:
 	edit.changed.connect(something_changed)
 	edit.character_editor = self
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 	if edit.has_signal('update_preview'):
 		edit.update_preview.connect(update_preview)
 
 	var button: Button
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 	if edit._show_title():
 		var hbox := HBoxContainer.new()
 		hbox.name = edit._get_title()+"BOX"

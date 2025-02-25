@@ -23,10 +23,16 @@ var shortcode_events := {}
 var custom_syntax_events := []
 var text_event: DialogicTextEvent = null
 
+<<<<<<< Updated upstream
 
 func _ready() -> void:
 	# Compile RegEx's
 	completion_word_regex.compile(r"(?<s>(\W)|^)(?<word>[\w]*)\x{FFFF}")
+=======
+func _ready() -> void:
+	# Compile RegEx's
+	completion_word_regex.compile("(?<s>(\\W)|^)(?<word>\\w*)\\x{FFFF}")
+>>>>>>> Stashed changes
 	completion_shortcode_getter_regex.compile("\\[(?<code>\\w*)")
 	completion_shortcode_param_getter_regex.compile("(?<param>\\w*)\\W*=\\s*\"?(\\w|\\s)*"+String.chr(0xFFFF))
 	completion_shortcode_value_regex.compile(r'(\[|\s)[^\[\s=]*="(?<value>[^"$]*)'+String.chr(0xFFFF))
@@ -173,7 +179,11 @@ func request_code_completion(force:bool, text:CodeEdit, mode:=Modes.FULL_HIGHLIG
 		if mode == Modes.TEXT_EVENT_ONLY and !event is DialogicTextEvent:
 			continue
 
+<<<<<<< Updated upstream
 		if not ' ' in line_part:
+=======
+		if ! ' ' in line_part:
+>>>>>>> Stashed changes
 			event._get_start_code_completion(self, text)
 
 		if event.is_valid_event(line):
@@ -183,9 +193,12 @@ func request_code_completion(force:bool, text:CodeEdit, mode:=Modes.FULL_HIGHLIG
 	# Force update and showing of the popup
 	text.update_code_completion_options(true)
 
+<<<<<<< Updated upstream
 	# USEFUL FOR DEBUGGING
 	#print(text.get_code_completion_options().map(func(x):return "{display_text}".format(x)))
 
+=======
+>>>>>>> Stashed changes
 
 
 # Helper that adds all characters as options
@@ -213,7 +226,11 @@ func suggest_labels(text:CodeEdit, timeline:String='', end:='', color:=Color()) 
 
 # Helper that adds all portraits of a given character as options
 func suggest_portraits(text:CodeEdit, character_name:String, end_check:=')') -> void:
+<<<<<<< Updated upstream
 	if not character_name in DialogicResourceUtil.get_character_directory():
+=======
+	if !character_name in DialogicResourceUtil.get_character_directory():
+>>>>>>> Stashed changes
 		return
 	var character_resource: DialogicCharacter = load(DialogicResourceUtil.get_character_directory()[character_name])
 	for portrait in character_resource.portraits:
@@ -246,9 +263,13 @@ func suggest_custom_suggestions(suggestions:Dictionary, text:CodeEdit, color:Col
 # Purpose of the different Kinds is explained in [_request_code_completion]
 func filter_code_completion_candidates(candidates:Array, text:CodeEdit) -> Array:
 	var valid_candidates := []
+<<<<<<< Updated upstream
 
 	var current_word := get_code_completion_word(text)
 
+=======
+	var current_word := get_code_completion_word(text)
+>>>>>>> Stashed changes
 	for candidate in candidates:
 		if candidate.kind == text.KIND_PLAIN_TEXT:
 			if !current_word.is_empty() and candidate.insert_text.begins_with(current_word):

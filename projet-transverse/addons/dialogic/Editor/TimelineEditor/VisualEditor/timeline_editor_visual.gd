@@ -22,7 +22,11 @@ signal timeline_loaded
 ################################################################################
 var _batches := []
 var _building_timeline := false
+<<<<<<< Updated upstream
 var _cancel_loading := false
+=======
+var _timeline_changed_while_loading := false
+>>>>>>> Stashed changes
 var _initialized := false
 
 ################## TIMELINE EVENT MANAGEMENT ###################################
@@ -75,8 +79,16 @@ func _notification(what:int) -> void:
 
 
 func load_timeline(resource:DialogicTimeline) -> void:
+<<<<<<< Updated upstream
 	# In case another timeline is still loading
 	cancel_loading()
+=======
+	if _building_timeline:
+		_timeline_changed_while_loading = true
+		await batch_loaded
+		_timeline_changed_while_loading = false
+		_building_timeline = false
+>>>>>>> Stashed changes
 
 	clear_timeline_nodes()
 
@@ -96,12 +108,16 @@ func load_timeline(resource:DialogicTimeline) -> void:
 		while batch_events(data, batch_size, page).size() != 0:
 			_batches.append(batch_events(data, batch_size, page))
 			page += 1
+<<<<<<< Updated upstream
 		set_meta("batch_count", len(_batches))
+=======
+>>>>>>> Stashed changes
 		batch_loaded.emit()
 	# Reset the scroll position
 	%TimelineArea.scroll_vertical = 0
 
 
+<<<<<<< Updated upstream
 func is_loading_timeline() -> bool:
 	return _building_timeline
 
@@ -114,6 +130,8 @@ func cancel_loading() -> void:
 		_building_timeline = false
 
 
+=======
+>>>>>>> Stashed changes
 func batch_events(array: Array, size: int, batch_number: int) -> Array:
 	return array.slice((batch_number - 1) * size, batch_number * size)
 
@@ -137,6 +155,7 @@ func load_batch(data:Array) -> void:
 
 
 func _on_batch_loaded() -> void:
+<<<<<<< Updated upstream
 	if _cancel_loading:
 		return
 
@@ -144,20 +163,32 @@ func _on_batch_loaded() -> void:
 		indent_events()
 		var progress: float = 1-(1.0/get_meta("batch_count")*len(_batches))
 		timeline_editor.set_progress(progress)
+=======
+	if _timeline_changed_while_loading:
+		return
+	if _batches.size() > 0:
+		indent_events()
+>>>>>>> Stashed changes
 		await get_tree().process_frame
 		load_batch(_batches)
 		return
 
+<<<<<<< Updated upstream
 	# This hides the progress bar again
 	timeline_editor.set_progress(1)
 
+=======
+>>>>>>> Stashed changes
 	if opener_events_stack:
 		for ev in opener_events_stack:
 			if is_instance_valid(ev):
 				create_end_branch_event(%Timeline.get_child_count(), ev)
 
+<<<<<<< Updated upstream
 	timeline_loaded.emit()
 
+=======
+>>>>>>> Stashed changes
 	opener_events_stack = []
 	indent_events()
 	update_content_list()
@@ -213,7 +244,11 @@ func load_event_buttons() -> void:
 	var button_scene := load("res://addons/dialogic/Editor/TimelineEditor/VisualEditor/AddEventButton.tscn")
 
 	var scripts := DialogicResourceUtil.get_event_cache()
+<<<<<<< Updated upstream
 	var hidden_buttons: Array = DialogicUtil.get_editor_setting('hidden_event_buttons', [])
+=======
+	var hidden_buttons :Array = DialogicUtil.get_editor_setting('hidden_event_buttons', [])
+>>>>>>> Stashed changes
 	var sections := {}
 
 	for event_script in scripts:
@@ -330,11 +365,14 @@ func _on_event_block_gui_input(event: InputEvent, item: Node) -> void:
 
 			drag_allowed = true
 
+<<<<<<< Updated upstream
 		if event.is_released() and not %TimelineArea.dragging and not Input.is_key_pressed(KEY_SHIFT):
 			if len(selected_items) > 1 and item in selected_items and not Input.is_key_pressed(KEY_CTRL):
 				deselect_all_items()
 				select_item(item)
 
+=======
+>>>>>>> Stashed changes
 	if len(selected_items) > 0 and event is InputEventMouseMotion:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 			if !%TimelineArea.dragging and !get_viewport().gui_is_dragging() and drag_allowed:
@@ -448,12 +486,20 @@ func get_events_indexed(events:Array) -> Dictionary:
 		if event.resource is DialogicEndBranchEvent:
 			continue
 
+<<<<<<< Updated upstream
 		indexed_dict[event.get_index()] = event.resource._store_as_string()
+=======
+		indexed_dict[event.get_index()] = event.resource.to_text()
+>>>>>>> Stashed changes
 
 		# store an end branch if it is selected or connected to a selected event
 		if 'end_node' in event and event.end_node:
 			event = event.end_node
+<<<<<<< Updated upstream
 			indexed_dict[event.get_index()] = event.resource._store_as_string()
+=======
+			indexed_dict[event.get_index()] = event.resource.to_text()
+>>>>>>> Stashed changes
 		elif event.resource is DialogicEndBranchEvent:
 			if event.parent_node in events: # add local index
 				indexed_dict[event.get_index()] += str(events.find(event.parent_node))
@@ -494,7 +540,11 @@ func add_events_indexed(indexed_events:Dictionary) -> void:
 				event_resource = i.duplicate()
 				break
 
+<<<<<<< Updated upstream
 		event_resource._load_from_string(indexed_events[event_idx])
+=======
+		event_resource.from_text(indexed_events[event_idx])
+>>>>>>> Stashed changes
 
 		# now create the visual block.
 		deselect_all_items()
@@ -565,7 +615,11 @@ func copy_selected_events() -> void:
 
 	var event_copy_array := []
 	for item in selected_items:
+<<<<<<< Updated upstream
 		event_copy_array.append(item.resource._store_as_string())
+=======
+		event_copy_array.append(item.resource.to_text())
+>>>>>>> Stashed changes
 		if item.resource is DialogicEndBranchEvent:
 			if item.parent_node in selected_items: # add local index
 				event_copy_array[-1] += str(selected_items.find(item.parent_node))
@@ -1122,17 +1176,28 @@ func _input(event:InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 		"Ctrl+C":
+<<<<<<< Updated upstream
 			select_events_indexed(get_events_indexed(selected_items))
+=======
+>>>>>>> Stashed changes
 			copy_selected_events()
 			get_viewport().set_input_as_handled()
 
 		"Ctrl+V":
 			var events_list := get_clipboard_data()
+<<<<<<< Updated upstream
 			var paste_position := 0
 			if selected_items:
 				paste_position = selected_items[-1].get_index()+1
 			else:
 				paste_position = %Timeline.get_child_count()
+=======
+			var paste_position := -1
+			if selected_items:
+				paste_position = selected_items[-1].get_index()+1
+			else:
+				paste_position = %Timeline.get_child_count()-1
+>>>>>>> Stashed changes
 			if events_list:
 				TimelineUndoRedo.create_action("[D] Pasting "+str(len(events_list))+" event(s).")
 				TimelineUndoRedo.add_do_method(add_events_at_index.bind(events_list, paste_position))
@@ -1203,6 +1268,7 @@ func get_previous_character(double_previous := false) -> DialogicCharacter:
 
 var search_results := {}
 func _search_timeline(search_text:String) -> bool:
+<<<<<<< Updated upstream
 	#for event in search_results:
 		#if is_instance_valid(search_results[event]):
 			#search_results[event].set_search_text("")
@@ -1229,6 +1295,24 @@ func _search_timeline(search_text:String) -> bool:
 
 	search_navigate(false)
 
+=======
+	for event in search_results:
+		if is_instance_valid(search_results[event]):
+			search_results[event].set_search_text("")
+			search_results[event].deselect()
+			search_results[event].queue_redraw()
+	search_results.clear()
+
+	for block in %Timeline.get_children():
+		if block.resource is DialogicTextEvent:
+			var text_field: TextEdit = block.get_node("%BodyContent").find_child("Field_Text_Multiline", true, false)
+			text_field.set_search_text(search_text)
+			if text_field.search(search_text, 0, 0, 0).x != -1:
+				search_results[block] = text_field
+				text_field.queue_redraw()
+	set_meta("current_search", search_text)
+	search_navigate(false)
+>>>>>>> Stashed changes
 	return not search_results.is_empty()
 
 
@@ -1245,6 +1329,7 @@ func search_navigate(navigate_up := false) -> void:
 
 	if search_results.is_empty() or %Timeline.get_child_count() == 0:
 		return
+<<<<<<< Updated upstream
 
 	# We start the search on the selected item,
 	# so these checks make sure something sensible is selected
@@ -1265,6 +1350,13 @@ func search_navigate(navigate_up := false) -> void:
 			index = wrapi(index+1, 0, %Timeline.get_child_count()-1)
 		select_item(%Timeline.get_child(index), false)
 
+=======
+	if selected_items.is_empty():
+		select_item(%Timeline.get_child(0), false)
+
+	while not selected_items[0] in search_results:
+		select_item(%Timeline.get_child(wrapi(selected_items[0].get_index()+1, 0, %Timeline.get_child_count()-1)), false)
+>>>>>>> Stashed changes
 
 	var event: Node = selected_items[0]
 	var counter := 0
@@ -1272,6 +1364,7 @@ func search_navigate(navigate_up := false) -> void:
 		counter += 1
 		var field: TextEdit = search_results[event]
 		field.queue_redraw()
+<<<<<<< Updated upstream
 
 		# First locates the next result in this field
 		var result := search_text_field(field, search_text, navigate_up)
@@ -1279,6 +1372,11 @@ func search_navigate(navigate_up := false) -> void:
 		var current_column := field.get_selection_from_column() if field.has_selection() else -1
 
 		# Determines if the found result is valid or navigation should continue into the next event
+=======
+		var result := search_text_field(field, search_text, navigate_up)
+		var current_line := field.get_selection_from_line() if field.has_selection() else -1
+		var current_column := field.get_selection_from_column() if field.has_selection() else -1
+>>>>>>> Stashed changes
 		var next_is_in_this_event := false
 		if result.y == -1:
 			next_is_in_this_event = false
@@ -1290,12 +1388,16 @@ func search_navigate(navigate_up := false) -> void:
 		else:
 			next_is_in_this_event = result.x > current_column or result.y > current_line
 
+<<<<<<< Updated upstream
 		# If the next result was found, select it and break out of the loop
+=======
+>>>>>>> Stashed changes
 		if next_is_in_this_event:
 			if not event in selected_items:
 				select_item(event, false)
 			%TimelineArea.ensure_control_visible(event)
 			event._on_ToggleBodyVisibility_toggled(true)
+<<<<<<< Updated upstream
 			field.call_deferred("select", result.y, result.x, result.y, result.x+len(search_text))
 			break
 
@@ -1303,6 +1405,15 @@ func search_navigate(navigate_up := false) -> void:
 		field.deselect()
 		var index := search_results.keys().find(event)
 		event = search_results.keys()[wrapi(index+(-1 if navigate_up else 1), 0, search_results.size())]
+=======
+			field.select(result.y, result.x, result.y, result.x+len(search_text))
+			break
+
+		else:
+			field.deselect()
+			var index := search_results.keys().find(event)
+			event = search_results.keys()[wrapi(index+(-1 if navigate_up else 1), 0, search_results.size())]
+>>>>>>> Stashed changes
 
 		if counter > 5:
 			print("[Dialogic] Search failed.")

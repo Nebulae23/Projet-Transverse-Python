@@ -1,9 +1,13 @@
-[gd_resource type="Resource" script_class="SceneBuilderConfig" load_steps=2 format=3 uid="uid://4xms0o3xg7yk"]
+[gd_resource type="Resource" script_class="SceneBuilderConfig" load_steps=2 format=3 uid="uid://82qnkc803uh3"]
 
+<<<<<<< Updated upstream
 [ext_resource type="Script" path="res://addons/SceneBuilder/scene_builder_config.gd" id="1_5l2kp"]
+=======
+[ext_resource type="Script" path="res://addons/SceneBuilder/scene_builder_config.gd" id="1_quoka"]
+>>>>>>> Stashed changes
 
 [resource]
-script = ExtResource("1_5l2kp")
+script = ExtResource("1_quoka")
 root_dir = "res://Data/SceneBuilder/"
 instantiate_in_a_row_1 = 76
 instantiate_in_a_row_2 = 59

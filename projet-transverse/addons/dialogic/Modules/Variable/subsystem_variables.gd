@@ -59,7 +59,11 @@ func parse_variables(text:String) -> String:
 
 	# Trying to extract the curly brackets from the text
 	var regex := RegEx.new()
+<<<<<<< Updated upstream
 	regex.compile(r"(?<!\\)\{(?<variable>([^{}]|\{[^}]*\})*)\}")
+=======
+	regex.compile("(?<!\\\\)\\{(?<variable>([^{}]|\\{.*\\})*)\\}")
+>>>>>>> Stashed changes
 
 	var parsed := text.replace('\\{', '{')
 	for result in regex.search_all(text):

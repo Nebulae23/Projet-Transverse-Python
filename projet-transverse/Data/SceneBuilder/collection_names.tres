@@ -1,9 +1,18 @@
+<<<<<<< Updated upstream
 [gd_resource type="Resource" script_class="CollectionNames" load_steps=2 format=3 uid="uid://4e0ws7xxckg5"]
 
 [ext_resource type="Script" path="res://addons/SceneBuilder/scene_builder_collections.gd" id="1_hfcpv"]
 
 [resource]
 script = ExtResource("1_hfcpv")
+=======
+[gd_resource type="Resource" script_class="CollectionNames" load_steps=2 format=3 uid="uid://cd71ll2bpnmie"]
+
+[ext_resource type="Script" path="res://addons/SceneBuilder/scene_builder_collections.gd" id="1_trvkl"]
+
+[resource]
+script = ExtResource("1_trvkl")
+>>>>>>> Stashed changes
 name_01 = ""
 name_02 = ""
 name_03 = ""

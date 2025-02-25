@@ -139,17 +139,66 @@ func get_shortcode_parameters() -> Dictionary:
 func build_event_editor() -> void:
 	add_header_edit('autoload_name', ValueType.DYNAMIC_OPTIONS, {'left_text':'On autoload',
 		'empty_text':'Autoload',
+<<<<<<< Updated upstream
 		'suggestions_func': DialogicUtil.get_autoload_suggestions,
 		'editor_icon':["Node", "EditorIcons"]})
 	add_header_edit('method', ValueType.DYNAMIC_OPTIONS, {'left_text':'call',
 		'empty_text':'Method',
 		'suggestions_func': get_method_suggestions,
+=======
+		'suggestions_func':get_autoload_suggestions,
+		'editor_icon':["Node", "EditorIcons"]})
+	add_header_edit('method', ValueType.DYNAMIC_OPTIONS, {'left_text':'call',
+		'empty_text':'Method',
+		'suggestions_func':get_method_suggestions,
+>>>>>>> Stashed changes
 		'editor_icon':["Callable", "EditorIcons"]}, 'autoload_name')
 	add_body_edit('arguments', ValueType.ARRAY, {'left_text':'Arguments:'}, 'not autoload_name.is_empty() and not method.is_empty()')
 
 
+<<<<<<< Updated upstream
 func get_method_suggestions(filter:="") -> Dictionary:
 	return DialogicUtil.get_autoload_method_suggestions(filter, autoload_name)
+=======
+
+func get_autoload_suggestions(filter:String="") -> Dictionary:
+	var suggestions := {}
+
+	for prop in ProjectSettings.get_property_list():
+		if prop.name.begins_with('autoload/'):
+			var autoload: String = prop.name.trim_prefix('autoload/')
+			suggestions[autoload] = {'value': autoload, 'tooltip':autoload, 'editor_icon': ["Node", "EditorIcons"]}
+			if filter.begins_with(autoload):
+				suggestions[filter] = {'value': filter, 'editor_icon':["GuiScrollArrowRight", "EditorIcons"]}
+	return suggestions
+
+
+func get_method_suggestions(filter:String="", temp_autoload:String = "") -> Dictionary:
+	var suggestions := {}
+
+	var script: Script
+	if temp_autoload and ProjectSettings.has_setting('autoload/'+temp_autoload):
+		script = load(ProjectSettings.get_setting('autoload/'+temp_autoload).trim_prefix('*'))
+
+	elif autoload_name and ProjectSettings.has_setting('autoload/'+autoload_name):
+		var loaded_autoload := load(ProjectSettings.get_setting('autoload/'+autoload_name).trim_prefix('*'))
+
+		if loaded_autoload is PackedScene:
+			var packed_scene: PackedScene = loaded_autoload
+			script = packed_scene.instantiate().get_script()
+
+		else:
+			script = loaded_autoload
+
+	if script:
+		for script_method in script.get_script_method_list():
+			if script_method.name.begins_with('@') or script_method.name.begins_with('_'):
+				continue
+			suggestions[script_method.name] = {'value': script_method.name, 'tooltip':script_method.name, 'editor_icon': ["Callable", "EditorIcons"]}
+	if !filter.is_empty():
+		suggestions[filter] = {'value': filter, 'editor_icon':["GuiScrollArrowRight", "EditorIcons"]}
+	return suggestions
+>>>>>>> Stashed changes
 
 
 func update_argument_info() -> void:
@@ -200,6 +249,7 @@ func check_arguments_and_update_warning() -> void:
 ####################### CODE COMPLETION ########################################
 ################################################################################
 
+<<<<<<< Updated upstream
 func _get_code_completion(CodeCompletionHelper:Node, TextNode:TextEdit, line:String, word:String, symbol:String) -> void:
 	var autoloads := DialogicUtil.get_autoload_suggestions()
 	var line_until_caret: String = CodeCompletionHelper.get_line_untill_caret(line)
@@ -215,6 +265,15 @@ func _get_code_completion(CodeCompletionHelper:Node, TextNode:TextEdit, line:Str
 			for i in methods.keys():
 				TextNode.add_code_completion_option(CodeEdit.KIND_MEMBER, i, i+'(', event_color.lerp(TextNode.syntax_highlighter.normal_color, 0.3), TextNode.get_theme_icon("MemberMethod", "EditorIcons"))
 
+=======
+func _get_code_completion(_CodeCompletionHelper:Node, TextNode:TextEdit, line:String, _word:String, symbol:String) -> void:
+	if line.count(' ') == 1 and not '.' in line:
+		for i in get_autoload_suggestions():
+			TextNode.add_code_completion_option(CodeEdit.KIND_MEMBER, i, i+'.', event_color.lerp(TextNode.syntax_highlighter.normal_color, 0.3), TextNode.get_theme_icon("Node", "EditorIcons"))
+	elif symbol == '.' and not '(' in line:
+		for i in get_method_suggestions('', line.get_slice('.', 0).trim_prefix('do ')):
+			TextNode.add_code_completion_option(CodeEdit.KIND_MEMBER, i, i+'(', event_color.lerp(TextNode.syntax_highlighter.normal_color, 0.3), TextNode.get_theme_icon("Callable", "EditorIcons"))
+>>>>>>> Stashed changes
 
 
 func _get_start_code_completion(_CodeCompletionHelper:Node, TextNode:TextEdit) -> void:

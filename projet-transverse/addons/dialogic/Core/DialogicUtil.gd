@@ -77,11 +77,15 @@ static func _update_autoload_subsystem_access() -> void:
 
 	var script: Script = load("res://addons/dialogic/Core/DialogicGameHandler.gd")
 	var new_subsystem_access_list := "#region SUBSYSTEMS\n"
+<<<<<<< Updated upstream
 	var subsystems_sorted := []
+=======
+>>>>>>> Stashed changes
 
 	for indexer: DialogicIndexer in get_indexers(true, true):
 
 		for subsystem: Dictionary in indexer._get_subsystems().duplicate(true):
+<<<<<<< Updated upstream
 			subsystems_sorted.append(subsystem)
 
 	subsystems_sorted.sort_custom(func (a: Dictionary, b: Dictionary) -> bool:
@@ -90,6 +94,9 @@ static func _update_autoload_subsystem_access() -> void:
 
 	for subsystem: Dictionary in subsystems_sorted:
 		new_subsystem_access_list += '\nvar {name} := preload("{script}").new():\n\tget: return get_subsystem("{name}")\n'.format(subsystem)
+=======
+			new_subsystem_access_list += '\nvar {name} := preload("{script}").new():\n\tget: return get_subsystem("{name}")\n'.format(subsystem)
+>>>>>>> Stashed changes
 
 	new_subsystem_access_list += "\n#endregion"
 	script.source_code = RegEx.create_from_string(r"#region SUBSYSTEMS\n#*\n((?!#endregion)(.*\n))*#endregion").sub(script.source_code, new_subsystem_access_list)
@@ -682,6 +689,7 @@ static func get_portrait_position_suggestions(search_text := "") -> Dictionary:
 			suggestions.erase(search_text)
 
 	return suggestions
+<<<<<<< Updated upstream
 
 
 static func get_autoload_suggestions(filter:String="") -> Dictionary:
@@ -736,3 +744,5 @@ static func get_autoload_property_suggestions(filter:String, autoload_name:Strin
 			suggestions[property.name] = {'value': property.name, 'tooltip':property.name, 'editor_icon': ["MemberProperty", "EditorIcons"]}
 
 	return suggestions
+=======
+>>>>>>> Stashed changes

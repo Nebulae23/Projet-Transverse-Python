@@ -158,8 +158,11 @@ func display_search_results(finds:Array[Dictionary]) -> void:
 
 	%ReferenceTree.clear()
 	%ReferenceTree.set_column_expand(0, false)
+<<<<<<< Updated upstream
 	%ReferenceTree.set_column_expand(1, false)
 	%ReferenceTree.set_column_custom_minimum_width(1, 50)
+=======
+>>>>>>> Stashed changes
 	%ReferenceTree.create_item()
 
 	var timelines := {}
@@ -168,25 +171,38 @@ func display_search_results(finds:Array[Dictionary]) -> void:
 		var parent: TreeItem = null
 		if !i.timeline in timelines:
 			parent = %ReferenceTree.create_item()
+<<<<<<< Updated upstream
 			parent.set_text(0, i.timeline)
 			parent.set_custom_color(0, get_theme_color("disabled_font_color", "Editor"))
 			parent.set_expand_right(0, true)
+=======
+			parent.set_text(1, i.timeline)
+			parent.set_custom_color(1, get_theme_color("disabled_font_color", "Editor"))
+>>>>>>> Stashed changes
 			timelines[i.timeline] = parent
 			height += %ReferenceTree.get_item_area_rect(parent).size.y+10
 		else:
 			parent = timelines[i.timeline]
 
 		var item: TreeItem = %ReferenceTree.create_item(parent)
+<<<<<<< Updated upstream
+=======
+		item.set_text(1, 'Line '+str(i.line_number)+': '+i.line)
+		item.set_tooltip_text(1, i.info.what+' -> '+i.info.forwhat)
+>>>>>>> Stashed changes
 		item.set_cell_mode(0, TreeItem.CELL_MODE_CHECK)
 		item.set_checked(0, true)
 		item.set_editable(0, true)
 		item.set_metadata(0, i)
+<<<<<<< Updated upstream
 		item.set_text(1, str(i.line_number)+':')
 		item.set_text_alignment(1, HORIZONTAL_ALIGNMENT_RIGHT)
 		item.set_cell_mode(2, TreeItem.CELL_MODE_CUSTOM)
 		item.set_text(2, i.line)
 		item.set_tooltip_text(2, i.info.what+' -> '+i.info.forwhat)
 		item.set_custom_draw_callback(2, _custom_draw)
+=======
+>>>>>>> Stashed changes
 		height += %ReferenceTree.get_item_area_rect(item).size.y+10
 		var change_item: TreeItem = i.info.item
 		change_item.set_meta('found_items', change_item.get_meta('found_items', [])+[item])
@@ -201,6 +217,7 @@ func display_search_results(finds:Array[Dictionary]) -> void:
 		%Replace.grab_focus()
 
 
+<<<<<<< Updated upstream
 ## Highlights the found text in the result tree
 ## Inspired by how godot highlights stuff in its search results
 func _custom_draw(item:TreeItem, rect:Rect2) -> void:
@@ -222,6 +239,8 @@ func _custom_draw(item:TreeItem, rect:Rect2) -> void:
 	%ReferenceTree.draw_rect(match_rect, get_theme_color("box_selection_stroke_color", "Editor"), false)
 
 
+=======
+>>>>>>> Stashed changes
 func search_timelines(regexes:Array[Array]) -> Array[Dictionary]:
 	var finds: Array[Dictionary] = []
 

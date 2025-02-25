@@ -63,9 +63,13 @@ func _enter_tree() -> void:
 
 
 func _exit_tree() -> void:
+<<<<<<< Updated upstream
 	var info: Dictionary = Engine.get_meta("dialogic_persistent_style_info", {})
 	info.merge(_get_persistent_info(), true)
 	Engine.set_meta("dialogic_persistent_style_info", info)
+=======
+	Engine.set_meta("dialogic_persistent_style_info", _get_persistent_info())
+>>>>>>> Stashed changes
 
 
 ## To be overwritten. Return any info that a later used style might want to know.

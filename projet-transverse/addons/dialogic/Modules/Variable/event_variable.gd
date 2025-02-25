@@ -303,6 +303,7 @@ func build_event_editor() -> void:
 
 func get_var_suggestions(filter:String) -> Dictionary:
 	var suggestions := {}
+<<<<<<< Updated upstream
 	for var_path in DialogicUtil.list_variables(DialogicUtil.get_default_variables()):
 		suggestions[var_path] = {'value':var_path, 'icon':load("res://addons/dialogic/Editor/Images/Pieces/variable.svg")}
 
@@ -323,6 +324,12 @@ func get_var_suggestions(filter:String) -> Dictionary:
 	if not filter in suggestions:
 		suggestions[filter] = {'value':filter, 'editor_icon':["GuiScrollArrowRight", "EditorIcons"]}
 
+=======
+	if filter:
+		suggestions[filter] = {'value':filter, 'editor_icon':["GuiScrollArrowRight", "EditorIcons"]}
+	for var_path in DialogicUtil.list_variables(DialogicUtil.get_default_variables()):
+		suggestions[var_path] = {'value':var_path, 'icon':load("res://addons/dialogic/Editor/Images/Pieces/variable.svg")}
+>>>>>>> Stashed changes
 	return suggestions
 
 
@@ -358,6 +365,7 @@ func update_editor_warning() -> void:
 ################################################################################
 
 func _get_code_completion(CodeCompletionHelper:Node, TextNode:TextEdit, line:String, _word:String, symbol:String) -> void:
+<<<<<<< Updated upstream
 	var autoloads := DialogicUtil.get_autoload_suggestions()
 	var line_until_caret: String = CodeCompletionHelper.get_line_untill_caret(line)
 	if line_until_caret.count(" ") == 1 and not "{" in line and not line_until_caret.ends_with("."):
@@ -374,6 +382,11 @@ func _get_code_completion(CodeCompletionHelper:Node, TextNode:TextEdit, line:Str
 				TextNode.add_code_completion_option(CodeEdit.KIND_MEMBER, i, i+" ", event_color.lerp(TextNode.syntax_highlighter.normal_color, 0.3), TextNode.get_theme_icon("MemberMethod", "EditorIcons"))
 
 	elif symbol == '{':
+=======
+	if CodeCompletionHelper.get_line_untill_caret(line) == 'set ':
+		TextNode.add_code_completion_option(CodeEdit.KIND_MEMBER, '{', '{', TextNode.syntax_highlighter.variable_color)
+	if symbol == '{':
+>>>>>>> Stashed changes
 		CodeCompletionHelper.suggest_variables(TextNode)
 
 

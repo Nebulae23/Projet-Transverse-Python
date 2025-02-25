@@ -13,11 +13,15 @@ extends DialogicEvent
 var scene := ""
 ## The argument that is passed to the background scene.
 ## For the default scene it's the path to the image to show.
+<<<<<<< Updated upstream
 var argument := "":
 	set(value):
 		if argument != value:
 			argument = value
 			ui_update_needed.emit()
+=======
+var argument := ""
+>>>>>>> Stashed changes
 ## The time the fade animation will take. Leave at 0 for instant change.
 var fade: float = 0.0
 ## Name of the transition to use.
@@ -142,10 +146,13 @@ func build_event_editor() -> void:
 			'_arg_type == ArgumentTypes.IMAGE or _scene_type == SceneTypes.DEFAULT')
 	add_header_edit('argument', ValueType.SINGLELINE_TEXT, {}, '_arg_type == ArgumentTypes.CUSTOM')
 
+<<<<<<< Updated upstream
 	add_body_edit("argument", ValueType.IMAGE_PREVIEW, {'left_text':'Preview:'},
 		'(_arg_type == ArgumentTypes.IMAGE or _scene_type == SceneTypes.DEFAULT) and !argument.is_empty()')
 	add_body_line_break('(_arg_type == ArgumentTypes.IMAGE or _scene_type == SceneTypes.DEFAULT) and !argument.is_empty()')
 
+=======
+>>>>>>> Stashed changes
 	add_body_edit("transition", ValueType.DYNAMIC_OPTIONS,
 			{'left_text':'Transition:',
 			'empty_text':'Simple Fade',

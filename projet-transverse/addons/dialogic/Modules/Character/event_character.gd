@@ -89,7 +89,11 @@ var character_identifier: String:
 	set(value):
 		character_identifier = value
 		character = DialogicResourceUtil.get_character_resource(value)
+<<<<<<< Updated upstream
 		if (not character) or (character and not character.portraits.has(portrait)):
+=======
+		if character and not character.portraits.has(portrait):
+>>>>>>> Stashed changes
 			portrait = ""
 			ui_update_needed.emit()
 
@@ -154,11 +158,19 @@ func _execute() -> void:
 			finish()
 			return
 
+<<<<<<< Updated upstream
 		if set_portrait:
 			dialogic.Portraits.change_character_portrait(character, portrait, fade_animation, fade_length)
 
 		dialogic.Portraits.change_character_extradata(character, extra_data)
 
+=======
+		dialogic.Portraits.change_character_extradata(character, extra_data)
+
+		if set_portrait:
+			dialogic.Portraits.change_character_portrait(character, portrait, fade_animation, fade_length)
+
+>>>>>>> Stashed changes
 		if set_mirrored:
 			dialogic.Portraits.change_character_mirror(character, mirrored)
 
@@ -478,7 +490,11 @@ func get_fade_suggestions(search_text:String='') -> Dictionary:
 
 func _get_code_completion(CodeCompletionHelper:Node, TextNode:TextEdit, line:String, _word:String, symbol:String) -> void:
 	var line_until_caret: String = CodeCompletionHelper.get_line_untill_caret(line)
+<<<<<<< Updated upstream
 	if symbol == ' ' and line_until_caret.split(" ", false).size() == 1:
+=======
+	if symbol == ' ' and line_until_caret.count(' ') == 1:
+>>>>>>> Stashed changes
 		CodeCompletionHelper.suggest_characters(TextNode, CodeEdit.KIND_MEMBER)
 		if line.begins_with('leave'):
 			TextNode.add_code_completion_option(CodeEdit.KIND_MEMBER, 'All', '--All-- ', event_color, TextNode.get_theme_icon("GuiEllipsis", "EditorIcons"))
@@ -487,7 +503,11 @@ func _get_code_completion(CodeCompletionHelper:Node, TextNode:TextEdit, line:Str
 		var completion_character := regex.search(line).get_string('name')
 		CodeCompletionHelper.suggest_portraits(TextNode, completion_character)
 
+<<<<<<< Updated upstream
 	elif not '[' in line_until_caret and symbol == ' ' and line_until_caret.split(" ", false).size() > 1:
+=======
+	elif not '[' in line_until_caret and symbol == ' ':
+>>>>>>> Stashed changes
 		if not line.begins_with("leave"):
 			for position in get_position_suggestions():
 				TextNode.add_code_completion_option(CodeEdit.KIND_MEMBER, position, position+' ', TextNode.syntax_highlighter.normal_color)

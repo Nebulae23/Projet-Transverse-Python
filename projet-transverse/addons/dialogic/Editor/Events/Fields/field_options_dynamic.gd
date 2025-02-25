@@ -123,14 +123,21 @@ func _on_Search_text_entered(new_text:String) -> void:
 func _on_Search_text_changed(new_text:String, just_update:bool = false) -> void:
 	%Suggestions.clear()
 
+<<<<<<< Updated upstream
 	if new_text == "" and not just_update:
+=======
+	if new_text == "" and !just_update:
+>>>>>>> Stashed changes
 		change_to_empty()
 	else:
 		%Search.show()
 
+<<<<<<< Updated upstream
 	if just_update and new_text.is_empty() and %Search.text.ends_with("."):
 		new_text = %Search.text
 
+=======
+>>>>>>> Stashed changes
 	var suggestions: Dictionary = get_suggestions_func.call(new_text)
 
 	var line_length := 0

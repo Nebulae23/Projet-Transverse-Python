@@ -52,11 +52,15 @@ var empty_lines_above: int = 0
 ### Editor UI Properties ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ## The event color that event node will take in the editor
+<<<<<<< Updated upstream
 var event_color := Color("FBB13C"):
 	get:
 		if dialogic_color_name:
 			return DialogicUtil.get_color(dialogic_color_name)
 		return event_color
+=======
+var event_color := Color("FBB13C")
+>>>>>>> Stashed changes
 ## If you are using the default color palette
 var dialogic_color_name: = ""
 ## To sort the buttons shown in the editor. Lower index is placed at the top of a category
@@ -97,7 +101,11 @@ enum ValueType {
 	NUMBER,
 	VECTOR2, VECTOR3, VECTOR4,
 	# Other
+<<<<<<< Updated upstream
 	CUSTOM, BUTTON, LABEL, COLOR, AUDIO_PREVIEW, IMAGE_PREVIEW
+=======
+	CUSTOM, BUTTON, LABEL, COLOR, AUDIO_PREVIEW
+>>>>>>> Stashed changes
 }
 ## List that stores the fields for the editor
 var editor_list: Array = []
@@ -470,8 +478,11 @@ func get_event_editor_info() -> Array:
 		else:
 			editor_list = []
 
+<<<<<<< Updated upstream
 		if DialogicUtil.get_editor_setting('show_event_names', false):
 			add_header_label(event_name)
+=======
+>>>>>>> Stashed changes
 		build_event_editor()
 		return editor_list
 	else:
@@ -489,7 +500,11 @@ func build_event_editor() -> void:
 ## @left_text: 		Text that will be shown to the left of the field
 ## @right_text: 	Text that will be shown to the right of the field
 ## @extra_info: 	Allows passing a lot more info to the field.
+<<<<<<< Updated upstream
 ## 					What info can be passed is different for every field
+=======
+## 					What info can be passed is differnet for every field
+>>>>>>> Stashed changes
 
 func add_header_label(text:String, condition:= "") -> void:
 	editor_list.append({

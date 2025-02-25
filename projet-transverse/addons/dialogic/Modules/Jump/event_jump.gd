@@ -134,9 +134,12 @@ func get_label_suggestions(_filter:String="") -> Dictionary:
 	if timeline_identifier in DialogicResourceUtil.get_label_cache().keys():
 		for label in DialogicResourceUtil.get_label_cache()[timeline_identifier]:
 			suggestions[label] = {'value': label, 'tooltip':label, 'editor_icon': ["ArrowRight", "EditorIcons"]}
+<<<<<<< Updated upstream
 	if _filter.begins_with("{"):
 		for var_path in DialogicUtil.list_variables(DialogicUtil.get_default_variables()):
 			suggestions["{"+var_path+"}"] = {'value':"{"+var_path+"}", 'icon':load("res://addons/dialogic/Editor/Images/Pieces/variable.svg")}
+=======
+>>>>>>> Stashed changes
 	return suggestions
 
 
@@ -147,8 +150,11 @@ func _get_code_completion(CodeCompletionHelper:Node, TextNode:TextEdit, line:Str
 	if symbol == ' ' and line.count(' ') == 1:
 		CodeCompletionHelper.suggest_labels(TextNode, '', '\n', event_color.lerp(TextNode.syntax_highlighter.normal_color, 0.6))
 		CodeCompletionHelper.suggest_timelines(TextNode, CodeEdit.KIND_MEMBER, event_color.lerp(TextNode.syntax_highlighter.normal_color, 0.6))
+<<<<<<< Updated upstream
 	if symbol == "{":
 		CodeCompletionHelper.suggest_variables(TextNode)
+=======
+>>>>>>> Stashed changes
 	if symbol == '/':
 		CodeCompletionHelper.suggest_labels(TextNode, line.strip_edges().trim_prefix('jump ').trim_suffix('/'+String.chr(0xFFFF)).strip_edges(), '\n', event_color.lerp(TextNode.syntax_highlighter.normal_color, 0.6))
 
