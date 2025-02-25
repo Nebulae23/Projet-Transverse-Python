@@ -3,20 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cxddwca1f08gq"
-path.s3tc="res://.godot/imported/Unarmed_Walk_full.png-9a560b9f6f7a9fb6c085ffb8803e2d9e.s3tc.ctex"
+path="res://.godot/imported/Unarmed_Walk_full.png-9a560b9f6f7a9fb6c085ffb8803e2d9e.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Assets/PNG/Unarmed_Walk/Unarmed_Walk_full.png"
-dest_files=["res://.godot/imported/Unarmed_Walk_full.png-9a560b9f6f7a9fb6c085ffb8803e2d9e.s3tc.ctex"]
+dest_files=["res://.godot/imported/Unarmed_Walk_full.png-9a560b9f6f7a9fb6c085ffb8803e2d9e.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

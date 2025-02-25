@@ -1,0 +1,15 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://vujyv7ylfj6f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b5qd0"]
+bg_color = Color(0.749146, 0.550831, 0.425509, 1)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_size = 2
+
+[resource]
+resource_local_to_scene = true
+/colors/test = Color(0.799908, 0.592578, 0.430653, 1)
+/styles/test = SubResource("StyleBoxFlat_b5qd0")

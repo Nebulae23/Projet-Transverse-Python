@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://cjdb1xbltfvcw"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_4q0ly"]
-[ext_resource type="Texture2D" path="res://Assets/PNG/Main_Menu/Placeholder_background_menu.jpg" id="2_f1egt"]
-[ext_resource type="FontFile" path="res://Assets/Fonts/BrookHolmes.otf" id="2_hq65p"]
+[ext_resource type="Texture2D" uid="uid://il8kepb2eaib" path="res://Assets/PNG/Main_Menu/Placeholder_background_menu.jpg" id="2_f1egt"]
+[ext_resource type="FontFile" uid="uid://8kmd0di6vpnu" path="res://Assets/Fonts/BrookHolmes.otf" id="2_hq65p"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s00wt"]
 texture = ExtResource("2_f1egt")

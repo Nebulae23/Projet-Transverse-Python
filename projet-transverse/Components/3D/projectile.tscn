@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://b77ieqepdb7cc"]
+
+[ext_resource type="Script" path="res://Components/3D/projectile.gd" id="1_55but"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dc1rm"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_6u2nu"]
+
+[node name="projectile" type="Area3D" groups=["Damage_source"]]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_55but")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dc1rm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_6u2nu")
