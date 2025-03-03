@@ -6,8 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://baw2xf2tckdo2" path="res://Assets/PNG/Unarmed_Idle/Unarmed_Idle_full.png" id="3_at4c5"]
 [ext_resource type="PackedScene" uid="uid://dqf2ir5irdwgu" path="res://scenes/menus/hud.tscn" id="5_ukm5v"]
 [ext_resource type="PackedScene" uid="uid://bcoei5cx0ucm4" path="res://Components/hitbox_component.tscn" id="6_12t0i"]
-[ext_resource type="Script" path="res://Assets/Component/HealthComponent.gd" id="6_cq6i5"]
-[ext_resource type="PackedScene" uid="uid://ce4gchwl5gky5" path="res://Components/damage_calculator_component.tscn" id="8_p1dnn"]
+[ext_resource type="Script" path="res://Components/health_component.gd" id="6_cq6i5"]
+[ext_resource type="PackedScene" uid="uid://ce4gchwl5gky5" path="res://Components/status_component.tscn" id="8_p1dnn"]
 [ext_resource type="Script" path="res://Components/stats_component.gd" id="9_qrqn4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tfnvf"]
@@ -999,7 +999,9 @@ frame = 1
 transform = Transform3D(0.35, 0, 0, 0, 0.5, 0, 0, 0, 0.25, 0, -1.26381, 0)
 shape = SubResource("CapsuleShape3D_s346s")
 
-[node name="Hitbox_component" parent="." instance=ExtResource("6_12t0i")]
+[node name="Hitbox_component" parent="." node_paths=PackedStringArray("health_component", "status_component") instance=ExtResource("6_12t0i")]
+health_component = NodePath("../Health_Component")
+status_component = NodePath("../status_component")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox_component"]
 transform = Transform3D(1, 0, 0, 0, 0.75, 0, 0, 0, 1, 0, 0.0532814, 0)
@@ -1023,7 +1025,8 @@ script = ExtResource("6_cq6i5")
 max_health = 50
 exceed_maximum_health = true
 
-[node name="Status_Component" parent="." instance=ExtResource("8_p1dnn")]
+[node name="status_component" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("8_p1dnn")]
+health_component = NodePath("../Health_Component")
 
 [node name="Stats_component" type="Node" parent="."]
 script = ExtResource("9_qrqn4")

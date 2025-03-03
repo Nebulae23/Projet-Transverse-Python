@@ -1,7 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c8wn8otphxap2"]
+[gd_scene load_steps=2 format=3 uid="uid://jo04xkfbhvv1"]
 
-[ext_resource type="Script" path="res://Assets/Component/HealthComponent.gd" id="1_h1wpx"]
+[ext_resource type="Script" path="res://Components/health_component.gd" id="1_6juug"]
 
 [node name="HealthComponent" type="Node"]
-script = ExtResource("1_h1wpx")
+script = ExtResource("1_6juug")
 max_health = 15

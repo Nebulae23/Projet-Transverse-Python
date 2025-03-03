@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bcoei5cx0ucm4"]
 
-[ext_resource type="Script" path="res://Components/Hitbox_component.gd" id="1_ixdnu"]
+[ext_resource type="Script" path="res://Components/hitbox_component.gd" id="1_ixdnu"]
 
 [node name="Hitbox_component" type="Area3D"]
 transform = Transform3D(0.3, 0, 0, 0, 0.5, 0, 0, 0, 0.25, 0, -1.27298, 0)
