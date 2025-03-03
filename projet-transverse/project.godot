@@ -29,12 +29,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-MetSys="*res://addons/MetroidvaniaSystem/Nodes/Singleton.tscn"
-Talo="*res://addons/talo/talo_manager.gd"
 QuestSystem="*res://addons/quest_system/quest_manager.gd"
-PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
-Pandora="*res://addons/pandora/api.gd"
-Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 
 [dialogic]
 
@@ -80,7 +75,7 @@ version_control/autoload_on_startup=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/3dEnemyToolkit/plugin.cfg", "res://addons/MetroidvaniaSystem/EditorExtension/plugin.cfg", "res://addons/MetroidvaniaSystem/plugin.cfg", "res://addons/SceneBuilder/plugin.cfg", "res://addons/componentable/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/mesh_lod_generator/plugin.cfg", "res://addons/signal_lens/plugin.cfg", "res://addons/worldmap_builder/plugin.cfg")
+enabled=PackedStringArray("res://addons/3dEnemyToolkit/plugin.cfg", "res://addons/AsepriteWizard/plugin.cfg", "res://addons/SceneBuilder/plugin.cfg", "res://addons/ScriptEditorQoL/plugin.cfg", "res://addons/componentable/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/quest_system/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg", "res://addons/rubonnek.quest_manager/plugin.cfg", "res://addons/signal_lens/plugin.cfg", "res://addons/talo/plugin.cfg")
 
 [global_group]
 

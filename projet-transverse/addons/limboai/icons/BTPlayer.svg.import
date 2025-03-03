@@ -2,27 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-<<<<<<< Updated upstream:projet-transverse/addons/MetroidvaniaSystem/Themes/RR/CornerOuter.png.import
-uid="uid://bma4gpyfwxyol"
-path="res://.godot/imported/CornerOuter.png-81afcca82023599019f5478662c4a80f.ctex"
-=======
-uid="uid://buvaancnmcdo4"
+uid="uid://diffrdqfbpklx"
 path="res://.godot/imported/BTPlayer.svg-ed7adc3cf4a0f3daa1e17a1a77e9a3a2.ctex"
->>>>>>> Stashed changes:projet-transverse/addons/limboai/icons/BTPlayer.svg.import
 metadata={
-"has_editor_variant": true,
 "vram_texture": false
 }
 
 [deps]
 
-<<<<<<< Updated upstream:projet-transverse/addons/MetroidvaniaSystem/Themes/RR/CornerOuter.png.import
-source_file="res://addons/MetroidvaniaSystem/Themes/RR/CornerOuter.png"
-dest_files=["res://.godot/imported/CornerOuter.png-81afcca82023599019f5478662c4a80f.ctex"]
-=======
 source_file="res://addons/limboai/icons/BTPlayer.svg"
 dest_files=["res://.godot/imported/BTPlayer.svg-ed7adc3cf4a0f3daa1e17a1a77e9a3a2.ctex"]
->>>>>>> Stashed changes:projet-transverse/addons/limboai/icons/BTPlayer.svg.import
 
 [params]
 
@@ -44,5 +33,5 @@ process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
 svg/scale=1.0
-editor/scale_with_editor_scale=true
-editor/convert_colors_with_editor_theme=true
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false
