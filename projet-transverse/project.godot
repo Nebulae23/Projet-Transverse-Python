@@ -30,6 +30,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 QuestSystem="*res://addons/quest_system/quest_manager.gd"
+Talo="*res://addons/talo/talo_manager.gd"
 
 [dialogic]
 

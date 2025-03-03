@@ -1,7 +1,7 @@
 extends Area3D
 
-@onready var health_component = $Health_Component
-@onready var damage_component = $damage_calculator_Component
+@export var health_component : Node 
+@export var status_component : Node 
 
 func _ready() -> void:
 	pass
@@ -20,7 +20,7 @@ func take_damage_and_effect(damage: int, type: String, effect: String, duration:
 	# Apply damage to the health component
 	health_component.take_damage(damage)
 	# Apply the effect to the damage component
-	damage_component.apply_effect(effect, duration, level, type)
+	status_component.apply_effect(effect, duration, level, type)
 	
 	
 #dictionnary for attack format

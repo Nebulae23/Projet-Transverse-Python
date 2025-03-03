@@ -1,6 +1,6 @@
 extends Node
 
-@onready var health_component= $Health_Component
+@export var health_component : Node 
 
 
 # Called when the node enters the scene tree for the first time.

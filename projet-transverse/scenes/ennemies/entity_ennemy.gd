@@ -3,11 +3,11 @@ extends CharacterBody3D
 @export var projectile: PackedScene
 @export var shoot_interval: float = 2.0  # Time between shots
 var time_since_last_shot: float = 0.0
-var player: Node3D  # Reference to the player node
+@export var player: Node    # Reference to the player node
 
 func _ready():
 	# Find the player node (assuming it's in the same scene and has a unique name or group)
-	player = get_tree().get_root().get_node("/Player")  # Adjust the path as needed
+	 # Adjust the path as needed
 	time_since_last_shot = shoot_interval
 
 func shoot():
