@@ -15,7 +15,7 @@ func _process(delta: float) -> void:
 
 
 #using an equation we can increase the damage or the duration/effect severity the x of the equation can be the level of the status, type define witch modifier to use for  decreasing the effect of status
-func _apply_effect(status,duration,level,type):
+func apply_effect(status,duration,level,type):
 	
 	
 	
