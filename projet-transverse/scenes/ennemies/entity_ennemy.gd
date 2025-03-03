@@ -7,7 +7,7 @@ var player: Node3D  # Reference to the player node
 
 func _ready():
 	# Find the player node (assuming it's in the same scene and has a unique name or group)
-	player = get_tree().get_root().get_node("Player")  # Adjust the path as needed
+	player = get_tree().get_root().get_node("/Player")  # Adjust the path as needed
 	time_since_last_shot = shoot_interval
 
 func shoot():

@@ -13,3 +13,4 @@ func _process(delta: float) -> void:
 
 func _get_modifier(stats:Dictionary):
 	if stats["type"]=="str":
+		pass
