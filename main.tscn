@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://cg64otb5cew5o"]
+
+[ext_resource type="Script" path="res://main.py" id="1_qmv3e"]
+[ext_resource type="PackedScene" uid="uid://dswsv100uo0hm" path="res://player.tscn" id="2_kjsji"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pryp6"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_52xap"]
+size = Vector3(60, 2, 60)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_qmv3e")
+test_int = 5
+test_float = 5.2
+test_bool = true
+test_vector = Vector3(1, 2, 3)
+
+[node name="ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ground"]
+shape = SubResource("BoxShape3D_pryp6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ground/CollisionShape3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.05115, 0)
+mesh = SubResource("BoxMesh_52xap")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.6602, 0)
+
+[node name="player" parent="." instance=ExtResource("2_kjsji")]
+
+[node name="Marker3D" type="Marker3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Marker3D"]
