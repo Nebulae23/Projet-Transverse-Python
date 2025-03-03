@@ -6,7 +6,7 @@ extends Area3D
 @export var duration : int = 0
 @export var level : int = 0
 var velocity: Vector3 = Vector3.ZERO
-var speed: float = 20.0
+var speed: float = 1.0
 
 
 func set_velocity(new_velocity: Vector3):
@@ -19,6 +19,10 @@ func _physics_process(delta):
 
 func _on_projectile_body_entered(body):
 	# Check if the body has a hitbox_component
+	print("test")
+	if body is GridMap:
+		queue_free()
+	
 	if body.has_node("Hitbox_Component") :
 		var hitbox_component = body.get_node("Hitbox_Component")
 		hitbox_component.take_damage_and_effect(damage, type, effect, duration, level)
