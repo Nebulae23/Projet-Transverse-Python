@@ -1,6 +1,6 @@
 extends Area3D
 
-@export var damage : int = 5
+@export var damage : int = 10
 @export var type : String = "physic"
 @export var effect : String = "none"
 @export var duration : int = 0
@@ -16,15 +16,17 @@ func _physics_process(delta):
 	velocity.y -= gravity * delta
 	# Move the projectile
 	global_transform.origin += velocity * delta
-
-func _on_projectile_body_entered(body):
-	# Check if the body has a hitbox_component
-	print("test")
-	if body is GridMap:
-		queue_free()
 	
-	if body.has_node("Hitbox_Component") :
-		var hitbox_component = body.get_node("Hitbox_Component")
+
+func _on_body_entered(body: Node3D) -> void:
+	if body.has_node("hitbox_component") :
+		print("hit")
+		var hitbox_component = body.get_node("hitbox_component")
 		hitbox_component.take_damage_and_effect(damage, type, effect, duration, level)
 			# Pass the projectile's data to the hitbox_component
-	queue_free()
+		queue_free()
+
+
+func _on_body_exited(body: Node3D) -> void:
+	if body is GridMap:
+		queue_free()
