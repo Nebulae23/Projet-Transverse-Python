@@ -1,20 +1,22 @@
 [gd_scene load_steps=11 format=3 uid="uid://b18rv6o4duide"]
 
-[ext_resource type="Texture2D" uid="uid://bgw8xgbwc2flx" path="res://godot_state_charts_examples/history_states/white_rectangle.svg" id="1_3v23e"]
+[ext_resource type="Texture2D" uid="uid://bgw8xgbwc2flx" path="res://addons/godot_state_charts_examples/history_states/white_rectangle.svg" id="1_3v23e"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="2_fgw1q"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_pqmip"]
-[ext_resource type="Script" path="res://godot_state_charts_examples/history_states/history_demo.gd" id="2_vphtk"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_nsw2j"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/history_state.gd" id="4_0qaqv"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="5_lh5sp"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="6_xvm5g"]
-[ext_resource type="Theme" uid="uid://s2bj74tt0y7f" path="res://godot_state_charts_examples/new_theme.tres" id="8_najew"]
+[ext_resource type="Script" uid="uid://d171tstnavmxj" path="res://addons/godot_state_charts/state_chart.gd" id="2_pqmip"]
+[ext_resource type="Script" uid="uid://bcdgcmgr6kfag" path="res://addons/godot_state_charts/compound_state.gd" id="3_nsw2j"]
+[ext_resource type="Script" uid="uid://cfuohta5rgjq4" path="res://addons/godot_state_charts/history_state.gd" id="4_0qaqv"]
+[ext_resource type="Script" uid="uid://ba1ppbd7k8ehd" path="res://addons/godot_state_charts/atomic_state.gd" id="5_lh5sp"]
+[ext_resource type="Script" uid="uid://ddt4wfgb61hw1" path="res://addons/godot_state_charts/transition.gd" id="6_xvm5g"]
+[ext_resource type="Theme" uid="uid://s2bj74tt0y7f" path="res://addons/godot_state_charts_examples/new_theme.tres" id="8_najew"]
+
+[sub_resource type="Resource" id="Resource_0sdg7"]
+metadata/__load_path__ = "res://godot_state_charts_examples/history_states/history_demo.gd"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kl3ga"]
 size = Vector2(34.243, 33.536)
 
 [node name="Node" type="Node"]
-script = ExtResource("2_vphtk")
+script = SubResource("Resource_0sdg7")
 
 [node name="StateChartDebugger" parent="." instance=ExtResource("2_fgw1q")]
 offset_left = 280.0

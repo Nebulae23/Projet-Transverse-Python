@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://d1tx7u8ho0r4v" path="res://addons/demo/assets/agent_demon.png" id="2_cb5f2"]
 [ext_resource type="BehaviorTree" uid="uid://cpcnbi81jqge4" path="res://addons/demo/ai/trees/08_agent_demon.tres" id="3_ebd57"]
 
-
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_5sr4g"]
 
 [node name="AgentDemon" instance=ExtResource("1_115kp")]

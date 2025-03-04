@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://c4qm4cb60w3w2"]
 
-[ext_resource type="Texture2D" uid="uid://xb5fialweqfw" path="res://godot_state_charts_examples/ant_hill/nest/nest.svg" id="1_8slek"]
+[ext_resource type="Texture2D" uid="uid://xb5fialweqfw" path="res://addons/godot_state_charts_examples/ant_hill/nest/nest.svg" id="1_8slek"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b8f1n"]
 radius = 37.1214

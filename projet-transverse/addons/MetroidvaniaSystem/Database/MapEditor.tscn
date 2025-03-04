@@ -1,9 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://dfbykrvyqnqr5"]
+[gd_scene load_steps=15 format=3 uid="uid://dfbykrvyqnqr5"]
 
-[ext_resource type="Script" path="res://addons/MetroidvaniaSystem/Database/MapEditor.gd" id="1_i7yda"]
-[ext_resource type="PackedScene" uid="uid://w34y4dyx84y8" path="res://addons/MetroidvaniaSystem/Nodes/LayerSelector.tscn" id="2_rinoa"]
+[sub_resource type="Resource" id="Resource_hi8rr"]
+metadata/__load_path__ = "res://addons/MetroidvaniaSystem/Database/MapEditor.gd"
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_pv7fp"]
+
+[sub_resource type="Resource" id="Resource_fa7iy"]
+metadata/__load_path__ = "res://addons/MetroidvaniaSystem/Nodes/LayerSelector.tscn"
+
+[sub_resource type="Resource" id="Resource_eufxn"]
+metadata/__load_path__ = "res://addons/MetroidvaniaSystem/Nodes/LayerSelector.tscn"
 
 [sub_resource type="GDScript" id="GDScript_dsps8"]
 resource_name = "RoomLayout"
@@ -871,7 +877,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_i7yda")
+script = SubResource("Resource_hi8rr")
 mode_group = SubResource("ButtonGroup_pv7fp")
 metadata/_edit_lock_ = true
 
@@ -898,7 +904,7 @@ layout_mode = 2
 text = "Current Layer"
 horizontal_alignment = 1
 
-[node name="CurrentLayer" parent="Sidebar/ScrollContainer/VBoxContainer/Layer" instance=ExtResource("2_rinoa")]
+[node name="CurrentLayer" parent="Sidebar/ScrollContainer/VBoxContainer/Layer"]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -907,7 +913,7 @@ layout_mode = 2
 text = "Preview Layer"
 horizontal_alignment = 1
 
-[node name="PreviewLayer" parent="Sidebar/ScrollContainer/VBoxContainer/Layer" instance=ExtResource("2_rinoa")]
+[node name="PreviewLayer" parent="Sidebar/ScrollContainer/VBoxContainer/Layer"]
 unique_name_in_owner = true
 layout_mode = 2
 allow_none = true

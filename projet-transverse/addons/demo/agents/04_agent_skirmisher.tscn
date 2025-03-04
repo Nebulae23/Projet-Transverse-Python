@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://l042ovqqsy3l" path="res://addons/demo/assets/agent_skirmisher.png" id="2_w8tqw"]
 [ext_resource type="BehaviorTree" uid="uid://qqmjvbeibatn" path="res://addons/demo/ai/trees/04_agent_skirmisher.tres" id="3_bhfkv"]
 
-
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_vjbry"]
 
 [node name="AgentSkirmisher" instance=ExtResource("1_2ir76")]

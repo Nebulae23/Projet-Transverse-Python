@@ -1,12 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://ch1pukkyc07qo"]
 
-[ext_resource type="Script" path="res://godot_state_charts_examples/cooldown/skill_button/skill_button.gd" id="1_r0ivs"]
-[ext_resource type="Texture2D" uid="uid://tgsnqiq40n41" path="res://godot_state_charts_examples/cooldown/icons/cooldown_overlay.png" id="3_pgrfi"]
+[ext_resource type="Texture2D" uid="uid://tgsnqiq40n41" path="res://addons/godot_state_charts_examples/cooldown/icons/cooldown_overlay.png" id="3_pgrfi"]
+
+[sub_resource type="Resource" id="Resource_3udpx"]
+metadata/__load_path__ = "res://godot_state_charts_examples/cooldown/skill_button/skill_button.gd"
 
 [node name="SkillButton" type="MarginContainer"]
 offset_right = 32.0
 offset_bottom = 32.0
-script = ExtResource("1_r0ivs")
+script = SubResource("Resource_3udpx")
 
 [node name="Button" type="Button" parent="."]
 unique_name_in_owner = true

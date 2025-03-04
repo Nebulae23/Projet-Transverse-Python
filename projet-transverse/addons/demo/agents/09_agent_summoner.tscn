@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://ombnpn2edldt" path="res://addons/demo/assets/agent_summoner.png" id="2_fcti4"]
 [ext_resource type="BehaviorTree" uid="uid://cpxk7jnqpwwlc" path="res://addons/demo/ai/trees/09_agent_summoner.tres" id="3_bunpq"]
 
-
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_bqv3d"]
 
 [node name="AgentSummoner" instance=ExtResource("1_neifu")]

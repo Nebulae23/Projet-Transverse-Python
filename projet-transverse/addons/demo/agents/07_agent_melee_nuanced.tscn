@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://usu3j55d6dgc" path="res://addons/demo/assets/agent_melee_nuanced.png" id="2_e51r0"]
 [ext_resource type="BehaviorTree" uid="uid://c2u6sljqkim0n" path="res://addons/demo/ai/trees/07_agent_melee_nuanced.tres" id="3_b8kcf"]
 
-
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_tnf02"]
 
 [node name="AgentMeleeNuanced" instance=ExtResource("1_afx5l")]

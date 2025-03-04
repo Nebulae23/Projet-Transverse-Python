@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://bo0ibp7tvjbba" path="res://addons/demo/assets/agent_combo.png" id="2_4rqld"]
 [ext_resource type="BehaviorTree" uid="uid://cpncl1db8j12f" path="res://addons/demo/ai/trees/06_agent_melee_combo.tres" id="3_l805q"]
 
-
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_67ric"]
 
 [node name="AgentMeleeCombo" instance=ExtResource("1_dny3b")]

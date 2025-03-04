@@ -1,10 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://w48b71tv2d4v"]
 
-[ext_resource type="Script" path="res://addons/MetroidvaniaSystem/Scripts/CollectibleElement.gd" id="1_1bebr"]
-[ext_resource type="Script" path="res://addons/MetroidvaniaSystem/Scripts/EditorIconButton.gd" id="2_3d05g"]
+[sub_resource type="Resource" id="Resource_gjsag"]
+metadata/__load_path__ = "res://addons/MetroidvaniaSystem/Scripts/CollectibleElement.gd"
+
+[sub_resource type="Resource" id="Resource_lc7y4"]
+metadata/__load_path__ = "res://addons/MetroidvaniaSystem/Scripts/EditorIconButton.gd"
 
 [node name="Collectible" type="PanelContainer"]
-script = ExtResource("1_1bebr")
+script = SubResource("Resource_gjsag")
 metadata/is_collectible = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -21,7 +24,7 @@ placeholder_text = "Node Name"
 
 [node name="Button" type="Button" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-script = ExtResource("2_3d05g")
+script = SubResource("Resource_lc7y4")
 icon_name = "Remove"
 
 [node name="IconContainer" type="HBoxContainer" parent="VBoxContainer"]

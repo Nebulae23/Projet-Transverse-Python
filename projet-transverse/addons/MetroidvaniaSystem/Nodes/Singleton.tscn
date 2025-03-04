@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://c01ibpvrp2wsd"]
 
-[ext_resource type="Script" path="res://addons/MetroidvaniaSystem/Scripts/MetroidvaniaSystem.gd" id="1_y1fyl"]
+[sub_resource type="Resource" id="Resource_x45n2"]
+metadata/__load_path__ = "res://addons/MetroidvaniaSystem/Scripts/MetroidvaniaSystem.gd"
 
 [node name="MetroidvaniaSettings" type="Node"]
-script = ExtResource("1_y1fyl")
+script = SubResource("Resource_x45n2")
