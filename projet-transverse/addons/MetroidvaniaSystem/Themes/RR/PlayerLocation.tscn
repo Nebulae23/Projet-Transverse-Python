@@ -35,8 +35,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n0w0r"]
 _data = {
-"Idle": SubResource("Animation_ys7gg"),
-"RESET": SubResource("Animation_tvuic")
+&"Idle": SubResource("Animation_ys7gg"),
+&"RESET": SubResource("Animation_tvuic")
 }
 
 [node name="PlayerLocation" type="Sprite2D"]

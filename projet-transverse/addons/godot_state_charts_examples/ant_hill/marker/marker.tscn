@@ -1,12 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://dy5xrmjffewnk"]
 
-[ext_resource type="Texture2D" uid="uid://b3k7i5rrn5hhl" path="res://godot_state_charts_examples/ant_hill/marker/circle_white.svg" id="1_2vg4s"]
-[ext_resource type="Script" path="res://godot_state_charts_examples/ant_hill/marker/marker.gd" id="2_2b6iy"]
+[ext_resource type="Texture2D" uid="uid://b3k7i5rrn5hhl" path="res://addons/godot_state_charts_examples/ant_hill/marker/circle_white.svg" id="1_2vg4s"]
+
+[sub_resource type="Resource" id="Resource_2hqaf"]
+metadata/__load_path__ = "res://godot_state_charts_examples/ant_hill/marker/marker.gd"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0xsut"]
 
 [node name="Node2D" type="Node2D"]
-script = ExtResource("2_2b6iy")
+script = SubResource("Resource_2hqaf")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture_filter = 1

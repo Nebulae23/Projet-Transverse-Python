@@ -1,8 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://df5fuj4vjr11p"]
 
-[ext_resource type="Script" path="res://addons/MetroidvaniaSystem/Database/MapViewer.gd" id="1_s16ok"]
-[ext_resource type="Script" path="res://addons/MetroidvaniaSystem/Scripts/EditorIconButton.gd" id="2_tjngl"]
-[ext_resource type="PackedScene" uid="uid://w34y4dyx84y8" path="res://addons/MetroidvaniaSystem/Nodes/LayerSelector.tscn" id="2_yqo4d"]
+[sub_resource type="Resource" id="Resource_3bp2m"]
+metadata/__load_path__ = "res://addons/MetroidvaniaSystem/Database/MapViewer.gd"
+
+[sub_resource type="Resource" id="Resource_iytva"]
+metadata/__load_path__ = "res://addons/MetroidvaniaSystem/Nodes/LayerSelector.tscn"
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_lmh17"]
 
@@ -243,6 +245,9 @@ func draw_collectibles_on_map(canvas_item: CanvasItem):
 	
 "
 
+[sub_resource type="Resource" id="Resource_28pmp"]
+metadata/__load_path__ = "res://addons/MetroidvaniaSystem/Scripts/EditorIconButton.gd"
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbvjg"]
 content_margin_left = 4.0
 content_margin_right = 4.0
@@ -254,7 +259,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_s16ok")
+script = SubResource("Resource_3bp2m")
 metadata/_edit_lock_ = true
 
 [node name="Sidebar" type="PanelContainer" parent="."]
@@ -280,7 +285,7 @@ layout_mode = 2
 text = "Current Layer"
 horizontal_alignment = 1
 
-[node name="CurrentLayer" parent="Sidebar/ScrollContainer/VBoxContainer/Layer" instance=ExtResource("2_yqo4d")]
+[node name="CurrentLayer" parent="Sidebar/ScrollContainer/VBoxContainer/Layer"]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -365,7 +370,7 @@ size_flags_horizontal = 3
 [node name="Button" type="Button" parent="Sidebar/ScrollContainer/VBoxContainer/EditControls/Settings"]
 layout_mode = 2
 icon_alignment = 1
-script = ExtResource("2_tjngl")
+script = SubResource("Resource_28pmp")
 icon_name = "Add"
 
 [node name="Finder" type="VBoxContainer" parent="Sidebar/ScrollContainer/VBoxContainer/EditControls"]

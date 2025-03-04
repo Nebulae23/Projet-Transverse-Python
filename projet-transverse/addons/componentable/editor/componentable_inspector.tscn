@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://daql0s3l8p0up"]
 
-[ext_resource type="Script" path="res://addons/componentable/editor/componentable_inspector.gd" id="1_jiawe"]
+[ext_resource type="Script" uid="uid://rieb1ki7erml" path="res://addons/componentable/editor/componentable_inspector.gd" id="1_jiawe"]
 
 [node name="Componentable" type="Tree" node_paths=PackedStringArray("file_dialog", "remove_component_dialog", "delete_component_dialog")]
 anchors_preset = 15

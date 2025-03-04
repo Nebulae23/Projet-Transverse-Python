@@ -1,8 +1,7 @@
-[gd_resource type="Resource" script_class="ResourceTablesImport" load_steps=4 format=3 uid="uid://b06j4ry7qkrum"]
+[gd_resource type="Resource" script_class="ResourceTablesImport" load_steps=3 format=3 uid="uid://b06j4ry7qkrum"]
 
-[ext_resource type="Script" path="res://example/Random Upgrades/upgrade_data.gd" id="1_uhq8c"]
-[ext_resource type="Script" path="res://addons/resources_spreadsheet_view/import_export/spreadsheet_import.gd" id="2_u1h5m"]
-[ext_resource type="Script" path="res://addons/resources_spreadsheet_view/import_export/formats_edit/edit_csv.gd" id="3_r213h"]
+[ext_resource type="Script" uid="uid://d1u6ldqxt8x2e" path="res://addons/resources_spreadsheet_view/import_export/spreadsheet_import.gd" id="2_u1h5m"]
+[ext_resource type="Script" uid="uid://c1gsqajwdcbe3" path="res://addons/resources_spreadsheet_view/import_export/formats_edit/edit_csv.gd" id="3_r213h"]
 
 [resource]
 script = ExtResource("2_u1h5m")
@@ -12,7 +11,6 @@ edited_path = "res://example/Random Upgrades/upgrades_csv/upgrades.csv"
 prop_used_as_filename = "resource_path"
 script_classname = "Upgrades"
 remove_first_row = true
-new_script = ExtResource("1_uhq8c")
 view_script = ExtResource("3_r213h")
 delimeter = ","
 enum_format = [2, "-", "Yes", "No"]

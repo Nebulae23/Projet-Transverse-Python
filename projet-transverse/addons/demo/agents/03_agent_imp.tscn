@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://h70okn6hmxum" path="res://addons/demo/assets/agent_imp.png" id="2_xd5s8"]
 [ext_resource type="BehaviorTree" uid="uid://c2bxoo68ywb27" path="res://addons/demo/ai/trees/03_agent_imp.tres" id="3_furh3"]
 
-
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_aog23"]
 
 [node name="AgentImp" instance=ExtResource("1_13xup")]

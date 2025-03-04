@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://i4v5fyt2ix01"]
 
-[ext_resource type="PackedScene" uid="uid://nji5r3vfeuwg" path="res://godot_state_charts_examples/random_transitions/wandering_frog/wandering_frog.tscn" id="1_r2x6m"]
+[ext_resource type="PackedScene" uid="uid://nji5r3vfeuwg" path="res://addons/godot_state_charts_examples/random_transitions/wandering_frog/wandering_frog.tscn" id="1_r2x6m"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="2_n8tkm"]
 
 [sub_resource type="Shader" id="Shader_8j6vc"]

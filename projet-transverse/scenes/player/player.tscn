@@ -1,14 +1,14 @@
 [gd_scene load_steps=115 format=3 uid="uid://cf7ttycd781n8"]
 
-[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_31qfq"]
+[ext_resource type="Script" uid="uid://fvtxbo2m2vl7" path="res://scenes/player/player.gd" id="1_31qfq"]
 [ext_resource type="Texture2D" uid="uid://dfbckr4xcqb7v" path="res://Assets/PNG/Unarmed_Hurt/Unarmed_Hurt_full.png" id="1_g6xir"]
 [ext_resource type="Texture2D" uid="uid://dqcsapv0glwsl" path="res://Assets/PNG/Unarmed_Run/Unarmed_Run_full.png" id="2_l0nhm"]
 [ext_resource type="Texture2D" uid="uid://baw2xf2tckdo2" path="res://Assets/PNG/Unarmed_Idle/Unarmed_Idle_full.png" id="3_at4c5"]
 [ext_resource type="PackedScene" uid="uid://dqf2ir5irdwgu" path="res://scenes/menus/hud.tscn" id="5_ukm5v"]
 [ext_resource type="PackedScene" uid="uid://bcoei5cx0ucm4" path="res://Components/hitbox_component.tscn" id="6_12t0i"]
-[ext_resource type="Script" path="res://Components/health_component.gd" id="6_cq6i5"]
-[ext_resource type="PackedScene" uid="uid://ce4gchwl5gky5" path="res://Components/status_component.tscn" id="8_p1dnn"]
-[ext_resource type="Script" path="res://Components/stats_component.gd" id="9_qrqn4"]
+[ext_resource type="Script" uid="uid://bk6r466m87qtc" path="res://Components/health_component.gd" id="6_cq6i5"]
+[ext_resource type="PackedScene" uid="uid://dwrpywpm86fll" path="res://Components/status_component.tscn" id="8_p1dnn"]
+[ext_resource type="Script" uid="uid://njjtnd0cky03" path="res://Components/stats_component.gd" id="9_qrqn4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tfnvf"]
 atlas = ExtResource("1_g6xir")
@@ -965,15 +965,15 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b8day"]
 _data = {
-"Idle_down": SubResource("Animation_x25h3"),
-"Idle_left": SubResource("Animation_knlco"),
-"Idle_right": SubResource("Animation_f8xhu"),
-"Idle_up": SubResource("Animation_3saq7"),
-"RESET": SubResource("Animation_btk7e"),
-"Run_down": SubResource("Animation_cqud5"),
-"Run_left": SubResource("Animation_mm6gf"),
-"Run_right": SubResource("Animation_0eg25"),
-"Run_up": SubResource("Animation_uld4h")
+&"Idle_down": SubResource("Animation_x25h3"),
+&"Idle_left": SubResource("Animation_knlco"),
+&"Idle_right": SubResource("Animation_f8xhu"),
+&"Idle_up": SubResource("Animation_3saq7"),
+&"RESET": SubResource("Animation_btk7e"),
+&"Run_down": SubResource("Animation_cqud5"),
+&"Run_left": SubResource("Animation_mm6gf"),
+&"Run_right": SubResource("Animation_0eg25"),
+&"Run_up": SubResource("Animation_uld4h")
 }
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
@@ -999,17 +999,18 @@ frame = 1
 transform = Transform3D(0.35, 0, 0, 0, 0.5, 0, 0, 0, 0.25, 0, -1.26381, 0)
 shape = SubResource("CapsuleShape3D_s346s")
 
-[node name="Hitbox_component" parent="." node_paths=PackedStringArray("health_component", "status_component") instance=ExtResource("6_12t0i")]
+[node name="hitbox_component" parent="." node_paths=PackedStringArray("health_component", "status_component") instance=ExtResource("6_12t0i")]
+collision_layer = 15
 health_component = NodePath("../Health_Component")
 status_component = NodePath("../status_component")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox_component"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="hitbox_component"]
 transform = Transform3D(1, 0, 0, 0, 0.75, 0, 0, 0, 1, 0, 0.0532814, 0)
 shape = SubResource("CapsuleShape3D_su8be")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_b8day")
+&"": SubResource("AnimationLibrary_b8day")
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="."]

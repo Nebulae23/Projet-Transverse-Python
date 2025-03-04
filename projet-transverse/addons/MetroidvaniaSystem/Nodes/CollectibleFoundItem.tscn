@@ -1,9 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://cwdt1r5mp5gpj"]
 
-[ext_resource type="Script" path="res://addons/MetroidvaniaSystem/Scripts/CollectibleFoundItem.gd" id="1_t85ni"]
+[sub_resource type="Resource" id="Resource_xleaj"]
+metadata/__load_path__ = "res://addons/MetroidvaniaSystem/Scripts/CollectibleFoundItem.gd"
 
 [node name="Collectible" type="PanelContainer"]
-script = ExtResource("1_t85ni")
+script = SubResource("Resource_xleaj")
 metadata/is_collectible = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]

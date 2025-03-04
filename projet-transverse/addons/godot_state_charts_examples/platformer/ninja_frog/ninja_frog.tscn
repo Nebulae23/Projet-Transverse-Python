@@ -1,11 +1,13 @@
 [gd_scene load_steps=28 format=3 uid="uid://v5vg88it87oj"]
 
-[ext_resource type="Script" path="res://godot_state_charts_examples/platformer/ninja_frog/ninja_frog.gd" id="1_xi1lh"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_qw75p"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="4_g6c55"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_vmkuk"]
-[ext_resource type="Texture2D" uid="uid://bgswg1pgd01d1" path="res://godot_state_charts_examples/platformer/ninja_frog/full.png" id="7_fehuj"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="9_wswdv"]
+[ext_resource type="Script" uid="uid://d171tstnavmxj" path="res://addons/godot_state_charts/state_chart.gd" id="3_qw75p"]
+[ext_resource type="Script" uid="uid://bcdgcmgr6kfag" path="res://addons/godot_state_charts/compound_state.gd" id="4_g6c55"]
+[ext_resource type="Script" uid="uid://ba1ppbd7k8ehd" path="res://addons/godot_state_charts/atomic_state.gd" id="6_vmkuk"]
+[ext_resource type="Texture2D" uid="uid://bgswg1pgd01d1" path="res://addons/godot_state_charts_examples/platformer/ninja_frog/full.png" id="7_fehuj"]
+[ext_resource type="Script" uid="uid://ddt4wfgb61hw1" path="res://addons/godot_state_charts/transition.gd" id="9_wswdv"]
+
+[sub_resource type="Resource" id="Resource_2amjn"]
+metadata/__load_path__ = "res://godot_state_charts_examples/platformer/ninja_frog/ninja_frog.gd"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1ethx"]
 radius = 12.0
@@ -110,12 +112,12 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_au2ov"]
 _data = {
-"RESET": SubResource("Animation_uq0h4"),
-"double_jump": SubResource("Animation_10ku2"),
-"fall": SubResource("Animation_ibg22"),
-"idle": SubResource("Animation_5rh2e"),
-"jump": SubResource("Animation_jaga7"),
-"walk": SubResource("Animation_6odvc")
+&"RESET": SubResource("Animation_uq0h4"),
+&"double_jump": SubResource("Animation_10ku2"),
+&"fall": SubResource("Animation_ibg22"),
+&"idle": SubResource("Animation_5rh2e"),
+&"jump": SubResource("Animation_jaga7"),
+&"walk": SubResource("Animation_6odvc")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_k3ia7"]
@@ -171,7 +173,7 @@ graph_offset = Vector2(84, -7)
 
 [node name="NinjaFrog" type="CharacterBody2D" groups=["player"]]
 input_pickable = true
-script = ExtResource("1_xi1lh")
+script = SubResource("Resource_2amjn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -15)

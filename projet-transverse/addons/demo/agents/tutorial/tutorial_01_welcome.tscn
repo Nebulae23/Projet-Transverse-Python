@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://b0oeqsc0xksto" path="res://addons/demo/assets/agent_junior_pieces.png" id="2_3h4dj"]
 [ext_resource type="BehaviorTree" uid="uid://b1mfh8yad7rmw" path="res://addons/demo/ai/trees/tutorial/tutorial_01_welcome.tres" id="3_ilmgw"]
 
-
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_52mdk"]
 
 [node name="TutorialWelcome" instance=ExtResource("1_2vrmp")]
