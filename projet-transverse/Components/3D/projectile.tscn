@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b77ieqepdb7cc"]
 
-[ext_resource type="Script" path="res://Components/3D/projectile.gd" id="1_55but"]
+[ext_resource type="Script" uid="uid://b2seg2siiol73" path="res://Components/3D/projectile.gd" id="1_55but"]
 [ext_resource type="Texture2D" uid="uid://dlp5x1nr64oyr" path="res://Assets/PNG/Entities_hurting_png/poubelle-exterieure-240-litres-gris.png" id="2_0awbt"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_6u2nu"]
@@ -18,6 +18,7 @@ animations = [{
 
 [node name="projectile" type="Area3D" groups=["Damage_source"]]
 transform = Transform3D(0.342785, 0, 0, 0, 0.210527, 0, 0, 0, 0.515378, 0, 0, 0)
+collision_layer = 3
 collision_mask = 2
 script = ExtResource("1_55but")
 damage = 50
@@ -31,4 +32,3 @@ transform = Transform3D(0.25, 0, 0, 0, 0.284, 0, 0, 0, 0.714, 0, 0, 0)
 sprite_frames = SubResource("SpriteFrames_dc1rm")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="body_exited" from="." to="." method="_on_body_exited"]

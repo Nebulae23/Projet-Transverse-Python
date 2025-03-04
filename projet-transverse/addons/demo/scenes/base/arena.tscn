@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://cc7b22sy46gwn" path="res://addons/demo/assets/env_ground.png" id="1_vifjc"]
 [ext_resource type="Texture2D" uid="uid://4kw2ks8doc0w" path="res://addons/demo/assets/env_plants.png" id="2_kesm7"]
 
-
 [sub_resource type="Animation" id="Animation_gwtgs"]
 length = 0.001
 tracks/0/type = "value"
@@ -2825,8 +2824,8 @@ tracks/116/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_an3cu"]
 _data = {
-"RESET": SubResource("Animation_gwtgs"),
-"float": SubResource("Animation_75lmk")
+&"RESET": SubResource("Animation_gwtgs"),
+&"float": SubResource("Animation_75lmk")
 }
 
 [node name="Arena" type="Node2D"]

@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://f4ie0ytcicf0"]
 
-[ext_resource type="Script" path="res://addons/signal_lens/editor/signal_lens_editor_panel.gd" id="1_abwge"]
+[ext_resource type="Script" uid="uid://mj55nomvjugm" path="res://addons/signal_lens/editor/signal_lens_editor_panel.gd" id="1_abwge"]
 [ext_resource type="Texture2D" uid="uid://6tme3kq6xv53" path="res://addons/signal_lens/icons/icon_clear.png" id="2_shd1a"]
 [ext_resource type="Texture2D" uid="uid://x35k7yli0rtc" path="res://addons/signal_lens/icons/icon_refresh.png" id="3_77yg3"]
 [ext_resource type="Texture2D" uid="uid://cr0vu7jtj21d2" path="res://addons/signal_lens/icons/icon_lock_open.png" id="4_o8y3g"]
-[ext_resource type="Script" path="res://addons/signal_lens/editor/signal_lens_lock_button.gd" id="5_qew8d"]
+[ext_resource type="Script" uid="uid://ci4h8nbrrqhid" path="res://addons/signal_lens/editor/signal_lens_lock_button.gd" id="5_qew8d"]
 [ext_resource type="Texture2D" uid="uid://brdnqivcfnsun" path="res://addons/signal_lens/icons/icon_logo.png" id="6_wrl4d"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2b25o"]

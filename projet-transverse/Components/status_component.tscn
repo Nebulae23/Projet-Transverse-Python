@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://ce4gchwl5gky5"]
+[gd_scene load_steps=2 format=3 uid="uid://dwrpywpm86fll"]
 
 [ext_resource type="Script" path="res://Components/status_component.gd" id="1_ybsi7"]
 
