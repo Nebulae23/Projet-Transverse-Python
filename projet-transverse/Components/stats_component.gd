@@ -70,7 +70,7 @@ example"""
 
 
 func _get_modifiying_value(character_data:Dictionary):
-
+	# gets data necessary for calculating flat damage, and stats
 	var level = character_data["level"]
 	var weapon_stat =0
 	var weapon_damage_bonus =0
@@ -93,14 +93,22 @@ func _get_modifiying_value(character_data:Dictionary):
 
 	var luck = character_data["stats"]["luck"]["value"]
 	var luck_weight = character_data["stats"]["luck"]["weight"]
+	#calculate stats medium gap for determining balancing
+	
+	var 
 
+	#search for "build" (highest attribute)
 	var highest = 0
+	var highest_weight=1
 	for key in character_data["stats"] :
-
+		#used for equilibrium 
 		if highest < character_data["stats"][key]["value"]:
 			highest = character_data["stats"][key]["value"]
 			if key == "strenght" or key == "agility":
 				highest *=1.25
+				highest_weight+=
+			if key=="intelligence":
+				highest*=
 	
 	
 	var luck_processed=luck*luck_weight+level
@@ -111,8 +119,8 @@ func _get_modifiying_value(character_data:Dictionary):
 
 
 
-	
-	var crit_chance=luck+agility*agility_weight
+	#set up crit damage and chances with overflow mechanic (get in crit damage if overflow of crit chance)
+	var crit_chance=luck+highest*highest_weight
 	var overflow_1=0
 	if crit_chance > 100:
 		overflow_1 += (crit_chance - 100)
@@ -125,11 +133,8 @@ func _get_modifiying_value(character_data:Dictionary):
 	if attack_touching_chance > 100:
 		overflow_2 += (attack_touching_chance - 100)
 
-		
+	
 	var attack_damage_bonus=(highest*level+weapon_damage_bonus)+(overflow_2)
-
-
-
 
 	
 		

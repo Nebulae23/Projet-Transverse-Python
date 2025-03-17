@@ -976,11 +976,11 @@ _data = {
 &"Run_up": SubResource("Animation_uld4h")
 }
 
-[node name="Player" type="CharacterBody3D" groups=["player"]]
+[node name="entity_player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_31qfq")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 4, 11)
+transform = Transform3D(1, 0, 0, 0, 0.592056, 0.805897, 0, -0.805897, 0.592056, 0, 12.1492, 8.03392)
 fov = 90.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera3D"]
