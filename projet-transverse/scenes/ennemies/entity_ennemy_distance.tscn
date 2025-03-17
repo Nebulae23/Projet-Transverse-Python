@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://jo04xkfbhvv1" path="res://Components/health_component.tscn" id="1_8d2me"]
 [ext_resource type="Script" uid="uid://swusauiwbimn" path="res://scenes/ennemies/entity_ennemy_distance.gd" id="1_t13qi"]
+[ext_resource type="Script" uid="uid://swusauiwbimn" path="res://scenes/ennemies/entity_ennemy.gd" id="1_t13qi"]
 [ext_resource type="PackedScene" uid="uid://bcoei5cx0ucm4" path="res://Components/hitbox_component.tscn" id="2_7lj33"]
 [ext_resource type="PackedScene" uid="uid://b77ieqepdb7cc" path="res://Components/3D/projectile.tscn" id="2_vy2im"]
 [ext_resource type="Texture2D" uid="uid://34jvtvcyt5ua" path="res://Assets/PNG/Ennemy_sprite/oussama-ammar-meme-984b0o.png" id="3_aaa56"]
