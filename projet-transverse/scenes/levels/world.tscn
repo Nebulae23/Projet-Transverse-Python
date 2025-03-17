@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://vai81pl42x7v" path="res://scenes/levels/world.gd" id="1_4syj8"]
 [ext_resource type="MeshLibrary" uid="uid://782erkm3wfjs" path="res://Assets/Tiles.tres" id="2_yidjl"]
 [ext_resource type="PackedScene" uid="uid://jj37ynbf5ti3" path="res://scenes/levels/Environment.tscn" id="3_0dvqm"]
-[ext_resource type="PackedScene" uid="uid://e34m1dmcnaji" path="res://scenes/ennemies/entity_ennemy_distance.tscn" id="5_3h0vl"]
+[ext_resource type="PackedScene" path="res://scenes/ennemies/entity_ennemy_distance.tscn" id="5_3h0vl"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_f2nkn"]
 frequency = 0.0171
