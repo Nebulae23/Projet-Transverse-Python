@@ -23,7 +23,7 @@ resources_spreadsheet_view/resource_cell_label_mode=1
 [application]
 
 config/name="Projet Transverse"
-run/main_scene="res://main.tscn"
+run/main_scene="res://scenes/menus/main.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 

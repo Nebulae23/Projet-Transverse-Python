@@ -1,8 +1,15 @@
+ Updated upstream
 [gd_scene load_steps=9 format=3 uid="uid://lcx1ck7d7bm7"]
 
-[ext_resource type="Script" path="res://scenes/menus/main.gd" id="1_nwwjl"]
+[gd_scene load_steps=9 format=3 uid="uid://cjdb1xbltfvcw"]
+
+ Updated upstream:projet-transverse/main.tscn
+
+[ext_resource type="Script" uid="uid://7i27r17q33xn" path="res://scenes/menus/main.gd" id="1_nwwjl"]
 [ext_resource type="Texture2D" uid="uid://il8kepb2eaib" path="res://Assets/PNG/Main_Menu/Placeholder_background_menu.jpg" id="2_tjt80"]
 [ext_resource type="FontFile" uid="uid://8kmd0di6vpnu" path="res://Assets/Fonts/BrookHolmes.otf" id="3_5b18o"]
+ Stashed changes:projet-transverse/scenes/menus/main.tscn
+ Stashed changes
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s00wt"]
 texture = ExtResource("2_tjt80")
