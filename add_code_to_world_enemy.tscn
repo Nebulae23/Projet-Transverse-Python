@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://mnv46giv7riw"]
+
+[sub_resource type="GDScript" id="GDScript_klq0x"]
+resource_name = "add_code_to_world"
+script/source = "extends Node
+
+
+@onready var Player = $Player
+
+func _physics_process(delta):
+	get_tree().call_group(\"enemies\", \"\", player.global_transform.origin)
+
+#Don't forget to add the group 'enemies
+"
+
+[node name="add_code_to_world_enemy" type="Node"]
+script = SubResource("GDScript_klq0x")
