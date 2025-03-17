@@ -1,6 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://e34m1dmcnaji"]
 
 [ext_resource type="PackedScene" uid="uid://jo04xkfbhvv1" path="res://Components/health_component.tscn" id="1_8d2me"]
+[ext_resource type="Script" uid="uid://swusauiwbimn" path="res://scenes/ennemies/entity_ennemy_distance.gd" id="1_t13qi"]
 [ext_resource type="Script" uid="uid://swusauiwbimn" path="res://scenes/ennemies/entity_ennemy.gd" id="1_t13qi"]
 [ext_resource type="PackedScene" uid="uid://bcoei5cx0ucm4" path="res://Components/hitbox_component.tscn" id="2_7lj33"]
 [ext_resource type="PackedScene" uid="uid://b77ieqepdb7cc" path="res://Components/3D/projectile.tscn" id="2_vy2im"]
@@ -25,7 +26,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yy5ob"]
 
-[node name="Entity_ennemy" type="CharacterBody3D"]
+[node name="entity_ennemy_distance" type="CharacterBody3D"]
 transform = Transform3D(1.00103, 0, 0, 0, 1.00103, 0, 0, 0, 1.00103, 1.569, 0.704083, 0)
 script = ExtResource("1_t13qi")
 projectile = ExtResource("2_vy2im")
@@ -65,4 +66,4 @@ script = ExtResource("6_y0lxf")
 ReachTargetMinDistance = 4.0
 
 [node name="Muzzle" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.505507, -1.57005, 0, 1.31206)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.505507, -1.57005, 0, 0.614447)

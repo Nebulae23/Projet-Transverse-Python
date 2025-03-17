@@ -27,7 +27,7 @@ signal healed(amount: int) ## Emitted when [member current_health] is changed in
 signal resurrected ## Emitted when [member current_health] was at 0, and now is positive.
 signal died(overkill: int) ## Emitted when [member current_health] has reached 0.
 
-@export var max_health: int = 10: ## The maximum amount of [member current_health] this component can have normally. By default on creation current [member current_health] will be set to this value.
+@export var max_health: int = 100: ## The maximum amount of [member current_health] this component can have normally. By default on creation current [member current_health] will be set to this value.
 	set(value):
 		var previous: int = max_health
 		max_health = value
