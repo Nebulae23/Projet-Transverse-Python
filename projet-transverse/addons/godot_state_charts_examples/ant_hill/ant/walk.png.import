@@ -2,26 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-<<<<<<< Updated upstream:projet-transverse/addons/MetroidvaniaSystem/Themes/SotN/BorderWall.png.import
-uid="uid://c3u8paa831jvs"
-path="res://.godot/imported/BorderWall.png-102432ab3b56ddfd5a6ab24610db58c2.ctex"
-=======
-uid="uid://bqgc7cft671q0"
+uid="uid://dmcoaw4b8m1a7"
 path="res://.godot/imported/walk.png-a659255baeaa06b91abbf630a31c6ffb.ctex"
->>>>>>> Stashed changes:projet-transverse/addons/godot_state_charts_examples/ant_hill/ant/walk.png.import
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-<<<<<<< Updated upstream:projet-transverse/addons/MetroidvaniaSystem/Themes/SotN/BorderWall.png.import
-source_file="res://addons/MetroidvaniaSystem/Themes/SotN/BorderWall.png"
-dest_files=["res://.godot/imported/BorderWall.png-102432ab3b56ddfd5a6ab24610db58c2.ctex"]
-=======
 source_file="res://addons/godot_state_charts_examples/ant_hill/ant/walk.png"
 dest_files=["res://.godot/imported/walk.png-a659255baeaa06b91abbf630a31c6ffb.ctex"]
->>>>>>> Stashed changes:projet-transverse/addons/godot_state_charts_examples/ant_hill/ant/walk.png.import
 
 [params]
 

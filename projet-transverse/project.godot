@@ -24,14 +24,12 @@ resources_spreadsheet_view/resource_cell_label_mode=1
 
 config/name="Projet Transverse"
 run/main_scene="res://main.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 MetSys="*res://addons/MetroidvaniaSystem/Nodes/Singleton.tscn"
-Talo="*res://addons/talo/talo_manager.gd"
-QuestSystem="*res://addons/quest_system/quest_manager.gd"
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 Pandora="*res://addons/pandora/api.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
@@ -109,10 +107,10 @@ dialogic_default_action={
 textures/canvas_textures/default_texture_filter=0
 textures/canvas_textures/default_texture_repeat=1
 global_illumination/voxel_gi/quality=1
-scaling_3d/mode=2
-scaling_3d/fsr_sharpness=0.0
+viewport/hdr_2d=true
 anti_aliasing/quality/msaa_2d=1
 anti_aliasing/quality/msaa_3d=1
-viewport/hdr_2d=true
+scaling_3d/mode=2
+scaling_3d/fsr_sharpness=0.0
 anti_aliasing/quality/screen_space_aa=1
 occlusion_culling/use_occlusion_culling=true
