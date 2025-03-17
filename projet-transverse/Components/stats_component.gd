@@ -95,7 +95,7 @@ func _get_modifiying_value(character_data:Dictionary):
 	var luck_weight = character_data["stats"]["luck"]["weight"]
 	#calculate stats medium gap for determining balancing
 	
-	var 
+	var sum_stat=(strength+vitality+intelligence++agility+luck)
 
 	#search for "build" (highest attribute)
 	var highest = 0
@@ -104,6 +104,7 @@ func _get_modifiying_value(character_data:Dictionary):
 		#used for equilibrium 
 		if highest < character_data["stats"][key]["value"]:
 			highest = character_data["stats"][key]["value"]
+			var medium = (sum_stat-highest)/4
 			if key == "strenght" or key == "agility":
 				highest *=1.25
 				highest_weight+=

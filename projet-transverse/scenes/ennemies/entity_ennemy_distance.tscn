@@ -65,4 +65,4 @@ script = ExtResource("6_y0lxf")
 ReachTargetMinDistance = 4.0
 
 [node name="Muzzle" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.505507, -1.57005, 0, 1.31206)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.505507, -1.57005, 0, 0.614447)

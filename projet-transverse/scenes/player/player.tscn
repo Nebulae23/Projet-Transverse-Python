@@ -980,7 +980,7 @@ _data = {
 script = ExtResource("1_31qfq")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.592056, 0.805897, 0, -0.805897, 0.592056, 0, 12.1492, 8.03392)
+transform = Transform3D(1, 0, 0, 0, 0.592056, 0.805897, 0, -0.805897, 0.592056, 0, 22.1225, 15.3608)
 fov = 90.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera3D"]
