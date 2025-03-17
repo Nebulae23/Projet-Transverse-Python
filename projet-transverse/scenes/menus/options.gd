@@ -1,6 +1,5 @@
 extends Control
 
-Updated upstream
 
 func _ready() -> void:
 	pass # Replace with function body.
