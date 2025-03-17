@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cjdb1xbltfvcw"]
 
-[ext_resource type="Script" uid="uid://7i27r17q33xn" path="res://main.gd" id="1_4q0ly"]
+[ext_resource type="Script" uid="uid://c761gnehffry7" path="res://main.gd" id="1_4q0ly"]
 [ext_resource type="Texture2D" uid="uid://il8kepb2eaib" path="res://Assets/PNG/Main_Menu/Placeholder_background_menu.jpg" id="2_f1egt"]
 [ext_resource type="FontFile" uid="uid://8kmd0di6vpnu" path="res://Assets/Fonts/BrookHolmes.otf" id="2_hq65p"]
 
