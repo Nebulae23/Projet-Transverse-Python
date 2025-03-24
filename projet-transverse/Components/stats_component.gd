@@ -110,6 +110,7 @@ func _get_modifiying_value(character_data:Dictionary):
 				highest_weight+=
 			if key=="intelligence":
 				highest*=
+				
 	
 	
 	var luck_processed=luck*luck_weight+level

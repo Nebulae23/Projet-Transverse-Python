@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://bbvvkcrr8hisv"]
+[gd_scene load_steps=3 format=3 uid="uid://bbvvkcrr8hisv"]
+
+[ext_resource type="Script" uid="uid://bnov3dsma6mub" path="res://scenes/menus/button.gd" id="1_71qnv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8uv0k"]
 bg_color = Color(0.643613, 0.573826, 0.422544, 1)
@@ -52,3 +54,14 @@ layout_mode = 2
 
 [node name="Volume" type="HSlider" parent="PanelContainer/Container/Son"]
 layout_mode = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1667.0
+offset_top = 180.0
+offset_right = 1770.0
+offset_bottom = 239.0
+text = "Menu"
+script = ExtResource("1_71qnv")
+
+[connection signal="pressed" from="Button" to="Button" method="_on_button_pressed"]
