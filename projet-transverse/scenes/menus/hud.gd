@@ -16,3 +16,7 @@ func _on_health_component_health_changed(current_amount: int, max_amount: int) -
 	HealthBar.value=health
 	damageBar.value=health
 	damageBar.max_value=max_health
+
+
+func _on_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://main.tscn")

@@ -73,4 +73,13 @@ show_percentage = false
 wait_time = 0.4
 one_shot = true
 
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1761.0
+offset_top = 41.0
+offset_right = 1883.0
+offset_bottom = 135.0
+text = "Menu"
+
 [connection signal="timeout" from="ItemList/VSplitContainer2/VSplitContainer/Healthbar/Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
