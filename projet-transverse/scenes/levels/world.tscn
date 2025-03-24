@@ -4,7 +4,11 @@
 [ext_resource type="Script" uid="uid://vai81pl42x7v" path="res://scenes/levels/world.gd" id="1_4syj8"]
 [ext_resource type="MeshLibrary" uid="uid://782erkm3wfjs" path="res://Assets/Tiles.tres" id="2_yidjl"]
 [ext_resource type="PackedScene" uid="uid://jj37ynbf5ti3" path="res://scenes/levels/Environment.tscn" id="3_0dvqm"]
+<<<<<<< Updated upstream
 [ext_resource type="PackedScene" path="res://scenes/ennemies/entity_ennemy_distance.tscn" id="5_3h0vl"]
+=======
+[ext_resource type="PackedScene" uid="uid://du61h5ng8m8kd" path="res://scenes/ennemies/entity_ennemy_distance.tscn" id="5_3h0vl"]
+>>>>>>> Stashed changes
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_f2nkn"]
 frequency = 0.0171
@@ -75,6 +79,6 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="Entity_ennemy" parent="." instance=ExtResource("5_3h0vl")]
-transform = Transform3D(0.777099, 0, 0, 0, 0.7, 0, 0, 0, 1, 1.88113, 1.47621, -4.00273)
+transform = Transform3D(0.776983, -0.0121067, 0, 0.0134402, 0.699895, 0, 0, 0, 1, 1.88113, 1.47621, -4.00273)
 shoot_interval = 0.5
 player = NodePath("../Player")
