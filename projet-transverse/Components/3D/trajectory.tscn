@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjyu3p2n8x1o5"]
+
+[ext_resource type="Script" uid="uid://ckqj1c1g8c31l" path="res://Components/3D/trajectory.gd" id="1_si6hg"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_w7wd5"]
+
+[node name="Trajectory" type="Node3D"]
+script = ExtResource("1_si6hg")
+
+[node name="TrajetoryLine" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_w7wd5")

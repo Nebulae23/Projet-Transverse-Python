@@ -1,4 +1,3 @@
-@icon("../../module.svg")
 extends Area2D
 class_name HitBoxComponent2D
 ## Used for managing when a Node gets hit by a [HurtBoxComponent2D].

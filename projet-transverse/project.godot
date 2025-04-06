@@ -78,7 +78,7 @@ version_control/autoload_on_startup=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/SceneBuilder/plugin.cfg", "res://addons/YouCanDoIt/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/quest_system/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg", "res://addons/rubonnek.quest_manager/plugin.cfg", "res://addons/signal_lens/plugin.cfg", "res://addons/talo/plugin.cfg")
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/SceneBuilder/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/quest_system/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg", "res://addons/rubonnek.quest_manager/plugin.cfg", "res://addons/signal_lens/plugin.cfg", "res://addons/talo/plugin.cfg")
 
 [global_group]
 

@@ -1,16 +1,17 @@
-[gd_scene load_steps=12 format=3 uid="uid://duwfv0n6s0let"]
+[gd_scene load_steps=13 format=3 uid="uid://duwfv0n6s0let"]
 
 [ext_resource type="PackedScene" uid="uid://cf7ttycd781n8" path="res://scenes/player/player.tscn" id="1_2r2la"]
 [ext_resource type="Script" uid="uid://vai81pl42x7v" path="res://scenes/levels/world.gd" id="1_4syj8"]
 [ext_resource type="MeshLibrary" uid="uid://782erkm3wfjs" path="res://Assets/Tiles.tres" id="2_yidjl"]
 [ext_resource type="PackedScene" uid="uid://jj37ynbf5ti3" path="res://scenes/levels/Environment.tscn" id="3_0dvqm"]
 [ext_resource type="PackedScene" uid="uid://e34m1dmcnaji" path="res://scenes/ennemies/entity_ennemy_distance.tscn" id="5_3h0vl"]
+[ext_resource type="PackedScene" uid="uid://b77ieqepdb7cc" path="res://Components/3D/projectile.tscn" id="6_0lift"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_f2nkn"]
 frequency = 0.0171
 fractal_type = 2
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qcl8w"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gy5pc"]
 width = 4096
 height = 4096
 in_3d_space = true
@@ -19,11 +20,11 @@ noise = SubResource("FastNoiseLite_f2nkn")
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qp5nw"]
 sky_top_color = Color(0.0978154, 0.37791, 0.98743, 1)
 sky_horizon_color = Color(0.309998, 0.685019, 0.980091, 1)
-sky_cover = SubResource("NoiseTexture2D_qcl8w")
+sky_cover = SubResource("NoiseTexture2D_gy5pc")
 sky_cover_modulate = Color(0, 0, 0, 1)
 sun_angle_max = 180.0
 
-[sub_resource type="Sky" id="Sky_lthcp"]
+[sub_resource type="Sky" id="Sky_0lift"]
 sky_material = SubResource("ProceduralSkyMaterial_qp5nw")
 process_mode = 1
 
@@ -31,7 +32,7 @@ process_mode = 1
 resource_local_to_scene = true
 background_mode = 1
 background_energy_multiplier = 0.4
-sky = SubResource("Sky_lthcp")
+sky = SubResource("Sky_0lift")
 sky_custom_fov = 55.0
 ambient_light_color = Color(1, 0.851386, 0.396631, 1)
 ambient_light_energy = 4.0
@@ -78,3 +79,6 @@ collision_mask = 3
 transform = Transform3D(0.777099, 0, 0, 0, 0.7, 0, 0, 0, 1, 1.88113, 1.47621, -4.00273)
 shoot_interval = 0.5
 player = NodePath("../Player")
+
+[node name="projectile" parent="." instance=ExtResource("6_0lift")]
+transform = Transform3D(0.342785, 0, 0, 0, 0.210527, 0, 0, 0, 0.515378, 2.37335, 0.913521, 0)
