@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dqf2ir5irdwgu"]
+[gd_scene load_steps=10 format=3 uid="uid://dqf2ir5irdwgu"]
 
 [ext_resource type="Script" uid="uid://cogcn6dnwoe6p" path="res://scenes/menus/hud.gd" id="1_qi7qv"]
 
@@ -19,6 +19,14 @@ shadow_offset = Vector2(0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fv5uq"]
 bg_color = Color(1.63645e-06, 0.508783, 0.711622, 1)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xmy64"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tfgnj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lf75b"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_2xkr3"]
+
 [node name="HUD" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -33,6 +41,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 23.0
+offset_bottom = 23.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -61,6 +71,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -2.0
+offset_right = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_ir5m6")
@@ -70,6 +82,35 @@ value = 20.0
 show_percentage = false
 
 [node name="Timer" type="Timer" parent="ItemList/VSplitContainer2/VSplitContainer/Healthbar"]
+wait_time = 0.4
+one_shot = true
+
+[node name="EnergyBar" type="ProgressBar" parent="ItemList/VSplitContainer2/VSplitContainer"]
+z_index = 1
+custom_minimum_size = Vector2(3, 22)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxEmpty_xmy64")
+theme_override_styles/fill = SubResource("StyleBoxFlat_tfgnj")
+value = 60.0
+show_percentage = false
+
+[node name="ExhaustionBar" type="ProgressBar" parent="ItemList/VSplitContainer2/VSplitContainer/EnergyBar"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_right = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_lf75b")
+theme_override_styles/fill = SubResource("StyleBoxLine_2xkr3")
+page = 80.0
+value = 20.0
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="ItemList/VSplitContainer2/VSplitContainer/EnergyBar"]
 wait_time = 0.4
 one_shot = true
 

@@ -107,9 +107,9 @@ func _get_modifiying_value(character_data:Dictionary):
 			var medium = (sum_stat-highest)/4
 			if key == "strenght" or key == "agility":
 				highest *=1.25
-				highest_weight+=
+				highest_weight+= 0
 			if key=="intelligence":
-				highest*=
+				highest*= 0 
 				
 	
 	
