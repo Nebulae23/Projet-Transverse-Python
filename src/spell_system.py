@@ -544,7 +544,13 @@ class LevelUpState(GameState):
         upgradable_spells = []
         new_spell_options = []
         
+        print(f"LevelUpState._generate_spell_choices: Starting spell choices generation")
+        
+        # Make sure we always have 3 choices
+        self.spell_choices = []
+        
         if self.player:
+            print(f"LevelUpState._generate_spell_choices: Player has {len(self.player.spells)} spells")
             # Check current spells for upgrades
             for spell_id in self.player.spells:
                 spell_data = self.all_spells_data.get(spell_id)
@@ -555,6 +561,11 @@ class LevelUpState(GameState):
                         next_level = self.player.spell_levels.get(spell_id, 1) + 1
                     
                     level_key = f"level_{next_level}"
+                    
+                    # Debug output for spell upgrades
+                    print(f"LevelUpState._generate_spell_choices: Checking upgrades for {spell_id}, next_level={next_level}")
+                    print(f"LevelUpState._generate_spell_choices: Upgrades available: {spell_data.get('upgrades', {}).keys()}")
+                    
                     if level_key in spell_data.get("upgrades", {}):
                         # This spell can be upgraded
                         upgradable_spells.append({
@@ -576,6 +587,8 @@ class LevelUpState(GameState):
                         "type": "new"
                     })
         
+        print(f"LevelUpState._generate_spell_choices: Found {len(upgradable_spells)} upgradable spells and {len(new_spell_options)} new spells")
+        
         # Combine and limit choices
         if upgradable_spells:
             # Prioritize upgrades
@@ -588,6 +601,20 @@ class LevelUpState(GameState):
             # Randomly select from available new spells
             random_new_spells = random.sample(new_spell_options, min(remaining_slots, len(new_spell_options)))
             self.spell_choices.extend(random_new_spells)
+        
+        # If we still don't have 3 choices, add filler options
+        while len(self.spell_choices) < 3:
+            # Add a basic health upgrade as filler
+            self.spell_choices.append({
+                "id": "health_boost",
+                "name": "Health Boost",
+                "description": "Increase your maximum health by 20 points.",
+                "type": "new"
+            })
+        
+        print(f"LevelUpState._generate_spell_choices: Final spell choices: {len(self.spell_choices)}")
+        for i, choice in enumerate(self.spell_choices):
+            print(f"  Choice {i+1}: {choice['name']} ({choice['type']})")
         
         # Now create UI elements for each choice
         self._create_spell_choice_ui()
@@ -602,48 +629,40 @@ class LevelUpState(GameState):
         button_spacing = 40
         start_y = 150
         
-        # Center the buttons horizontally
-        if len(self.spell_choices) == 1:
-            # One centered button
-            positions = [(config.SCREEN_WIDTH // 2 - button_width // 2, start_y)]
-        elif len(self.spell_choices) == 2:
-            # Two buttons side by side
-            total_width = 2 * button_width + button_spacing
-            start_x = config.SCREEN_WIDTH // 2 - total_width // 2
-            positions = [
-                (start_x, start_y),
-                (start_x + button_width + button_spacing, start_y)
-            ]
-        else:
-            # Three buttons side by side
-            total_width = 3 * button_width + 2 * button_spacing
-            start_x = config.SCREEN_WIDTH // 2 - total_width // 2
-            positions = [
-                (start_x, start_y),
-                (start_x + button_width + button_spacing, start_y),
-                (start_x + 2 * (button_width + button_spacing), start_y)
-            ]
+        print(f"LevelUpState._create_spell_choice_ui: Creating UI for {len(self.spell_choices)} choices")
+        
+        # Always use the layout for 3 buttons to ensure consistent spacing
+        # Three buttons side by side
+        total_width = 3 * button_width + 2 * button_spacing
+        start_x = config.SCREEN_WIDTH // 2 - total_width // 2
+        positions = [
+            (start_x, start_y),
+            (start_x + button_width + button_spacing, start_y),
+            (start_x + 2 * (button_width + button_spacing), start_y)
+        ]
         
         # Create buttons for each spell choice
         for i, choice in enumerate(self.spell_choices):
             if i < len(positions):
                 x, y = positions[i]
                 
-                # Box background - make it more vibrant with a colored border to indicate clickable
+                print(f"LevelUpState._create_spell_choice_ui: Creating UI for choice {i+1}: {choice['name']}")
+                
+                # Box background with vibrant border
                 border_color = config.BRIGHT_BLUE if choice["type"] == "new" else config.BRIGHT_GREEN
                 
-                # Create background TextBox (without border_width parameter)
+                # Create background with contrasting colors
                 self.ui_manager.add_element(f"spell_choice_bg_{i}", TextBox(
                     x=x,
                     y=y,
                     width=button_width,
                     height=button_height,
-                    background_color=config.DARK_GRAY,
+                    background_color=config.GRAY,  # Lighter background for better contrast
                     border_color=border_color
                 ))
                 
-                # Spell name with bold styling
-                spell_type_text = "New Spell!" if choice["type"] == "new" else f"Upgrade (Level {choice['upgrade_level']})"
+                # Spell name with bright color
+                spell_type_text = "New Spell!" if choice["type"] == "new" else f"Upgrade (Level {choice.get('upgrade_level', 1)})"
                 title_color = config.BRIGHT_BLUE if choice["type"] == "new" else config.BRIGHT_GREEN
                 
                 self.ui_manager.add_element(f"spell_choice_name_{i}", TextBox(
@@ -664,8 +683,8 @@ class LevelUpState(GameState):
                     width=button_width - 20,
                     height=60,
                     text=choice["description"],
-                    font_size=14,
-                    text_color=config.WHITE,
+                    font_size=16,
+                    text_color=config.BLACK,  # Change text color to black for better visibility on gray
                     background_color=None
                 ))
                 
@@ -676,8 +695,8 @@ class LevelUpState(GameState):
                     width=button_width - 20,
                     height=20,
                     text="Click to select",
-                    font_size=14,
-                    text_color=(255, 255, 0),
+                    font_size=16,
+                    text_color=config.RED,  # Make the hint text bright red for better visibility
                     background_color=None
                 ))
                 
@@ -689,7 +708,7 @@ class LevelUpState(GameState):
                     height=button_height,
                     text="",
                     color=(0, 0, 0, 0),  # Transparent
-                    hover_color=(255, 255, 255, 80),  # More visible hover effect
+                    hover_color=(255, 255, 255, 130),  # More visible hover effect
                     on_click_data=i  # Store the choice index
                 ))
     
@@ -746,11 +765,17 @@ class LevelUpState(GameState):
         if self.player:
             spell_id = spell_choice["id"]
             
-            if spell_choice["type"] == "upgrade":
+            # Special handling for health boost
+            if spell_id == "health_boost":
+                print("Applying health boost...")
+                # Increase max HP
+                self.player.max_hp += 20
+                self.player.current_hp += 20  # Also heal the player
+                print(f"Player max HP increased to {self.player.max_hp}")
+            elif spell_choice["type"] == "upgrade":
                 # Upgrade existing spell
                 print(f"Upgrading spell: {spell_id} to level {spell_choice['upgrade_level']}")
-                # TODO: Implement proper spell upgrading system
-                # For now, just track the levels in a dictionary attribute
+                # Track the levels in a dictionary attribute
                 if not hasattr(self.player, 'spell_levels'):
                     self.player.spell_levels = {}
                 
@@ -784,9 +809,9 @@ class LevelUpState(GameState):
         Args:
             screen (pygame.Surface): Screen to render to
         """
-        # First, darken the previous state
+        # First, darken the previous state more significantly
         dark_overlay = pygame.Surface((screen.get_width(), screen.get_height()), pygame.SRCALPHA)
-        dark_overlay.fill((0, 0, 0, 180))  # Semi-transparent black
+        dark_overlay.fill((0, 0, 0, 220))  # More opaque black overlay (less transparent)
         screen.blit(dark_overlay, (0, 0))
         
         # Now render UI elements
