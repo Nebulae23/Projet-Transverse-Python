@@ -1,6 +1,5 @@
 # Magic Survivor
 
-![Magic Survivor Logo](assets/sprites/ui_elements/logo.png)
 
 ## 📖 Présentation
 
