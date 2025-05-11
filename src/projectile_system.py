@@ -9,6 +9,7 @@ import pygame
 import math
 from src import config
 from src.data_handler import DataHandler # Import DataHandler
+import random
 
 class Projectile(pygame.sprite.Sprite):
     """Represents a projectile in the game"""
@@ -26,10 +27,14 @@ class Projectile(pygame.sprite.Sprite):
         self.trajectory_properties = trajectory_properties
         self.trajectory_type = self.trajectory_properties.get("type", "STRAIGHT")
 
-        # Placeholder sprite: a colored circle
+        # Make projectiles more visible with larger size
         # Allow radius and color to be defined in trajectory_properties in spell data
         default_color = config.YELLOW # Fallback color if not specified in spell
-        radius = self.trajectory_properties.get("radius", 5) 
+        
+        # Increase default radius to make projectiles more visible
+        base_radius = self.trajectory_properties.get("radius", 5)
+        radius = base_radius * 2  # Double the radius to make it more visible
+        
         # Ensure color is a tuple, not a list, if fetched from JSON
         color_value = self.trajectory_properties.get("color", default_color)
         if isinstance(color_value, list):
@@ -37,9 +42,29 @@ class Projectile(pygame.sprite.Sprite):
         else:
             color = color_value
 
+        # Create a surface that's large enough for the projectile
         self.image = pygame.Surface((radius * 2, radius * 2), pygame.SRCALPHA)
+        
+        # Draw the projectile with a bright outer glow for visibility
+        # First draw a larger, semi-transparent circle for the glow effect
+        glow_radius = radius + 4
+        glow_color = color
+        if isinstance(glow_color, tuple) and len(glow_color) == 3:
+            glow_color = glow_color + (150,)  # Add alpha for semi-transparency
+        pygame.draw.circle(self.image, glow_color, (radius, radius), glow_radius)
+        
+        # Then draw the main projectile
         pygame.draw.circle(self.image, color, (radius, radius), radius)
+        
+        # Add a bright core for extra visibility
+        core_radius = max(2, int(radius / 2))
+        core_color = (255, 255, 255)  # Bright white core
+        pygame.draw.circle(self.image, core_color, (radius, radius), core_radius)
+        
         self.rect = self.image.get_rect(center=(int(self.x), int(self.y)))
+        
+        # Print debugging info about projectile creation
+        print(f"Created projectile: type={projectile_type}, pos=({int(self.x)}, {int(self.y)}), size={radius*2}x{radius*2}")
         
         self.distance_traveled = 0
         self.active = True # Projectile is active by default
@@ -482,9 +507,23 @@ class Projectile(pygame.sprite.Sprite):
         """Render the projectile"""
         if self.active:
             if camera:
-                screen.blit(self.image, camera.apply(self))
+                # Calculate adjusted position with camera
+                adjusted_pos = camera.apply(self)
+                
+                # Debug - print occasional position info 
+                if random.random() < 0.01:  # 1% chance each frame to avoid log spam
+                    print(f"Rendering projectile {self.projectile_type} at screen pos: {adjusted_pos.topleft}, world pos: ({self.x}, {self.y})")
+                
+                # Draw to screen at camera-adjusted position
+                screen.blit(self.image, adjusted_pos)
+                
+                # Draw a bright marker at the center for additional visibility
+                marker_pos = (adjusted_pos.centerx, adjusted_pos.centery)
+                pygame.draw.circle(screen, (255, 255, 255), marker_pos, 2)
             else:
+                # Draw directly if no camera
                 screen.blit(self.image, self.rect)
+                pygame.draw.circle(screen, (255, 255, 255), self.rect.center, 2)
 
     def on_hit_enemy(self, hit_enemy, all_enemies_list):
         """Called when a projectile hits an enemy. Handles chain/pierce logic if applicable.
@@ -639,6 +678,11 @@ class ProjectileManager:
 
     def render(self, screen, camera=None):
         """Render all projectiles"""
+        # Print the number of projectiles being rendered
+        if len(self.projectiles) > 0:
+            print(f"Rendering {len(self.projectiles)} projectiles")
+            
+        # Render each projectile
         for projectile in self.projectiles:
             projectile.render(screen, camera) # Projectile handles camera offset itself
 

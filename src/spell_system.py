@@ -7,10 +7,11 @@ This module handles the spell system, including spell classes and spell manageme
 import pygame
 import math
 import random
+import json
 from src import config
 from src.data_handler import DataHandler
 from src.projectile_system import Projectile
-from src.game_state import GameState
+from src.game_state_base import GameState
 from src.ui_manager import UIManager, Button, TextBox
 
 class Spell:
