@@ -584,15 +584,72 @@ class GameManager:
         # import sys
         # sys.exit()
 
-    def notify_night_has_fallen(self): # ADDED METHOD
-        """Called by a game state (e.g., WorldMapState) when night begins."""
-        print("GameManager: Night has fallen.")
-        # Check if current state is CityInteriorState and pop it (expel player)
-        if self.current_state and isinstance(self.current_state, typing.cast(typing.Any, __import__('src.city_interior', fromlist=['CityInteriorState'])).CityInteriorState): # Use cast and dynamic import for runtime check
-            print("Player is in City Interior as night falls. Expelling to previous state (World Map).")
-            self.pop_state()
-            # Potentially, directly go to NightPhaseState if that's the desired flow
-            # For now, popping to WorldMapState which will then handle NightPhase transition via 'E' key or automatically.
+    def notify_night_has_fallen(self): # MODIFIED METHOD
+        print("GameManager: Night has fallen notification received.")
+        
+        # Attempt to import necessary states locally to avoid circular imports at module level
+        # and to ensure they are available for type checking and instantiation.
+        try:
+            from src.world_map import WorldMapState
+            from src.city_interior import CityInteriorState
+            from src.day_night_manager import DayPhaseState
+        except ImportError as e:
+            print(f"GameManager Error: Could not import states for night transition: {e}")
+            return
+
+        active_state = self.current_state
+        player_data = None
+        current_day = 1
+
+        # Consolidate player_data and current_day retrieval
+        if active_state:
+            if hasattr(active_state, 'player_data') and active_state.player_data is not None:
+                player_data = active_state.player_data
+            elif hasattr(active_state, 'day_night_manager') and \
+                 hasattr(active_state.day_night_manager, 'player_data') and \
+                 active_state.day_night_manager.player_data is not None:
+                player_data = active_state.day_night_manager.player_data
+        
+        if player_data:
+            current_day = player_data.get("day", 1)
+        else:
+            print("GameManager Warning: Could not source player_data. Loading fresh save.")
+            player_data = DataHandler.load_player_save()
+            current_day = player_data.get("day", 1)
+
+        # Ensure essential keys in player_data
+        if "day" not in player_data: player_data["day"] = current_day
+        if "spells" not in player_data: player_data["spells"] = ["basic_projectile"]
+        if "relics" not in player_data: player_data["relics"] = []
+        if "position" not in player_data: player_data["position"] = {"x": None, "y": None} # WorldMapState handles None
+        if "resources" not in player_data: player_data["resources"] = config.STARTING_RESOURCES.copy()
+        if "visited_map_chunks" not in player_data: player_data["visited_map_chunks"] = []
+        
+        # Handle state transitions to ensure player is on WorldMapState at night
+        if isinstance(active_state, CityInteriorState):
+            print("GameManager: Player in City Interior. Expelling to World Map for night.")
+            self.pop_state() # This should reveal WorldMapState
+            active_state = self.current_state # Update active_state to the new top state
+        
+        if isinstance(active_state, WorldMapState):
+            print("GameManager: Player is on WorldMapState.")
+            if active_state.is_day: # If it's still day on the map
+                print("GameManager: WorldMapState is_day is True, calling transition_to_night().")
+                active_state.transition_to_night()
+            else:
+                print("GameManager: WorldMapState is_day is False, night mode likely already active or will be by its own update.")
+        else: # If not WorldMapState after CityInterior pop, or was DayPhaseState, or other
+            print(f"GameManager: Current state is {type(active_state).__name__}. Transitioning to WorldMapState for night.")
+            new_world_map_state = WorldMapState(self, load_saved=False) # Create a new instance
+            new_world_map_state.player_data = player_data # Pass the consolidated player data
+            self.change_state(new_world_map_state)
+            print("GameManager: Switched to new WorldMapState. Calling transition_to_night().")
+            new_world_map_state.transition_to_night() # Ensure it transitions to night
+
+        # REMOVED: Logic for transitioning to NightPhaseState
+        # print(f"GameManager: Transitioning to NightPhaseState for day {current_day}.")
+        # from src.night_phase import NightPhaseState
+        # self.change_state(NightPhaseState(self, player_data, current_day))
 
     def notify_day_has_broken(self): # ADDED METHOD
         """Called by a game state (e.g., WorldMapState) when day begins."""

@@ -153,8 +153,9 @@ class DayPhaseState(GameState):
                     # Pause the game
                     self.game_manager.change_state(PauseState(self.game_manager, self))
                 elif event.key == pygame.K_SPACE:
-                    # Skip day and go directly to night
-                    self.transition_to_night()
+                    # Skip day and go directly to night by notifying GameManager
+                    print("DayPhaseState: Spacebar pressed. Notifying GameManager night has fallen.")
+                    self.game_manager.notify_night_has_fallen()
                 elif event.key == pygame.K_1:
                     # Switch to city view
                     self.current_screen = "city"
@@ -172,7 +173,8 @@ class DayPhaseState(GameState):
         # Update day/night manager
         if self.day_night_manager.update(dt):
             # Phase has changed to night
-            self.transition_to_night()
+            print("DayPhaseState: Day timer expired. Notifying GameManager night has fallen.")
+            self.game_manager.notify_night_has_fallen()
     
     def render(self, screen):
         """Render the day phase
@@ -273,11 +275,6 @@ class DayPhaseState(GameState):
             resource_surface = self.resource_font.render(resource_text, True, config.BLACK)
             screen.blit(resource_surface, (x_pos, 55))
             x_pos += resource_surface.get_width() + 20
-    
-    def transition_to_night(self):
-        """Transition to the night phase"""
-        from src.night_phase import NightPhaseState
-        self.game_manager.change_state(NightPhaseState(self.game_manager, self.day_night_manager))
     
     def enter(self):
         """Called when entering the day phase state"""

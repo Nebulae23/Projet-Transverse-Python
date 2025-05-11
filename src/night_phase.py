@@ -31,6 +31,7 @@ class NightPhaseState(GameState):
         super().__init__(game_manager)
         self.player_session_data = player_data_dict
         self.current_day = current_day_number
+        self.current_frame_events = []
         
         # Create player
         self.player = Player(config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 2, self.game_manager)
@@ -115,21 +116,43 @@ class NightPhaseState(GameState):
             alignment="right"
         ))
 
-        # City Health Bar
+        # City Health UI
+        city_health_label_x = config.SCREEN_WIDTH // 2 - 100
+        city_health_label_y = 10 
+        city_health_label_width = 200
+        city_health_label_height = 20 
+
+        city_health_bar_x = city_health_label_x
+        city_health_bar_y = city_health_label_y + city_health_label_height + 5 # Bar below label
+        city_health_bar_width = city_health_label_width
+        city_health_bar_height = 20
+
+        self.ui_manager.add_element("city_health_label", TextBox(
+            x=city_health_label_x,
+            y=city_health_label_y,
+            width=city_health_label_width,
+            height=city_health_label_height,
+            text="City Health",
+            font_size=18,
+            text_color=config.WHITE,
+            alignment="center"
+        ))
+
         self.ui_manager.add_element("city_health_bar", ProgressBar(
-            x=config.SCREEN_WIDTH // 2 - 100,
-            y=10, # Positioned at top-center
-            width=200,
-            height=20,
+            x=city_health_bar_x,
+            y=city_health_bar_y,
+            width=city_health_bar_width,
+            height=city_health_bar_height,
             value=self.game_manager.city_current_hp,
             max_value=self.game_manager.city_max_hp,
             color=config.CYAN,
-            label_text="City Health" # Using label_text as per ProgressBar potential capability
+            background_color=config.DARK_GRAY,
+            border_color=config.WHITE
         ))
     
     def handle_events(self, events):
         """Handle events in the night phase"""
-        self.ui_manager.handle_events(events)
+        self.current_frame_events = events
         
         for event in events:
             if event.type == pygame.QUIT:
@@ -202,60 +225,74 @@ class NightPhaseState(GameState):
         Args:
             dt (float): Time elapsed since last update in seconds
         """
-        if self.relic_choice_active or self.game_over:
-            # Only update UI when paused for relic choice or game over
-            self.ui_manager.update(pygame.mouse.get_pos(), [])
-            return
-        
-        # Update player
-        keys_pressed = pygame.key.get_pressed()
-        self.player.update(dt, keys_pressed)
-        
-        # Update projectiles
-        self.projectile_manager.update(dt, self.enemy_manager.get_enemies())
-        
-        # Update enemies
-        self.enemy_manager.update(dt, (self.player.rect.centerx, self.player.rect.centery), self.wall_rects, self.damage_city)
-        
-        # Update spells
-        new_projectiles = self.spell_manager.update(
-            dt, 
-            self.player.rect.centerx, 
-            self.player.rect.centery, 
-            self.enemy_manager.get_enemies()
-        )
-        for projectile in new_projectiles:
-            self.projectile_manager.add_projectile(projectile)
-        
-        # Check for collisions
-        self.check_collisions()
-        
-        # Check wave status
-        if self.wave_complete:
-            self.wave_end_timer -= dt
-            if self.wave_end_timer <= 0:
-                if self.enemy_manager.is_night_complete():
-                    # Night is complete, transition back to day
-                    self.transition_to_day()
+        # Standard game logic updates if not paused by relic choice or game over
+        if not (self.relic_choice_active or self.game_over):
+            # Update player
+            keys_pressed = pygame.key.get_pressed()
+            self.player.update(dt, keys_pressed)
+            
+            # Update projectiles
+            self.projectile_manager.update(dt, self.enemy_manager.get_enemies())
+            
+            # Update enemies
+            self.enemy_manager.update(dt, (self.player.rect.centerx, self.player.rect.centery), self.wall_rects, self.damage_city)
+            
+            # Update spells
+            new_projectiles = self.spell_manager.update(
+                dt, 
+                self.player.rect.centerx, 
+                self.player.rect.centery, 
+                self.enemy_manager.get_enemies()
+            )
+            for projectile in new_projectiles:
+                self.projectile_manager.add_projectile(projectile)
+            
+            # Check for collisions
+            self.check_collisions()
+            
+            # Check wave status
+            if self.wave_complete:
+                self.wave_end_timer -= dt
+                if self.wave_end_timer <= 0:
+                    if self.enemy_manager.is_night_complete():
+                        self.transition_to_day()
+                    else:
+                        self.offer_relic_choice()
+            elif self.enemy_manager.is_wave_complete():
+                self.wave_complete = True
+                self.wave_end_timer = 3.0
+            
+            # Update specific UI elements values (dynamic ones)
+            if self.ui_manager.get_element("health_bar"):
+                 self.ui_manager.get_element("health_bar").update_value(self.player.current_hp)
+            if self.ui_manager.get_element("xp_bar"):
+                self.ui_manager.get_element("xp_bar").update_value(self.player.xp)
+            if self.ui_manager.get_element("level_text"):
+                self.ui_manager.get_element("level_text").set_text(f"Lv {self.player.level}")
+            if self.ui_manager.get_element("city_health_bar"):
+                self.ui_manager.get_element("city_health_bar").update_value(self.game_manager.city_current_hp)
+            
+            # Check for city game over
+            if self.game_manager.city_current_hp <= 0 and not self.game_over:
+                self.game_over = True
+                self.game_manager.city_current_hp = 0
+                self.setup_game_over_ui()
+
+        # Always update the UI Manager with all events for the frame
+        # This handles hover states and click processing for all UI elements
+        clicked_elements = self.ui_manager.update(pygame.mouse.get_pos(), self.current_frame_events, dt)
+
+        # Process UI clicks
+        for element_id, click_data in clicked_elements.items():
+            if element_id.startswith("relic_choice_") and self.relic_choice_active:
+                if isinstance(click_data, int): # Expecting index from on_click_data
+                    self.select_relic(click_data)
                 else:
-                    # Offer relic choice between waves
-                    self.offer_relic_choice()
-        elif self.enemy_manager.is_wave_complete():
-            self.wave_complete = True
-            self.wave_end_timer = 3.0  # 3 second delay before next wave
-        
-        # Update UI elements
-        self.ui_manager.get_element("health_bar").update_value(self.player.current_hp)
-        self.ui_manager.get_element("xp_bar").update_value(self.player.xp)
-        self.ui_manager.get_element("level_text").set_text(f"Lv {self.player.level}")
-        if self.ui_manager.get_element("city_health_bar"): # Check if it exists
-            self.ui_manager.get_element("city_health_bar").update_value(self.game_manager.city_current_hp)
-        
-        # Check for city game over
-        if self.game_manager.city_current_hp <= 0 and not self.game_over:
-            self.game_over = True
-            self.game_manager.city_current_hp = 0 # Clamp health
-            self.setup_game_over_ui() # This will now handle specific message
+                    print(f"Warning: Relic choice button {element_id} click_data was not an int: {click_data}")
+            elif element_id == "return_button" and click_data == "return_to_menu" and self.game_over:
+                from src.game_manager import MainMenuState # Local import
+                self.game_manager.clear_states()
+                self.game_manager.push_state(MainMenuState(self.game_manager))
     
     def check_collisions(self):
         """Check for collisions between game objects"""
@@ -363,7 +400,8 @@ class NightPhaseState(GameState):
                 height=100,
                 text="",
                 color=(0, 0, 0, 0),  # Invisible
-                hover_color=(255, 255, 255, 50)  # Semi-transparent white on hover
+                hover_color=(255, 255, 255, 50),  # Semi-transparent white on hover
+                on_click_data=i
             ))
     
     def select_relic(self, index):
@@ -439,7 +477,8 @@ class NightPhaseState(GameState):
             text="Return to Menu",
             color=config.GRAY,
             hover_color=config.WHITE,
-            text_color=config.BLACK
+            text_color=config.BLACK,
+            on_click_data="return_to_menu"
         ))
     
     def transition_to_day(self):

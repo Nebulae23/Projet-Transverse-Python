@@ -3,6 +3,7 @@
         "name": "Basic Bolt",
         "description": "Fires a simple magical bolt.",
         "type": "PROJECTILE",
+        "automatic": false,
         "damage": 10,
         "cooldown": 0.5,
         "range": 300,

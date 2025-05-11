@@ -139,8 +139,11 @@ class CityLocation:
         if self.player: # Ensure player exists
             renderable_objects.append(self.player)
             
-        # (Future: Add enemies or other dynamic entities that need Y-sorting)
-        # For example: if self.enemy_manager and self.is_night: renderable_objects.extend(self.enemy_manager.active_enemies)
+        # Add enemies during nighttime
+        if not self.is_day and self.enemy_manager:
+            # Convert pygame sprite group to a list of enemy objects for rendering
+            active_enemies = self.enemy_manager.get_enemies().sprites()
+            renderable_objects.extend(active_enemies)
 
         # Sort objects by their Y-coordinate (bottom of sprite for pseudo-3D effect)
         # Requires each object to have a get_render_sort_key() method
@@ -758,11 +761,9 @@ class WorldMapState(GameState):
                     # Import PauseState locally to avoid circular import at module level
                     from src.game_manager import PauseState 
                     self.game_manager.push_state(PauseState(self.game_manager, self)) # Pass current state
-                elif event.key == pygame.K_e and self.show_entry_prompt: # MODIFIED LOGIC
-                    if self.is_day:
-                        self.enter_city_interior()
-                    else: # It's night
-                        self.start_city_defense()
+                elif event.key == pygame.K_e and self.show_entry_prompt and self.is_day:
+                    # 'E' key now only for entering city interior during the day
+                    self.enter_city_interior()
                 elif event.key == pygame.K_m:
                     # Toggle mini-map size
                     self.toggle_minimap()
@@ -936,6 +937,24 @@ class WorldMapState(GameState):
         # Update player
         keys_pressed = pygame.key.get_pressed()
         self.player.update(dt, keys_pressed)
+        
+        # Update enemies at night - added with wall collision and city damage callback
+        if not self.is_day and self.enemy_manager:
+            # Get a callback for enemy damaging the city
+            damage_city_callback = self.damage_city_on_world_map
+            # Get wall collision rects for enemies to attack
+            wall_rects = self.city_wall_rects
+            # Update enemy manager with player position, wall rects, and damage callback
+            
+            # Track enemy count before update
+            enemy_count_before = len(self.enemy_manager.get_enemies())
+            
+            self.enemy_manager.update(dt, self.player.rect.center, wall_rects, damage_city_callback)
+            
+            # Only print if enemy count has changed
+            enemy_count_after = len(self.enemy_manager.get_enemies())
+            if enemy_count_before != enemy_count_after:
+                print(f"Enemy count changed: {enemy_count_before} → {enemy_count_after}")
         
         # Update projectiles
         # Pass enemies list, which might be empty if it's day or no enemies on map
@@ -1171,13 +1190,12 @@ class WorldMapState(GameState):
     def transition_to_night(self):
         """Transition from day to night phase"""
         self.is_day = False
+        self.day_timer = 0 # Ensure timer is zeroed
         print("WorldMapState: Transitioning to Night.")
-        self.game_manager.notify_night_has_fallen() # ADDED notification
+        # self.game_manager.notify_night_has_fallen() # REMOVED - WorldMapState manages its own transition to night behavior
         
-        # Start enemy spawning (behavior might need adjustment for world map vs. siege)
-        # For now, let's assume EnemyManager's start_night is general enough
-        # or will be adapted.
-        self.enemy_manager.start_night(self.player_data["day"])
+        print(f"WorldMapState: Starting enemy manager for day {self.player_data['day']}.")
+        self.enemy_manager.start_night(self.player_data["day"]) # UNCOMMENTED/ENSURED
     
     def transition_to_day(self):
         """Transition from night to day phase"""
@@ -1228,8 +1246,11 @@ class WorldMapState(GameState):
         if self.player: # Ensure player exists
             renderable_objects.append(self.player)
             
-        # (Future: Add enemies or other dynamic entities that need Y-sorting)
-        # For example: if self.enemy_manager and self.is_night: renderable_objects.extend(self.enemy_manager.active_enemies)
+        # Add enemies during nighttime
+        if not self.is_day and self.enemy_manager:
+            # Convert pygame sprite group to a list of enemy objects for rendering
+            active_enemies = self.enemy_manager.get_enemies().sprites()
+            renderable_objects.extend(active_enemies)
 
         # Sort objects by their Y-coordinate (bottom of sprite for pseudo-3D effect)
         # Requires each object to have a get_render_sort_key() method

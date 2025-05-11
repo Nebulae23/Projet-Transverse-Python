@@ -32,57 +32,20 @@ class Enemy(pygame.sprite.Sprite):
         self.enemy_type = enemy_type
         self.data = enemy_data
         
-        # Create more distinctive placeholder sprites based on enemy type
-        self.radius = 16  # Radius for collision detection
+        # Create a simple red square placeholder
+        self.radius = 16  # Radius for collision detection (can be adjusted if square size changes significantly)
         self.image = pygame.Surface((32, 32), pygame.SRCALPHA)
         
-        # Color coding based on enemy type
-        enemy_colors = {
-            "slime": (0, 255, 0),       # Green for slimes
-            "goblin": (255, 180, 0),    # Orange for goblins
-            "skeleton": (200, 200, 200), # Light gray for skeletons
-            "default": (255, 0, 0)      # Red for any undefined enemy
-        }
+        # Red color for the square
+        fill_color = (255, 0, 0) # Red
+        # Optional: border_color = (0, 0, 0) # Black border
         
-        # Default shape patterns based on enemy type
-        border_color = (255, 255, 0)  # Yellow border for all enemies
-        fill_color = enemy_colors.get(enemy_type, enemy_colors["default"])
-        
-        # Base circle for all enemies
-        pygame.draw.circle(self.image, fill_color, (16, 16), 16)
-        pygame.draw.circle(self.image, border_color, (16, 16), 16, 2)
-        
-        # Add distinctive patterns based on enemy type
-        if enemy_type == "slime":
-            # Slime: green blob with eyes
-            pygame.draw.circle(self.image, (255, 255, 255), (11, 11), 4)  # Left eye
-            pygame.draw.circle(self.image, (255, 255, 255), (21, 11), 4)  # Right eye
-            pygame.draw.circle(self.image, (0, 0, 0), (11, 11), 2)  # Left pupil
-            pygame.draw.circle(self.image, (0, 0, 0), (21, 11), 2)  # Right pupil
-            pygame.draw.arc(self.image, (0, 0, 0), (8, 15, 16, 8), 0, 3.14, 2)  # Smile
-            
-        elif enemy_type == "goblin":
-            # Goblin: orange with pointy ears and angry eyes
-            # Draw ears
-            pygame.draw.polygon(self.image, fill_color, [(6, 6), (10, 0), (14, 6)])  # Left ear
-            pygame.draw.polygon(self.image, fill_color, [(18, 6), (22, 0), (26, 6)])  # Right ear
-            # Eyes
-            pygame.draw.line(self.image, (0, 0, 0), (10, 10), (14, 13), 2)  # Left eye
-            pygame.draw.line(self.image, (0, 0, 0), (22, 10), (18, 13), 2)  # Right eye
-            # Frown
-            pygame.draw.arc(self.image, (0, 0, 0), (8, 18, 16, 8), 3.14, 6.28, 2)  # Frown
-            
-        elif enemy_type == "skeleton":
-            # Skeleton: gray with bone patterns and hollowed eyes
-            # Skull features
-            pygame.draw.rect(self.image, (0, 0, 0), (9, 9, 5, 5))  # Left eye socket
-            pygame.draw.rect(self.image, (0, 0, 0), (18, 9, 5, 5))  # Right eye socket
-            pygame.draw.polygon(self.image, (0, 0, 0), [(13, 18), (16, 24), (19, 18)])  # Nose hole
-            pygame.draw.line(self.image, (0, 0, 0), (10, 22), (22, 22), 1)  # Teeth line
-            
-            # Crossbones (simplified)
-            pygame.draw.line(self.image, (255, 255, 255), (6, 26), (26, 6), 3)  # Diagonal bone 1
-            pygame.draw.line(self.image, (255, 255, 255), (6, 6), (26, 26), 3)  # Diagonal bone 2
+        # Draw a red square
+        # The rect is (left, top, width, height)
+        # To center a 32x32 square on a 32x32 surface, it's (0, 0, 32, 32)
+        pygame.draw.rect(self.image, fill_color, (0, 0, 32, 32))
+        # Optional: to draw a border
+        # pygame.draw.rect(self.image, border_color, (0, 0, 32, 32), 2) # 2 is border thickness
         
         # Position and movement
         self.rect = self.image.get_rect(center=(x, y))
@@ -293,6 +256,15 @@ class Enemy(pygame.sprite.Sprite):
                     screen.blit(label, (label_x, label_y))
                 except Exception as e:
                     print(f"Error rendering enemy label: {e}")
+
+    def get_render_sort_key(self):
+        """Get the Y-coordinate for render sorting
+        
+        Returns:
+            float: Y-coordinate for sorting (higher values rendered on top)
+        """
+        # Use the bottom of the sprite for Y-sorting
+        return self.rect.bottom
 
 
 class EnemyManager:
