@@ -31,6 +31,8 @@ LIGHT_GRAY = (200, 200, 200)
 DARK_GRAY = (100, 100, 100)
 MAGENTA = (255, 0, 255)
 ORANGE = (255, 165, 0)
+BRIGHT_BLUE = (0, 170, 255)
+BRIGHT_GREEN = (0, 220, 0)
 
 # File paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

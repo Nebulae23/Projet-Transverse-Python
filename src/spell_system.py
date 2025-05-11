@@ -610,27 +610,33 @@ class LevelUpState(GameState):
             if i < len(positions):
                 x, y = positions[i]
                 
-                # Box background
+                # Box background - make it more vibrant with a colored border to indicate clickable
+                border_color = config.BRIGHT_BLUE if choice["type"] == "new" else config.BRIGHT_GREEN
+                
                 self.ui_manager.add_element(f"spell_choice_bg_{i}", TextBox(
                     x=x,
                     y=y,
                     width=button_width,
                     height=button_height,
                     background_color=config.DARK_GRAY,
-                    border_color=config.LIGHT_GRAY
+                    border_color=border_color,
+                    border_width=4
                 ))
                 
-                # Spell name
+                # Spell name with bold styling
                 spell_type_text = "New Spell!" if choice["type"] == "new" else f"Upgrade (Level {choice['upgrade_level']})"
+                title_color = config.BRIGHT_BLUE if choice["type"] == "new" else config.BRIGHT_GREEN
+                
                 self.ui_manager.add_element(f"spell_choice_name_{i}", TextBox(
                     x=x,
                     y=y + 10,
                     width=button_width,
                     height=30,
                     text=f"{choice['name']} - {spell_type_text}",
-                    font_size=18,
-                    text_color=config.WHITE,
-                    background_color=None
+                    font_size=20,
+                    text_color=title_color,
+                    background_color=None,
+                    bold=True
                 ))
                 
                 # Spell description
@@ -641,11 +647,23 @@ class LevelUpState(GameState):
                     height=60,
                     text=choice["description"],
                     font_size=14,
-                    text_color=config.LIGHT_GRAY,
+                    text_color=config.WHITE,
                     background_color=None
                 ))
                 
-                # Button overlay (for clicking)
+                # Add a "Click to select" text at the bottom
+                self.ui_manager.add_element(f"spell_choice_hint_{i}", TextBox(
+                    x=x + 10,
+                    y=y + button_height - 30,
+                    width=button_width - 20,
+                    height=20,
+                    text="Click to select",
+                    font_size=14,
+                    text_color=(255, 255, 0),
+                    background_color=None
+                ))
+                
+                # Button overlay (for clicking) - make hover effect more noticeable
                 self.ui_manager.add_element(f"spell_choice_button_{i}", Button(
                     x=x,
                     y=y,
@@ -653,7 +671,7 @@ class LevelUpState(GameState):
                     height=button_height,
                     text="",
                     color=(0, 0, 0, 0),  # Transparent
-                    hover_color=(255, 255, 255, 30),  # Slight white on hover
+                    hover_color=(255, 255, 255, 80),  # More visible hover effect
                     on_click_data=i  # Store the choice index
                 ))
     
@@ -663,18 +681,23 @@ class LevelUpState(GameState):
         Args:
             events (list): List of pygame events
         """
-        # Pass events to UI manager
-        clicked_elements = self.ui_manager.update(pygame.mouse.get_pos(), events)
+        # Handle mouse position
+        mouse_pos = pygame.mouse.get_pos()
         
-        # Handle spell choice clicks
-        for element_id, click_data in clicked_elements.items():
-            if element_id.startswith("spell_choice_button_") and isinstance(click_data, int):
-                choice_index = click_data
-                if 0 <= choice_index < len(self.spell_choices):
-                    self._select_spell(self.spell_choices[choice_index])
-        
-        # Check for escape key to cancel
+        # Process events for UI elements
         for event in events:
+            # Handle mouse click events directly
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Left mouse button
+                # Check if any spell choice button was clicked
+                for i in range(len(self.spell_choices)):
+                    button_id = f"spell_choice_button_{i}"
+                    if button_id in self.ui_manager.elements:
+                        button = self.ui_manager.elements[button_id]
+                        if button.rect.collidepoint(mouse_pos):
+                            self._select_spell(self.spell_choices[i])
+                            return
+            
+            # Check for escape key to cancel
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 # Default to first choice if player presses escape
                 if self.spell_choices:
@@ -682,6 +705,17 @@ class LevelUpState(GameState):
                 else:
                     # Nothing to choose from, just return to previous state
                     self.game_manager.pop_state()
+        
+        # Pass events to UI manager as a backup
+        clicked_elements = self.ui_manager.update(mouse_pos, events)
+        
+        # Handle spell choice clicks from UI manager (if the direct check above missed anything)
+        for element_id, click_data in clicked_elements.items():
+            if element_id.startswith("spell_choice_button_") and isinstance(click_data, int):
+                choice_index = click_data
+                if 0 <= choice_index < len(self.spell_choices):
+                    self._select_spell(self.spell_choices[choice_index])
+                    return
     
     def _select_spell(self, spell_choice):
         """Handle spell selection

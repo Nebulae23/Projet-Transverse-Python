@@ -295,7 +295,7 @@ class Player(pygame.sprite.Sprite):
             
         # Check if we need to stop attacking animation
         if self.is_attacking and self.attack_timer <= 0:
-            self.is_attacking = False
+                self.is_attacking = False
             self.current_anim = self.ANIM_IDLE if not self.is_moving else self.ANIM_WALK
         
         # Automatic spell casting for spells marked as automatic
@@ -371,7 +371,7 @@ class Player(pygame.sprite.Sprite):
                             # Target the closest enemy
                             target_x = closest_enemy.rect.centerx
                             target_y = closest_enemy.rect.centery
-                            print(f"Auto-casting {spell_id} at closest enemy")
+                            print(f"Auto-casting {spell_id} at closest enemy at ({target_x}, {target_y})")
                         else:
                             # No active enemies found, cast in a random direction
                             import random
@@ -392,14 +392,29 @@ class Player(pygame.sprite.Sprite):
                     # Cast the spell
                     projectile = self.cast_spell(spell_id, target_x, target_y)
                     if projectile:
-                        # Add projectile to game manager's projectile manager
-                        self.game_manager.projectile_manager.add_projectile(projectile)
+                        # Get the projectile manager from the current state
+                        projectile_manager = None
+                        
+                        # First try from the current state
+                        if hasattr(self.game_manager, 'state_stack') and self.game_manager.state_stack:
+                            current_state = self.game_manager.state_stack[-1]
+                            if hasattr(current_state, 'projectile_manager'):
+                                projectile_manager = current_state.projectile_manager
+                        
+                        # If not found in state, try from game_manager
+                        if not projectile_manager and hasattr(self.game_manager, 'projectile_manager'):
+                            projectile_manager = self.game_manager.projectile_manager
+                        
+                        # Add projectile to the projectile manager if found
+                        if projectile_manager:
+                            projectile_manager.add_projectile(projectile)
+                            print(f"Projectile created on world map: {projectile}")
+                        else:
+                            print("Warning: No projectile manager found to add projectile to!")
                         
                     # Reset cooldown
                     cooldown_time = current_spell_data.get("cooldown", 1.0)
                     self.spell_cooldowns[spell_id] = cooldown_time
-                    
-                    print(f"Auto-cast spell: {spell_id}")
     
     def _handle_movement(self, dt, keys_pressed):
         """Handle player movement

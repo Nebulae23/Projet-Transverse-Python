@@ -1,21 +1,19 @@
 {
     "level": 1,
     "xp": 0,
-    "city_buildings": {
-        "forge": 1
-    },
+    "city_buildings": {},
     "spells": [
         "basic_projectile"
     ],
     "relics": [],
     "day": 1,
     "position": {
-        "x": 1878.1732528159125,
-        "y": 1987.001051457416
+        "x": 1692.447298144069,
+        "y": 1425.0114020282404
     },
     "visited_map_chunks": [
         [
-            4,
+            2,
             4
         ],
         [
@@ -29,6 +27,10 @@
         [
             4,
             2
+        ],
+        [
+            1,
+            4
         ],
         [
             2,
@@ -48,8 +50,8 @@
         ]
     ],
     "resources": {
-        "wood": 50,
-        "stone": 20
+        "wood": 100,
+        "stone": 50
     },
     "city_current_hp": 235
 }
