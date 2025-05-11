@@ -1,0 +1,634 @@
+{
+    "width": 100,
+    "height": 100,
+    "tile_data_format": "list_of_lists_rle",
+    "generated_by": "DataHandler.create_default_files",
+    "generation_timestamp": "timestamp_placeholder",
+    "static_props": [],
+    "resource_nodes": [],
+    "points_of_interest": [
+        {
+            "id": "default_shrine_1",
+            "type": "abandoned_shrine",
+            "tile_x": 20,
+            "tile_y": 20,
+            "saved_state": null
+        },
+        {
+            "id": "default_den_1",
+            "type": "monster_den",
+            "tile_x": 80,
+            "tile_y": 80,
+            "saved_state": null
+        },
+        {
+            "id": "default_ruin_1",
+            "type": "ancient_ruin",
+            "tile_x": 20,
+            "tile_y": 80,
+            "saved_state": null
+        }
+    ],
+    "tiles": [
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ],
+        [
+            {
+                "tile": "grass",
+                "count": 100
+            }
+        ]
+    ]
+}

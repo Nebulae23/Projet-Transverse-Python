@@ -1,0 +1,53 @@
+{
+    "level": 1,
+    "xp": 0,
+    "city_buildings": {},
+    "spells": [
+        "basic_projectile"
+    ],
+    "relics": [],
+    "day": 1,
+    "position": {
+        "x": 1892.5223124178285,
+        "y": 1666.3645586963219
+    },
+    "visited_map_chunks": [
+        [
+            2,
+            4
+        ],
+        [
+            3,
+            4
+        ],
+        [
+            4,
+            3
+        ],
+        [
+            4,
+            2
+        ],
+        [
+            2,
+            3
+        ],
+        [
+            3,
+            3
+        ],
+        [
+            2,
+            2
+        ],
+        [
+            3,
+            2
+        ]
+    ],
+    "resources": {
+        "wood": 100,
+        "stone": 50
+    },
+    "city_current_hp": 500
+}

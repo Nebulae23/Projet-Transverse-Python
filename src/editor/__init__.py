@@ -1,0 +1,3 @@
+"""
+Magic Survivor - Editor module
+""" 

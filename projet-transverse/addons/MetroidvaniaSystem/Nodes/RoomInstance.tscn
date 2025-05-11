@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bsg0351mx3b4u"]
-
-[sub_resource type="Resource" id="Resource_pquvh"]
-metadata/__load_path__ = "res://addons/MetroidvaniaSystem/Scripts/RoomInstance.gd"
-
-[node name="RoomInstance" type="Node2D"]
-script = SubResource("Resource_pquvh")

@@ -1,0 +1,325 @@
+{
+    "basic_projectile": {
+        "name": "Basic Bolt",
+        "description": "Fires a simple magical bolt.",
+        "type": "PROJECTILE",
+        "damage": 10,
+        "cooldown": 0.5,
+        "range": 300,
+        "speed": 250,
+        "projectile_sprite": "default_projectile.png",
+        "trajectory_properties": {
+            "type": "HOMING",
+            "homing_strength": 0.1,
+            "radius": 6,
+            "color": [
+                255,
+                165,
+                0
+            ]
+        },
+        "upgrades": {}
+    },
+    "fireball": {
+        "name": "Fireball",
+        "description": "Launches a fiery explosion.",
+        "type": "PROJECTILE_AOE",
+        "damage": 25,
+        "cooldown": 2.0,
+        "range": 400,
+        "speed": 200,
+        "aoe_radius": 50,
+        "projectile_sprite": "fireball.png",
+        "trajectory_properties": {
+            "type": "STRAIGHT",
+            "radius": 8,
+            "color": [
+                255,
+                0,
+                0
+            ]
+        },
+        "upgrades": {}
+    },
+    "orbiting_blades": {
+        "name": "Orbiting Blades",
+        "description": "Summons magical blades that orbit the caster.",
+        "type": "PROJECTILE",
+        "damage": 5,
+        "cooldown": 15.0,
+        "range": 0,
+        "speed": 0,
+        "projectile_sprite": "default_orbiter.png",
+        "trajectory_properties": {
+            "type": "ORBITING",
+            "orbit_radius": 80,
+            "angular_speed": 3,
+            "duration": 10,
+            "radius": 7,
+            "color": [
+                100,
+                180,
+                255
+            ]
+        },
+        "upgrades": {}
+    },
+    "wave_pulse": {
+        "name": "Wave Pulse",
+        "description": "Fires a pulse that travels in a sine wave.",
+        "type": "PROJECTILE",
+        "damage": 12,
+        "cooldown": 0.8,
+        "range": 350,
+        "speed": 200,
+        "projectile_sprite": "default_wave_pulse.png",
+        "trajectory_properties": {
+            "type": "SINE_WAVE",
+            "amplitude": 30,
+            "frequency": 5,
+            "radius": 5,
+            "color": [
+                0,
+                255,
+                255
+            ]
+        },
+        "upgrades": {}
+    },
+    "returning_disk": {
+        "name": "Returning Disk",
+        "description": "Throws a disk that returns to the caster.",
+        "type": "PROJECTILE",
+        "damage": 15,
+        "cooldown": 1.2,
+        "range": 250,
+        "speed": 300,
+        "projectile_sprite": "default_disk.png",
+        "trajectory_properties": {
+            "type": "BOOMERANG",
+            "radius": 10,
+            "color": [
+                128,
+                0,
+                128
+            ]
+        },
+        "upgrades": {}
+    },
+    "chain_spark": {
+        "name": "Chain Spark",
+        "description": "A spark that jumps between enemies.",
+        "type": "PROJECTILE",
+        "damage": 8,
+        "cooldown": 1.0,
+        "range": 300,
+        "speed": 350,
+        "projectile_sprite": "default_spark.png",
+        "trajectory_properties": {
+            "type": "CHAIN",
+            "max_chains": 3,
+            "chain_radius": 150,
+            "radius": 4,
+            "color": [
+                255,
+                255,
+                0
+            ]
+        },
+        "upgrades": {}
+    },
+    "piercing_bolt": {
+        "name": "Piercing Bolt",
+        "description": "A bolt that pierces through multiple enemies.",
+        "type": "PROJECTILE",
+        "damage": 12,
+        "cooldown": 0.7,
+        "range": 400,
+        "speed": 300,
+        "projectile_sprite": "default_piercing.png",
+        "trajectory_properties": {
+            "type": "PIERCING",
+            "pierce_count": 3,
+            "radius": 5,
+            "color": [
+                200,
+                200,
+                200
+            ]
+        },
+        "upgrades": {}
+    },
+    "meteor_shard": {
+        "name": "Meteor Shard",
+        "description": "Calls down a shard that explodes at the target location after a delay.",
+        "type": "PROJECTILE",
+        "damage": 0,
+        "cooldown": 2.5,
+        "range": 1000,
+        "speed": 0,
+        "projectile_sprite": "default_marker.png",
+        "trajectory_properties": {
+            "type": "GROUND_AOE",
+            "travel_speed": 500,
+            "aoe_radius": 80,
+            "aoe_damage": 30,
+            "aoe_duration": 0.2,
+            "delay_after_arrival": 0.3,
+            "marker_radius": 6,
+            "marker_color": [
+                255,
+                120,
+                0
+            ],
+            "aoe_visual_color": [
+                255,
+                60,
+                0,
+                180
+            ]
+        },
+        "upgrades": {}
+    },
+    "spiral_blast": {
+        "name": "Spiral Blast",
+        "description": "Launches a spiraling energy blast.",
+        "type": "PROJECTILE",
+        "damage": 7,
+        "cooldown": 1.0,
+        "range": 0,
+        "speed": 0,
+        "projectile_sprite": "default_spiral.png",
+        "trajectory_properties": {
+            "type": "SPIRAL",
+            "expansion_speed": 40,
+            "rotation_speed": 720,
+            "base_travel_speed": 150,
+            "duration": 1.5,
+            "initial_radius": 5,
+            "radius": 5,
+            "color": [
+                200,
+                0,
+                255
+            ]
+        },
+        "upgrades": {}
+    },
+    "forking_bolt": {
+        "name": "Forking Bolt",
+        "description": "A bolt that splits into smaller fragments.",
+        "type": "PROJECTILE",
+        "damage": 10,
+        "cooldown": 1.5,
+        "range": 150,
+        "speed": 250,
+        "projectile_sprite": "default_forker.png",
+        "trajectory_properties": {
+            "type": "FORKING",
+            "fork_condition_type": "DISTANCE",
+            "fork_condition_value": 150,
+            "fork_count": 3,
+            "fork_angle_spread": 45,
+            "child_spell_id": "seeking_fragment",
+            "radius": 6,
+            "color": [
+                0,
+                255,
+                0
+            ]
+        },
+        "upgrades": {}
+    },
+    "seeking_fragment": {
+        "name": "Seeking Fragment",
+        "description": "A small, fast fragment.",
+        "type": "PROJECTILE",
+        "damage": 5,
+        "cooldown": 0,
+        "range": 100,
+        "speed": 400,
+        "projectile_sprite": "default_fragment.png",
+        "trajectory_properties": {
+            "type": "STRAIGHT",
+            "radius": 3,
+            "color": [
+                150,
+                255,
+                150
+            ]
+        },
+        "upgrades": {}
+    },
+    "growing_orb_spell": {
+        "name": "Growing Orb",
+        "description": "An orb that expands as it travels.",
+        "type": "PROJECTILE",
+        "damage": 12,
+        "cooldown": 1.0,
+        "range": 300,
+        "speed": 180,
+        "projectile_sprite": "default_growing_orb.png",
+        "trajectory_properties": {
+            "type": "GROWING_ORB",
+            "initial_radius": 4,
+            "max_radius": 25,
+            "growth_rate": 15.0,
+            "growth_duration": 2.0,
+            "color": [
+                75,
+                0,
+                130
+            ]
+        },
+        "upgrades": {}
+    },
+    "ice_lance": {
+        "name": "Ice Lance",
+        "description": "A sharp shard of ice.",
+        "mana_cost": 15,
+        "cooldown": 1.5,
+        "damage": 18,
+        "aoe_radius": 0,
+        "projectile_speed": 15,
+        "duration": 1.5,
+        "pierce": 1,
+        "effects": {
+            "chill": {
+                "duration": 2,
+                "slow_amount": 0.3
+            }
+        },
+        "icon_path": "assets/sprites/projectiles/ice_lance.png",
+        "sound_effect": "assets/sounds/effects/ice_lance_01.wav",
+        "trajectory": "sine",
+        "trajectory_params": {
+            "amplitude": 30,
+            "frequency": 3,
+            "initial_straight_duration": 0.1
+        },
+        "upgrades": {
+            "level_2": {
+                "pierce_increase": 1,
+                "description": "Pierce +1"
+            },
+            "level_3": {
+                "damage_multiplier": 1.2,
+                "description": "Damage +20%"
+            },
+            "level_4": {
+                "effect_potency": 0.1,
+                "description": "Chill slow +10%"
+            },
+            "level_5_path_a": {
+                "duration_increase": 0.5,
+                "is_divergence": true,
+                "description": "Duration +0.5s"
+            },
+            "level_5_path_b": {
+                "projectile_speed_increase": 5,
+                "is_divergence": true,
+                "description": "Speed +5"
+            }
+        }
+    }
+}

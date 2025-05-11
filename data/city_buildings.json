@@ -1,0 +1,94 @@
+{
+    "forge": {
+        "name": "Forge",
+        "description": "Produces weapons and armor. Increases player attack damage.",
+        "base_cost": {
+            "wood": 50,
+            "stone": 30
+        },
+        "levels": {
+            "1": {
+                "production": {
+                    "iron": 1
+                },
+                "bonuses": {
+                    "player_damage_flat": 2
+                }
+            },
+            "2": {
+                "cost": {
+                    "wood": 100,
+                    "stone": 60,
+                    "iron": 20
+                },
+                "production": {
+                    "iron": 2
+                },
+                "bonuses": {
+                    "player_damage_flat": 5
+                }
+            },
+            "3": {
+                "cost": {
+                    "wood": 200,
+                    "stone": 120,
+                    "iron": 50
+                },
+                "production": {
+                    "iron": 4,
+                    "steel": 1
+                },
+                "bonuses": {
+                    "player_damage_flat": 10,
+                    "player_damage_percent": 5
+                }
+            }
+        }
+    },
+    "library": {
+        "name": "Arcane Library",
+        "description": "Research new spells and improves magic potency.",
+        "base_cost": {
+            "wood": 60,
+            "stone": 40
+        },
+        "levels": {
+            "1": {
+                "production": {
+                    "knowledge": 1
+                },
+                "bonuses": {
+                    "spell_damage_percent": 5
+                }
+            },
+            "2": {
+                "cost": {
+                    "wood": 120,
+                    "stone": 80,
+                    "knowledge": 20
+                },
+                "production": {
+                    "knowledge": 2
+                },
+                "bonuses": {
+                    "spell_damage_percent": 10
+                }
+            },
+            "3": {
+                "cost": {
+                    "wood": 240,
+                    "stone": 160,
+                    "knowledge": 50
+                },
+                "production": {
+                    "knowledge": 4,
+                    "scrolls": 1
+                },
+                "bonuses": {
+                    "spell_damage_percent": 20,
+                    "spell_cooldown_percent": -10
+                }
+            }
+        }
+    }
+}

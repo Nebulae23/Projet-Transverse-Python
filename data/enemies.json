@@ -1,0 +1,32 @@
+{
+    "slime": {
+        "name": "Slime",
+        "health": 30,
+        "damage": 5,
+        "speed": 2,
+        "xp_reward": 10,
+        "sprite_sheet": "slime.png",
+        "sprite_rows": 1,
+        "sprite_columns": 4
+    },
+    "goblin": {
+        "name": "Goblin",
+        "health": 50,
+        "damage": 10,
+        "speed": 3,
+        "xp_reward": 20,
+        "sprite_sheet": "goblin.png",
+        "sprite_rows": 1,
+        "sprite_columns": 4
+    },
+    "skeleton": {
+        "name": "Skeleton",
+        "health": 80,
+        "damage": 15,
+        "speed": 2.5,
+        "xp_reward": 30,
+        "sprite_sheet": "skeleton.png",
+        "sprite_rows": 1,
+        "sprite_columns": 4
+    }
+}

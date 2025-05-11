@@ -1,7 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bfx2fid0hmsyb"]
-
-[sub_resource type="Resource" id="Resource_adveq"]
-metadata/__load_path__ = "res://addons/MetroidvaniaSystem/Scripts/MapTheme.gd"
-
-[resource]
-metadata/_custom_type_script = SubResource("Resource_adveq")

@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dwrpywpm86fll"]
-
-[ext_resource type="Script" path="res://Components/status_component.gd" id="1_ybsi7"]
-
-[node name="Status_Component" type="Node"]
-script = ExtResource("1_ybsi7")
-
-[node name="Timer" type="Timer" parent="."]

@@ -1,0 +1,35 @@
+{
+    "heart_stone": {
+        "name": "Heart Stone",
+        "description": "Increases maximum health by 20%.",
+        "rarity": "common",
+        "effects": {
+            "max_health_percent": 20
+        }
+    },
+    "magic_amplifier": {
+        "name": "Magic Amplifier",
+        "description": "Increases spell damage by 15%.",
+        "rarity": "common",
+        "effects": {
+            "spell_damage_percent": 15
+        }
+    },
+    "swift_boots": {
+        "name": "Swift Boots",
+        "description": "Increases movement speed by 10%.",
+        "rarity": "common",
+        "effects": {
+            "movement_speed_percent": 10
+        }
+    },
+    "forked_wand": {
+        "name": "Forked Wand",
+        "description": "Basic projectiles have a 20% chance to split into 2 projectiles.",
+        "rarity": "rare",
+        "effects": {
+            "basic_projectile_fork_chance": 20,
+            "basic_projectile_fork_count": 2
+        }
+    }
+}
