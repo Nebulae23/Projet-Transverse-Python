@@ -721,25 +721,42 @@ class GameManager:
         Args:
             level (int): The new player level
         """
-        print(f"GameManager: Player leveled up to level {level}! Opening spell selection UI.")
+        print(f"GameManager.handle_player_level_up: Player leveled up to level {level}! Opening spell selection UI.")
         
-        # We'll create a LevelUpState that will handle spell selection
-        from src.spell_system import LevelUpState
-        
-        # If we're in WorldMapState or any other state, push the LevelUpState on top
-        # This pauses the current state and creates a modal dialog for spell selection
         try:
+            # We'll create a LevelUpState that will handle spell selection
+            print("GameManager.handle_player_level_up: Attempting to import LevelUpState")
+            from src.spell_system import LevelUpState
+            print("GameManager.handle_player_level_up: Successfully imported LevelUpState")
+            
+            # If we're in WorldMapState or any other state, push the LevelUpState on top
+            # This pauses the current state and creates a modal dialog for spell selection
+            print("GameManager.handle_player_level_up: Getting current_state")
             current_state = self.current_state
+            print(f"GameManager.handle_player_level_up: Current state is {current_state.__class__.__name__ if current_state else 'None'}")
+            
             # Get player instance from current state
             player = None
             if hasattr(current_state, 'player'):
                 player = current_state.player
+                print(f"GameManager.handle_player_level_up: Found player in current state: {player}")
+            else:
+                print("GameManager.handle_player_level_up: No player found in current state!")
             
             # Create new level up state
+            print("GameManager.handle_player_level_up: Creating LevelUpState instance")
             level_up_state = LevelUpState(self, player, level)
+            print("GameManager.handle_player_level_up: Successfully created LevelUpState instance")
+            
+            # Push it onto the state stack
+            print("GameManager.handle_player_level_up: Pushing LevelUpState onto state stack")
             self.push_state(level_up_state)
+            print("GameManager.handle_player_level_up: Successfully pushed LevelUpState onto state stack")
+            
         except Exception as e:
-            print(f"Error creating LevelUpState: {e}")
+            print(f"GameManager.handle_player_level_up: Error creating or pushing LevelUpState: {e}")
+            import traceback
+            traceback.print_exc()
     
     @property
     def current_state(self):

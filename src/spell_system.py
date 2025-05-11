@@ -468,21 +468,40 @@ class LevelUpState(GameState):
             player (Player): Reference to the player
             level (int): New player level
         """
-        super().__init__(game_manager)
-        self.player = player
-        self.level = level
-        self.ui_manager = UIManager()
-        self.available_spells = []
-        self.spell_choices = []
+        print(f"LevelUpState.__init__: Creating with level={level}, player={player}")
         
-        # Load all spells data
-        self.all_spells_data = DataHandler.load_spells()
-        
-        # Setup UI
-        self.setup_ui()
-        
-        # Generate spell choices - either upgrades to existing spells or new spells
-        self._generate_spell_choices()
+        try:
+            super().__init__(game_manager)
+            print("LevelUpState.__init__: Called super().__init__()")
+            
+            self.player = player
+            self.level = level
+            self.ui_manager = UIManager()
+            print("LevelUpState.__init__: Created UIManager")
+            
+            self.available_spells = []
+            self.spell_choices = []
+            
+            # Load all spells data
+            print("LevelUpState.__init__: Loading spell data")
+            self.all_spells_data = DataHandler.load_spells()
+            print(f"LevelUpState.__init__: Loaded {len(self.all_spells_data)} spells")
+            
+            # Setup UI
+            print("LevelUpState.__init__: Setting up UI")
+            self.setup_ui()
+            print("LevelUpState.__init__: UI setup complete")
+            
+            # Generate spell choices - either upgrades to existing spells or new spells
+            print("LevelUpState.__init__: Generating spell choices")
+            self._generate_spell_choices()
+            print(f"LevelUpState.__init__: Generated {len(self.spell_choices)} spell choices")
+            
+            print("LevelUpState.__init__: Initialization complete")
+        except Exception as e:
+            print(f"LevelUpState.__init__: Error during initialization: {e}")
+            import traceback
+            traceback.print_exc()
     
     def setup_ui(self):
         """Setup the level up UI"""
@@ -502,7 +521,7 @@ class LevelUpState(GameState):
             text=f"Level Up! - Level {self.level}",
             font_size=36,
             text_color=config.WHITE,
-            background_color=config.DARK_BLUE
+            background_color=config.DARK_GRAY
         ))
         
         # Subtitle
@@ -613,14 +632,14 @@ class LevelUpState(GameState):
                 # Box background - make it more vibrant with a colored border to indicate clickable
                 border_color = config.BRIGHT_BLUE if choice["type"] == "new" else config.BRIGHT_GREEN
                 
+                # Create background TextBox (without border_width parameter)
                 self.ui_manager.add_element(f"spell_choice_bg_{i}", TextBox(
                     x=x,
                     y=y,
                     width=button_width,
                     height=button_height,
                     background_color=config.DARK_GRAY,
-                    border_color=border_color,
-                    border_width=4
+                    border_color=border_color
                 ))
                 
                 # Spell name with bold styling
@@ -635,8 +654,7 @@ class LevelUpState(GameState):
                     text=f"{choice['name']} - {spell_type_text}",
                     font_size=20,
                     text_color=title_color,
-                    background_color=None,
-                    bold=True
+                    background_color=None
                 ))
                 
                 # Spell description
@@ -707,7 +725,7 @@ class LevelUpState(GameState):
                     self.game_manager.pop_state()
         
         # Pass events to UI manager as a backup
-        clicked_elements = self.ui_manager.update(mouse_pos, events)
+        clicked_elements = self.ui_manager.update(mouse_pos, events, 0.016)
         
         # Handle spell choice clicks from UI manager (if the direct check above missed anything)
         for element_id, click_data in clicked_elements.items():
@@ -776,8 +794,12 @@ class LevelUpState(GameState):
     
     def enter(self):
         """Called when entering this state"""
+        print("LevelUpState.enter: Entering state")
         super().enter()
+        print("LevelUpState.enter: State entered, transition started")
     
     def exit(self):
         """Called when exiting this state"""
-        super().exit() 
+        print("LevelUpState.exit: Exiting state")
+        super().exit()
+        print("LevelUpState.exit: State exited") 

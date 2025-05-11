@@ -586,9 +586,17 @@ class Player(pygame.sprite.Sprite):
         self.base_attack_damage += 2
         
         # Notify game manager about level up so it can show spell selection UI
+        print(f"Player._level_up: Leveled up to level {self.level}!")
+        print(f"Player._level_up: game_manager exists: {hasattr(self, 'game_manager')}")
+        
+        if hasattr(self, 'game_manager'):
+            print(f"Player._level_up: handle_player_level_up exists on game_manager: {hasattr(self.game_manager, 'handle_player_level_up')}")
+            
         if hasattr(self.game_manager, "handle_player_level_up"):
-            print(f"Player leveled up to level {self.level}! Notifying game manager.")
+            print(f"Player._level_up: Calling game_manager.handle_player_level_up({self.level})")
             self.game_manager.handle_player_level_up(self.level)
+        else:
+            print("Player._level_up: ERROR! game_manager.handle_player_level_up method not found!")
     
     @staticmethod
     def calculate_xp_for_level(level_number):
