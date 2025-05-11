@@ -223,24 +223,50 @@ class CityLocation:
             screen.blit(self.minimap_surface, minimap_rect.topleft)
         
         # --- Draw City HP Bar if Night ---
-        if not self.is_day: # ADDED rendering for city HP at night
-            hp_bar_width = 200
-            hp_bar_height = 20
+        if not self.is_day: # MODIFIED: Enhanced city health display
+            hp_bar_width = 300
+            hp_bar_height = 30
             hp_bar_x = (config.SCREEN_WIDTH - hp_bar_width) // 2
             hp_bar_y = 10 # At the top of the screen
             
             current_hp_ratio = 0
-            if self.game_manager.city_max_hp > 0 :
-                 current_hp_ratio = max(0, self.game_manager.city_current_hp / self.game_manager.city_max_hp)
+            if self.game_manager.city_max_hp > 0:
+                current_hp_ratio = max(0, min(1.0, self.game_manager.city_current_hp / self.game_manager.city_max_hp))
 
+            # Draw background
             pygame.draw.rect(screen, config.DARK_GRAY, (hp_bar_x, hp_bar_y, hp_bar_width, hp_bar_height))
-            pygame.draw.rect(screen, config.RED, (hp_bar_x, hp_bar_y, hp_bar_width * current_hp_ratio, hp_bar_height))
+            
+            # Draw health fill with color based on health level
+            if current_hp_ratio > 0.7:
+                health_color = config.GREEN
+            elif current_hp_ratio > 0.3:
+                health_color = config.YELLOW
+            else:
+                health_color = config.RED
+                
+            pygame.draw.rect(screen, health_color, (hp_bar_x, hp_bar_y, int(hp_bar_width * current_hp_ratio), hp_bar_height))
             pygame.draw.rect(screen, config.WHITE, (hp_bar_x, hp_bar_y, hp_bar_width, hp_bar_height), 2)
             
             hp_text_str = f"City HP: {int(self.game_manager.city_current_hp)}/{self.game_manager.city_max_hp}"
             hp_label = self.font_small.render(hp_text_str, True, config.WHITE)
             text_rect = hp_label.get_rect(center=(hp_bar_x + hp_bar_width / 2, hp_bar_y + hp_bar_height / 2))
             screen.blit(hp_label, text_rect)
+            
+            # Add game over display if city health is zero
+            if self.game_manager.city_current_hp <= 0:
+                overlay = pygame.Surface((config.SCREEN_WIDTH, config.SCREEN_HEIGHT), pygame.SRCALPHA)
+                overlay.fill((0, 0, 0, 180))  # Semi-transparent black
+                screen.blit(overlay, (0, 0))
+                
+                game_over_font = pygame.font.Font(None, 72)
+                game_over_text = game_over_font.render("CITY DESTROYED", True, config.RED)
+                game_over_rect = game_over_text.get_rect(center=(config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 2 - 50))
+                screen.blit(game_over_text, game_over_rect)
+                
+                restart_font = pygame.font.Font(None, 36)
+                restart_text = restart_font.render("Press ESC to return to Menu", True, config.WHITE)
+                restart_rect = restart_text.get_rect(center=(config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 2 + 50))
+                screen.blit(restart_text, restart_rect)
         # --- END ---
 
         self.game_manager.global_ui_manager.render(screen)
@@ -312,6 +338,9 @@ class WorldMapState(GameState):
         # Initialize fonts (example for font_small)
         self.font_small = pygame.font.Font(None, 24) # ADDED
         self.minimap_visible = True # ADDED
+        
+        # Game state flags
+        self.game_over = False
 
         # Load player save data
         self.player_data = DataHandler.load_player_save() if load_saved else {
@@ -757,7 +786,14 @@ class WorldMapState(GameState):
                 self.game_manager.quit_game()
                 return # Exit early if quitting
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
+                # Handle game over state
+                if self.game_over and event.key == pygame.K_ESCAPE:
+                    # Return to main menu
+                    self.game_manager.clear_states()
+                    from src.game_manager import MainMenuState
+                    self.game_manager.push_state(MainMenuState(self.game_manager))
+                    return
+                elif event.key == pygame.K_ESCAPE:
                     # Import PauseState locally to avoid circular import at module level
                     from src.game_manager import PauseState 
                     self.game_manager.push_state(PauseState(self.game_manager, self)) # Pass current state
@@ -931,6 +967,17 @@ class WorldMapState(GameState):
         """
         super().update(dt)
         
+        # If game is over, only handle minimal updates
+        if self.game_over:
+            return
+            
+        # Check if city has been destroyed
+        if not self.is_day and self.game_manager.city_current_hp <= 0:
+            self.game_over = True
+            self.game_manager.city_current_hp = 0
+            print("City has been destroyed! Game over.")
+            return
+        
         # Scale time if needed
         dt_scaled = dt * self.time_scale
         
@@ -955,10 +1002,40 @@ class WorldMapState(GameState):
             enemy_count_after = len(self.enemy_manager.get_enemies())
             if enemy_count_before != enemy_count_after:
                 print(f"Enemy count changed: {enemy_count_before} → {enemy_count_after}")
+            
+            # Check for enemy-player collisions
+            active_enemies = self.enemy_manager.get_enemies()
+            for enemy in active_enemies:
+                if not enemy.active:
+                    continue
+                if pygame.sprite.collide_rect(enemy, self.player):
+                    if hasattr(enemy, 'can_attack') and enemy.can_attack():
+                        # Enemy attacks player
+                        damage = enemy.get_attack_damage()
+                        self.player.take_damage(damage)
+                        enemy.attack_performed()  # Reset attack cooldown
+                        print(f"Player hit by {enemy.enemy_type}! Took {damage} damage. Player HP: {self.player.current_hp}/{self.player.max_hp}")
         
         # Update projectiles
         # Pass enemies list, which might be empty if it's day or no enemies on map
         self.projectile_manager.update(dt, self.enemy_manager.get_enemies())
+        
+        # Check for projectile-enemy collisions
+        if not self.is_day and self.enemy_manager:
+            active_enemies = self.enemy_manager.get_enemies()
+            if active_enemies:
+                collisions = self.projectile_manager.check_enemy_collisions(active_enemies)
+                for enemy, projectile, damage in collisions:
+                    # Apply damage to enemy
+                    if hasattr(enemy, 'take_damage'):
+                        still_alive = enemy.take_damage(damage)
+                        if not still_alive:
+                            # Give XP to player for defeating enemy
+                            if self.player and hasattr(self.player, 'gain_xp'):
+                                enemy_xp = getattr(enemy, 'xp_reward', 10)  # Default XP if enemy doesn't specify
+                                self.player.gain_xp(enemy_xp)
+                            # Mark enemy as inactive
+                            enemy.active = False
         
         # Update resource nodes (e.g., for cooldowns)
         current_time_seconds = pygame.time.get_ticks() / 1000.0
@@ -1225,10 +1302,15 @@ class WorldMapState(GameState):
         screen.fill(config.BLACK)
         self.map.render(screen, self.camera)
         
-        # --- Draw City Walls --- # MODIFIED: Condition changed
-        if self.city_wall_rects: # Render if wall_rects exist (removed 'not self.is_day')
+        # --- Draw City Walls --- # MODIFIED: Always draw walls for better visibility
+        if self.city_wall_rects:
+            wall_color = config.CITY_WALL_COLOR
+            # Use a different color at night to make it more visible
+            if not self.is_day:
+                wall_color = (220, 220, 150)  # Lighter color at night
+                
             for wall_key, wall_rect in self.city_wall_rects.items():
-                pygame.draw.rect(screen, config.CITY_WALL_COLOR, self.camera.apply_rect(wall_rect))
+                pygame.draw.rect(screen, wall_color, self.camera.apply_rect(wall_rect))
         # --- END ---
 
         renderable_objects = []
@@ -1330,24 +1412,50 @@ class WorldMapState(GameState):
             screen.blit(self.minimap_surface, minimap_rect.topleft)
         
         # --- Draw City HP Bar if Night ---
-        if not self.is_day: # ADDED rendering for city HP at night
-            hp_bar_width = 200
-            hp_bar_height = 20
+        if not self.is_day: # MODIFIED: Enhanced city health display
+            hp_bar_width = 300
+            hp_bar_height = 30
             hp_bar_x = (config.SCREEN_WIDTH - hp_bar_width) // 2
             hp_bar_y = 10 # At the top of the screen
             
             current_hp_ratio = 0
-            if self.game_manager.city_max_hp > 0 :
-                 current_hp_ratio = max(0, self.game_manager.city_current_hp / self.game_manager.city_max_hp)
+            if self.game_manager.city_max_hp > 0:
+                current_hp_ratio = max(0, min(1.0, self.game_manager.city_current_hp / self.game_manager.city_max_hp))
 
+            # Draw background
             pygame.draw.rect(screen, config.DARK_GRAY, (hp_bar_x, hp_bar_y, hp_bar_width, hp_bar_height))
-            pygame.draw.rect(screen, config.RED, (hp_bar_x, hp_bar_y, hp_bar_width * current_hp_ratio, hp_bar_height))
+            
+            # Draw health fill with color based on health level
+            if current_hp_ratio > 0.7:
+                health_color = config.GREEN
+            elif current_hp_ratio > 0.3:
+                health_color = config.YELLOW
+            else:
+                health_color = config.RED
+                
+            pygame.draw.rect(screen, health_color, (hp_bar_x, hp_bar_y, int(hp_bar_width * current_hp_ratio), hp_bar_height))
             pygame.draw.rect(screen, config.WHITE, (hp_bar_x, hp_bar_y, hp_bar_width, hp_bar_height), 2)
             
             hp_text_str = f"City HP: {int(self.game_manager.city_current_hp)}/{self.game_manager.city_max_hp}"
             hp_label = self.font_small.render(hp_text_str, True, config.WHITE)
             text_rect = hp_label.get_rect(center=(hp_bar_x + hp_bar_width / 2, hp_bar_y + hp_bar_height / 2))
             screen.blit(hp_label, text_rect)
+            
+            # Add game over display if city health is zero
+            if self.game_manager.city_current_hp <= 0:
+                overlay = pygame.Surface((config.SCREEN_WIDTH, config.SCREEN_HEIGHT), pygame.SRCALPHA)
+                overlay.fill((0, 0, 0, 180))  # Semi-transparent black
+                screen.blit(overlay, (0, 0))
+                
+                game_over_font = pygame.font.Font(None, 72)
+                game_over_text = game_over_font.render("CITY DESTROYED", True, config.RED)
+                game_over_rect = game_over_text.get_rect(center=(config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 2 - 50))
+                screen.blit(game_over_text, game_over_rect)
+                
+                restart_font = pygame.font.Font(None, 36)
+                restart_text = restart_font.render("Press ESC to return to Menu", True, config.WHITE)
+                restart_rect = restart_text.get_rect(center=(config.SCREEN_WIDTH // 2, config.SCREEN_HEIGHT // 2 + 50))
+                screen.blit(restart_text, restart_rect)
         # --- END ---
 
         self.game_manager.global_ui_manager.render(screen)
