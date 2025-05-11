@@ -295,7 +295,7 @@ class Player(pygame.sprite.Sprite):
             
         # Check if we need to stop attacking animation
         if self.is_attacking and self.attack_timer <= 0:
-                self.is_attacking = False
+            self.is_attacking = False
             self.current_anim = self.ANIM_IDLE if not self.is_moving else self.ANIM_WALK
         
         # Automatic spell casting for spells marked as automatic
