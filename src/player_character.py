@@ -44,10 +44,7 @@ class Player(pygame.sprite.Sprite):
         self.anim_frame = 0
         self.anim_timer = 0
         self.anim_speed = 0.1  # Time between frames
-        self.update_image()
-        
-        # Set up rect
-        self.rect = self.image.get_rect(center=(int(x), int(y)))
+        self.is_attacking = False  # Initialize is_attacking
         
         # Position and movement
         self.x = float(x)
@@ -55,9 +52,14 @@ class Player(pygame.sprite.Sprite):
         self.dx = 0  # Direction vector X
         self.dy = 0  # Direction vector Y
         self.speed = config.PLAYER_SPEED
-        self.is_moving = False
+        self.is_moving = False  # Initialize is_moving flag
         
-        # Load player data if provided, otherwise use defaults
+        # Debug initialization - print attributes
+        print("Player initialization:")
+        print(f"is_moving: {hasattr(self, 'is_moving')}")
+        print(f"is_attacking: {hasattr(self, 'is_attacking')}")
+        
+        # Load player data and update the image after all attributes are set
         if player_data:
             self._load_player_data(player_data)
         else:
@@ -73,13 +75,22 @@ class Player(pygame.sprite.Sprite):
             self.xp_to_next_level = config.PLAYER_XP_PER_LEVEL
             
             # Equipment and abilities
-            self.spells = ["basic_projectile"]  # List of spell IDs
+            self.spells = [
+                "basic_projectile", 
+                "fireball",       # Auto-cast spell
+                "ice_shard"       # Auto-cast spell
+            ]  # List of spell IDs
             self.relics = []  # List of relic IDs
             self.resources = {} # Will be populated by _load_player_data or default
+            
+        # Update image should be called after all attributes are initialized
+        self.update_image()
+        
+        # Set up rect
+        self.rect = self.image.get_rect(center=(int(x), int(y)))
         
         # Attack state
         self.attack_timer = 0
-        self.is_attacking = False
         
         # Derived stats (affected by relics, level, etc.)
         self.derived_stats = {
@@ -225,15 +236,31 @@ class Player(pygame.sprite.Sprite):
         self.resources = player_data.get("resources", config.STARTING_RESOURCES.copy() if hasattr(config, 'STARTING_RESOURCES') else {})
     
     def update_image(self):
-        """Update the current image based on animation state"""
-        # Get the appropriate animation frames
-        anim_frames = self.sprites.get(self.current_anim, {}).get(self.facing, [])
+        """Update the current image based on animation state and frame"""
+        # Debug - verify attributes exist before using them
+        if not hasattr(self, 'is_attacking'):
+            print("ERROR: is_attacking attribute missing")
+            self.is_attacking = False
+            
+        if not hasattr(self, 'is_moving'):
+            print("ERROR: is_moving attribute missing")
+            self.is_moving = False
+            
+        # Update animation state based on player state
+        if self.is_attacking:
+            self.current_anim = self.ANIM_ATTACK
+        elif self.is_moving:
+            self.current_anim = self.ANIM_WALK
+        else:
+            self.current_anim = self.ANIM_IDLE
         
-        # If we have frames for this animation and direction
+        # Update animation frame (wrap around if needed)
+        anim_frames = self.sprites.get(self.current_anim, {}).get(self.facing, [])
         if anim_frames:
-            # Get the current frame
-            frame_index = self.anim_frame % len(anim_frames)
-            self.image = anim_frames[frame_index]
+            frame_count = len(anim_frames)
+            if frame_count > 0:
+                self.anim_frame = self.anim_frame % frame_count
+                self.image = anim_frames[self.anim_frame]
         else:
             # Fallback to a colored rectangle if no frames are available
             self.image = pygame.Surface((32, 32), pygame.SRCALPHA)
@@ -248,19 +275,13 @@ class Player(pygame.sprite.Sprite):
         
         Args:
             dt (float): Time elapsed since last update in seconds
-            keys_pressed (pygame.key.ScancodeWrapper): Current pressed keys
+            keys_pressed (dict): Dictionary of pressed keys
         """
-        # Handle movement
-        was_moving = self.is_moving
+        # Handle basic movement
         self._handle_movement(dt, keys_pressed)
         
-        # Update animation state
-        if self.is_attacking:
-            self.current_anim = self.ANIM_ATTACK
-        elif self.is_moving:
-            self.current_anim = self.ANIM_WALK
-        else:
-            self.current_anim = self.ANIM_IDLE
+        # Update hitbox position
+        self.update_hitbox()
         
         # Update animation timer
         self.anim_timer += dt
@@ -268,17 +289,117 @@ class Player(pygame.sprite.Sprite):
             self.anim_timer -= self.anim_speed
             self.anim_frame += 1
         
-        # Update the current image
-        self.update_image()
-        
-        # Update attack timer
+        # Decrement attack timer if active
         if self.attack_timer > 0:
             self.attack_timer -= dt
-            if self.attack_timer <= 0:
-                self.is_attacking = False
+            
+        # Check if we need to stop attacking animation
+        if self.is_attacking and self.attack_timer <= 0:
+            self.is_attacking = False
+            self.current_anim = self.ANIM_IDLE if not self.is_moving else self.ANIM_WALK
         
-        # Update hitbox
-        self.update_hitbox()
+        # Automatic spell casting for spells marked as automatic
+        self._update_automatic_spells(dt)
+        
+        # Update the player's image
+        self.update_image()
+    
+    def _update_automatic_spells(self, dt):
+        """Handle automatic spell casting
+        
+        Args:
+            dt (float): Time elapsed since last update in seconds
+        """
+        # Skip if player has no spells
+        if not hasattr(self, 'spells') or not self.spells:
+            return
+        
+        # Skip if player has no spell cooldowns initialized
+        if not hasattr(self, 'spell_cooldowns'):
+            self.spell_cooldowns = {}
+            
+        # Get spell data from game manager
+        spell_data = self.game_manager.data_handler.spells
+        
+        # Check each spell
+        for spell_id in self.spells:
+            # Skip basic_projectile, which is manual
+            if spell_id == "basic_projectile":
+                continue
+                
+            # Get spell data
+            current_spell_data = spell_data.get(spell_id)
+            if not current_spell_data:
+                continue
+                
+            # Check if spell is automatic
+            if current_spell_data.get("automatic", True):
+                # Initialize cooldown if needed
+                if spell_id not in self.spell_cooldowns:
+                    self.spell_cooldowns[spell_id] = 0
+                
+                # Update cooldown
+                if self.spell_cooldowns[spell_id] > 0:
+                    self.spell_cooldowns[spell_id] -= dt
+                else:
+                    # Find target position - check for enemies first
+                    target_x, target_y = self.rect.centerx, self.rect.centery
+                    
+                    # Try to get enemies list from game manager's enemy manager
+                    enemies = None
+                    if hasattr(self.game_manager, 'state_stack') and self.game_manager.state_stack:
+                        current_state = self.game_manager.state_stack[-1]
+                        if hasattr(current_state, 'enemy_manager'):
+                            enemies = current_state.enemy_manager.get_enemies()
+                    
+                    if enemies and len(enemies) > 0:
+                        # Find the closest enemy
+                        closest_enemy = None
+                        min_distance = float('inf')
+                        
+                        for enemy in enemies:
+                            if hasattr(enemy, 'rect') and enemy.active:
+                                dx = enemy.rect.centerx - self.rect.centerx
+                                dy = enemy.rect.centery - self.rect.centery
+                                distance = dx**2 + dy**2  # Using squared distance for efficiency
+                                
+                                if distance < min_distance:
+                                    min_distance = distance
+                                    closest_enemy = enemy
+                        
+                        if closest_enemy:
+                            # Target the closest enemy
+                            target_x = closest_enemy.rect.centerx
+                            target_y = closest_enemy.rect.centery
+                            print(f"Auto-casting {spell_id} at closest enemy")
+                        else:
+                            # No active enemies found, cast in a random direction
+                            import random
+                            angle = random.uniform(0, 6.28)  # Random angle in radians (0 to 2π)
+                            distance = random.uniform(100, 300)  # Random distance
+                            target_x = self.rect.centerx + math.cos(angle) * distance
+                            target_y = self.rect.centery + math.sin(angle) * distance
+                            print(f"Auto-casting {spell_id} in random direction")
+                    else:
+                        # No enemies available, cast in random direction
+                        import random
+                        angle = random.uniform(0, 6.28)  # Random angle in radians (0 to 2π)
+                        distance = random.uniform(100, 300)  # Random distance
+                        target_x = self.rect.centerx + math.cos(angle) * distance
+                        target_y = self.rect.centery + math.sin(angle) * distance
+                        print(f"Auto-casting {spell_id} in random direction (no enemies)")
+                    
+                    # Cast the spell
+                    projectile = self.cast_spell(spell_id, target_x, target_y)
+                    if projectile:
+                        # Add projectile to game manager's projectile manager
+                        self.game_manager.projectile_manager.add_projectile(projectile)
+                        
+                    # Reset cooldown
+                    cooldown_time = current_spell_data.get("cooldown", 1.0)
+                    self.spell_cooldowns[spell_id] = cooldown_time
+                    
+                    print(f"Auto-cast spell: {spell_id}")
     
     def _handle_movement(self, dt, keys_pressed):
         """Handle player movement
@@ -448,6 +569,11 @@ class Player(pygame.sprite.Sprite):
         self.max_hp += 10
         self.current_hp = self.max_hp  # Fully heal on level up
         self.base_attack_damage += 2
+        
+        # Notify game manager about level up so it can show spell selection UI
+        if hasattr(self.game_manager, "handle_player_level_up"):
+            print(f"Player leveled up to level {self.level}! Notifying game manager.")
+            self.game_manager.handle_player_level_up(self.level)
     
     @staticmethod
     def calculate_xp_for_level(level_number):

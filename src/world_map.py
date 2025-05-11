@@ -1119,8 +1119,8 @@ class WorldMapState(GameState):
             if self.day_timer <= 0:
                 self.transition_to_night()
         else:
-            # Update enemies during night
-            self.enemy_manager.update(dt, (self.player.x, self.player.y), self.city_wall_rects, self.damage_city_on_world_map) # MODIFIED: Pass actual walls and callback
+            # Update enemies during night - REMOVED duplicate call to enemy_manager.update()
+            # self.enemy_manager.update(dt, (self.player.x, self.player.y), self.city_wall_rects, self.damage_city_on_world_map) # REMOVED: Already called above
             
             if self.enemy_manager.is_night_complete(): # This check might need adjustment if night doesn't end based on enemy count on world map
                 self.transition_to_day()

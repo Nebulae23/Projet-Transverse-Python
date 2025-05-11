@@ -10,6 +10,8 @@ import random
 from src import config
 from src.data_handler import DataHandler
 from src.projectile_system import Projectile
+from src.game_state import GameState
+from src.ui_manager import UIManager, Button, TextBox
 
 class Spell:
     """Class representing a spell"""
@@ -453,3 +455,294 @@ class SpellManager:
             return result_spell_id
         
         return None 
+
+class LevelUpState(GameState):
+    """State for handling level up spell selection UI"""
+    
+    def __init__(self, game_manager, player, level):
+        """Initialize level up state
+        
+        Args:
+            game_manager (GameManager): Reference to the game manager
+            player (Player): Reference to the player
+            level (int): New player level
+        """
+        super().__init__(game_manager)
+        self.player = player
+        self.level = level
+        self.ui_manager = UIManager()
+        self.available_spells = []
+        self.spell_choices = []
+        
+        # Load all spells data
+        self.all_spells_data = DataHandler.load_spells()
+        
+        # Setup UI
+        self.setup_ui()
+        
+        # Generate spell choices - either upgrades to existing spells or new spells
+        self._generate_spell_choices()
+    
+    def setup_ui(self):
+        """Setup the level up UI"""
+        from src import config
+        
+        # Title
+        title_x = config.SCREEN_WIDTH // 2 - 200
+        title_y = 50
+        title_width = 400
+        title_height = 50
+        
+        self.ui_manager.add_element("level_up_title", TextBox(
+            x=title_x,
+            y=title_y,
+            width=title_width,
+            height=title_height,
+            text=f"Level Up! - Level {self.level}",
+            font_size=36,
+            text_color=config.WHITE,
+            background_color=config.DARK_BLUE
+        ))
+        
+        # Subtitle
+        subtitle_y = title_y + title_height + 20
+        
+        self.ui_manager.add_element("level_up_subtitle", TextBox(
+            x=title_x,
+            y=subtitle_y,
+            width=title_width,
+            height=30,
+            text="Choose a spell or upgrade:",
+            font_size=24,
+            text_color=config.WHITE,
+            background_color=None
+        ))
+    
+    def _generate_spell_choices(self):
+        """Generate spell choices for the level up UI"""
+        # First, check if the player has existing spells that can be upgraded
+        upgradable_spells = []
+        new_spell_options = []
+        
+        if self.player:
+            # Check current spells for upgrades
+            for spell_id in self.player.spells:
+                spell_data = self.all_spells_data.get(spell_id)
+                if spell_data:
+                    # Check if this spell has an upgrade for the current level
+                    next_level = 2  # Assuming spell starts at level 1
+                    if hasattr(self.player, 'spell_levels'):
+                        next_level = self.player.spell_levels.get(spell_id, 1) + 1
+                    
+                    level_key = f"level_{next_level}"
+                    if level_key in spell_data.get("upgrades", {}):
+                        # This spell can be upgraded
+                        upgradable_spells.append({
+                            "id": spell_id,
+                            "name": spell_data.get("name", "Unknown Spell"),
+                            "description": spell_data.get("description", ""),
+                            "upgrade_level": next_level,
+                            "type": "upgrade"
+                        })
+            
+            # Now add some new spell options
+            # Filter to spells the player doesn't have yet
+            for spell_id, spell_data in self.all_spells_data.items():
+                if spell_id not in self.player.spells:
+                    new_spell_options.append({
+                        "id": spell_id,
+                        "name": spell_data.get("name", "Unknown Spell"),
+                        "description": spell_data.get("description", ""),
+                        "type": "new"
+                    })
+        
+        # Combine and limit choices
+        if upgradable_spells:
+            # Prioritize upgrades
+            self.spell_choices = upgradable_spells[:2]  # Maximum 2 upgrade options
+        
+        # Fill remaining slots with new spells
+        remaining_slots = 3 - len(self.spell_choices)
+        if remaining_slots > 0 and new_spell_options:
+            import random
+            # Randomly select from available new spells
+            random_new_spells = random.sample(new_spell_options, min(remaining_slots, len(new_spell_options)))
+            self.spell_choices.extend(random_new_spells)
+        
+        # Now create UI elements for each choice
+        self._create_spell_choice_ui()
+    
+    def _create_spell_choice_ui(self):
+        """Create UI elements for spell choices"""
+        from src import config
+        
+        # Position calculations
+        button_width = 300
+        button_height = 150
+        button_spacing = 40
+        start_y = 150
+        
+        # Center the buttons horizontally
+        if len(self.spell_choices) == 1:
+            # One centered button
+            positions = [(config.SCREEN_WIDTH // 2 - button_width // 2, start_y)]
+        elif len(self.spell_choices) == 2:
+            # Two buttons side by side
+            total_width = 2 * button_width + button_spacing
+            start_x = config.SCREEN_WIDTH // 2 - total_width // 2
+            positions = [
+                (start_x, start_y),
+                (start_x + button_width + button_spacing, start_y)
+            ]
+        else:
+            # Three buttons side by side
+            total_width = 3 * button_width + 2 * button_spacing
+            start_x = config.SCREEN_WIDTH // 2 - total_width // 2
+            positions = [
+                (start_x, start_y),
+                (start_x + button_width + button_spacing, start_y),
+                (start_x + 2 * (button_width + button_spacing), start_y)
+            ]
+        
+        # Create buttons for each spell choice
+        for i, choice in enumerate(self.spell_choices):
+            if i < len(positions):
+                x, y = positions[i]
+                
+                # Box background
+                self.ui_manager.add_element(f"spell_choice_bg_{i}", TextBox(
+                    x=x,
+                    y=y,
+                    width=button_width,
+                    height=button_height,
+                    background_color=config.DARK_GRAY,
+                    border_color=config.LIGHT_GRAY
+                ))
+                
+                # Spell name
+                spell_type_text = "New Spell!" if choice["type"] == "new" else f"Upgrade (Level {choice['upgrade_level']})"
+                self.ui_manager.add_element(f"spell_choice_name_{i}", TextBox(
+                    x=x,
+                    y=y + 10,
+                    width=button_width,
+                    height=30,
+                    text=f"{choice['name']} - {spell_type_text}",
+                    font_size=18,
+                    text_color=config.WHITE,
+                    background_color=None
+                ))
+                
+                # Spell description
+                self.ui_manager.add_element(f"spell_choice_desc_{i}", TextBox(
+                    x=x + 10,
+                    y=y + 50,
+                    width=button_width - 20,
+                    height=60,
+                    text=choice["description"],
+                    font_size=14,
+                    text_color=config.LIGHT_GRAY,
+                    background_color=None
+                ))
+                
+                # Button overlay (for clicking)
+                self.ui_manager.add_element(f"spell_choice_button_{i}", Button(
+                    x=x,
+                    y=y,
+                    width=button_width,
+                    height=button_height,
+                    text="",
+                    color=(0, 0, 0, 0),  # Transparent
+                    hover_color=(255, 255, 255, 30),  # Slight white on hover
+                    on_click_data=i  # Store the choice index
+                ))
+    
+    def handle_events(self, events):
+        """Handle events
+        
+        Args:
+            events (list): List of pygame events
+        """
+        # Pass events to UI manager
+        clicked_elements = self.ui_manager.update(pygame.mouse.get_pos(), events)
+        
+        # Handle spell choice clicks
+        for element_id, click_data in clicked_elements.items():
+            if element_id.startswith("spell_choice_button_") and isinstance(click_data, int):
+                choice_index = click_data
+                if 0 <= choice_index < len(self.spell_choices):
+                    self._select_spell(self.spell_choices[choice_index])
+        
+        # Check for escape key to cancel
+        for event in events:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                # Default to first choice if player presses escape
+                if self.spell_choices:
+                    self._select_spell(self.spell_choices[0])
+                else:
+                    # Nothing to choose from, just return to previous state
+                    self.game_manager.pop_state()
+    
+    def _select_spell(self, spell_choice):
+        """Handle spell selection
+        
+        Args:
+            spell_choice (dict): The selected spell choice
+        """
+        print(f"Selected spell: {spell_choice['name']} ({spell_choice['id']})")
+        
+        if self.player:
+            spell_id = spell_choice["id"]
+            
+            if spell_choice["type"] == "upgrade":
+                # Upgrade existing spell
+                print(f"Upgrading spell: {spell_id} to level {spell_choice['upgrade_level']}")
+                # TODO: Implement proper spell upgrading system
+                # For now, just track the levels in a dictionary attribute
+                if not hasattr(self.player, 'spell_levels'):
+                    self.player.spell_levels = {}
+                
+                # Set to the new level
+                self.player.spell_levels[spell_id] = spell_choice["upgrade_level"]
+                
+            elif spell_choice["type"] == "new":
+                # Add new spell
+                print(f"Adding new spell: {spell_id}")
+                self.player.equip_spell(spell_id)
+                # Initialize level to 1
+                if not hasattr(self.player, 'spell_levels'):
+                    self.player.spell_levels = {}
+                self.player.spell_levels[spell_id] = 1
+        
+        # Return to previous state
+        self.game_manager.pop_state()
+    
+    def update(self, dt):
+        """Update the level up state
+        
+        Args:
+            dt (float): Time elapsed since last update in seconds
+        """
+        # No active updates needed
+        pass
+    
+    def render(self, screen):
+        """Render the level up state
+        
+        Args:
+            screen (pygame.Surface): Screen to render to
+        """
+        # First, darken the previous state
+        dark_overlay = pygame.Surface((screen.get_width(), screen.get_height()), pygame.SRCALPHA)
+        dark_overlay.fill((0, 0, 0, 180))  # Semi-transparent black
+        screen.blit(dark_overlay, (0, 0))
+        
+        # Now render UI elements
+        self.ui_manager.render(screen)
+    
+    def enter(self):
+        """Called when entering this state"""
+        super().enter()
+    
+    def exit(self):
+        """Called when exiting this state"""
+        super().exit() 

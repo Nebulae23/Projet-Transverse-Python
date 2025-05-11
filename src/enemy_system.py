@@ -76,13 +76,38 @@ class Enemy(pygame.sprite.Sprite):
         self.attack_timer = 0
     
     def update(self, dt, player_pos, wall_rects, damage_city_callback):
+        """Update the enemy
+        
+        Args:
+            dt (float): Time elapsed since last update in seconds
+            player_pos (tuple): Player's position (x, y)
+            wall_rects (dict): Dictionary of wall rectangles
+            damage_city_callback (callable): Callback for damaging the city
+        """
         if not self.active:
             return
 
-        # Standard movement towards player_pos if not attacking wall
+        # Calculate city center position from wall_rects if available
+        city_center_pos = player_pos  # Default to player position if no walls
+        if isinstance(wall_rects, dict) and wall_rects:
+            # Calculate the center of the city from the wall rects
+            x_positions = []
+            y_positions = []
+            for wall_key, wall_r in wall_rects.items():
+                x_positions.extend([wall_r.left, wall_r.right])
+                y_positions.extend([wall_r.top, wall_r.bottom])
+            
+            if x_positions and y_positions:
+                city_center_x = sum(x_positions) / len(x_positions)
+                city_center_y = sum(y_positions) / len(y_positions)
+                city_center_pos = (city_center_x, city_center_y)
+
+        # Standard movement towards city_center_pos if not attacking wall
         if not self.is_attacking_wall:
-            dx = player_pos[0] - self.rect.centerx
-            dy = player_pos[1] - self.rect.centery
+            old_x, old_y = self.rect.centerx, self.rect.centery
+            
+            dx = city_center_pos[0] - self.rect.centerx
+            dy = city_center_pos[1] - self.rect.centery
             distance = math.hypot(dx, dy)
 
             if distance > 0:
@@ -91,8 +116,28 @@ class Enemy(pygame.sprite.Sprite):
             else:
                 self.vx, self.vy = 0, 0
             
-            self.rect.x += self.vx * self.speed * dt
-            self.rect.y += self.vy * self.speed * dt
+            # Store calculated velocity values
+            calculated_vx = self.vx
+            calculated_vy = self.vy
+            
+            # Apply the movement
+            # Add proper timestep scaling - this is likely the issue
+            move_speed = self.speed * dt
+            self.rect.x += self.vx * move_speed
+            self.rect.y += self.vy * move_speed
+            
+            # Update self.x and self.y to match rect position (these were likely not being updated)
+            self.x = self.rect.centerx
+            self.y = self.rect.centery
+            
+            # Debug output for movement
+            # Only print occasionally to avoid console spam
+            if random.random() < 0.01:  # 1% chance to print each update
+                print(f"Enemy {self.enemy_type} moved from ({old_x}, {old_y}) to ({self.rect.centerx}, {self.rect.centery})")
+                print(f"  Distance to target: {distance}")
+                print(f"  Velocity: ({calculated_vx}, {calculated_vy})")
+                print(f"  Move amount: {move_speed}")
+                print(f"  Target: {city_center_pos}")
 
         # Check for wall collision
         collided_wall_key = None
@@ -126,9 +171,7 @@ class Enemy(pygame.sprite.Sprite):
         else:
             self.is_attacking_wall = False
 
-        self.update_animation(dt) 
-        # Ensure attack_cooldown_timer is managed by can_attack and attack_performed
-        # If not, it might need: self.attack_cooldown_timer -= dt
+        self.update_animation(dt)
     
     def _update_health_bar(self):
         """Update the health bar to reflect current health"""
@@ -367,10 +410,15 @@ class EnemyManager:
             self.wave_timer -= dt
             if self.wave_timer <= 0:
                 # Wave is over, start the next one
+                print(f"Wave {self.current_wave + 1} ended. Starting wave {self.current_wave + 2}")
                 self._start_wave(self.current_wave + 1)
             else:
                 # Update spawn timers and spawn enemies
                 self._handle_enemy_spawning(dt, player_pos)
+                
+                # Debug output every 5 seconds (using modulo on wave_timer)
+                if int(self.wave_timer) % 5 == 0 and self.wave_timer % 1 < dt:
+                    print(f"Wave {self.current_wave + 1} in progress: {self.wave_timer:.1f}s left, {len(self.enemies)} enemies active")
     
     def _handle_enemy_spawning(self, dt, player_pos):
         """Handle enemy spawning based on wave data
@@ -399,7 +447,15 @@ class EnemyManager:
                     max_count = enemy_spawn.get("count", 10)
                     
                     if spawned_count < max_count:
+                        print(f"Spawning {enemy_type}: {spawned_count+1}/{max_count}")
                         self._spawn_enemy(enemy_type, player_pos)
+                    elif spawned_count >= max_count:
+                        # Debug: Already reached max count
+                        if int(self.wave_timer) % 10 == 0 and self.wave_timer % 1 < dt:
+                            print(f"Max count reached for {enemy_type}: {spawned_count}/{max_count}")
+            else:
+                # This shouldn't normally happen - timer missing for an enemy type
+                print(f"Warning: Spawn timer not initialized for {enemy_type} in wave {self.current_wave+1}")
     
     def _spawn_enemy(self, enemy_type, player_pos):
         """Spawn an enemy of a specific type
@@ -413,17 +469,62 @@ class EnemyManager:
             print(f"Warning: Unknown enemy type: {enemy_type}")
             return
         
-        # Generate spawn position (e.g., random edge of screen)
-        # For now, spawn randomly around player outside a certain radius
-        angle = random.uniform(0, 2 * math.pi)
-        spawn_radius = 400 # Distance from player to spawn
-        spawn_x = player_pos[0] + spawn_radius * math.cos(angle)
-        spawn_y = player_pos[1] + spawn_radius * math.sin(angle)
+        # Ensure enemy has a proper speed that's not too slow
+        if "speed" not in enemy_data or enemy_data["speed"] < 30:
+            enemy_data = enemy_data.copy()  # Make a copy to avoid modifying the original
+            
+            # Set higher speed values based on enemy type
+            if enemy_type == "slime":
+                enemy_data["speed"] = 40
+            elif enemy_type == "goblin":
+                enemy_data["speed"] = 60
+            elif enemy_type == "skeleton":
+                enemy_data["speed"] = 45
+            else:
+                enemy_data["speed"] = 50  # Default for unknown enemy types
+                
+            print(f"Set {enemy_type} speed to {enemy_data['speed']}")
         
-        # Create enemy instance with a unique ID
-        new_enemy_id = str(uuid.uuid4())
-        enemy = Enemy(new_enemy_id, spawn_x, spawn_y, enemy_type, enemy_data)
-        self.enemies.add(enemy)
+        # Generate spawn position at the edge of the map
+        # Choose one of the four map edges
+        edge = random.choice(["top", "bottom", "left", "right"])
+        
+        # Map dimensions - conservative estimates in case the actual map is smaller
+        MAP_WIDTH = 2560  # Using estimates, adjust based on your actual map size
+        MAP_HEIGHT = 2560
+        
+        # Spawn coordinates
+        spawn_x = 0
+        spawn_y = 0
+        
+        if edge == "top":
+            spawn_x = random.randint(0, MAP_WIDTH)
+            spawn_y = 0
+        elif edge == "bottom":
+            spawn_x = random.randint(0, MAP_WIDTH)
+            spawn_y = MAP_HEIGHT
+        elif edge == "left":
+            spawn_x = 0
+            spawn_y = random.randint(0, MAP_HEIGHT)
+        elif edge == "right":
+            spawn_x = MAP_WIDTH
+            spawn_y = random.randint(0, MAP_HEIGHT)
+        
+        try:
+            # Create enemy instance with a unique ID
+            new_enemy_id = str(uuid.uuid4())
+            enemy = Enemy(new_enemy_id, spawn_x, spawn_y, enemy_type, enemy_data)
+            self.enemies.add(enemy)
+            
+            # Update the enemy count counter
+            old_count = len(self.enemies) - 1
+            new_count = len(self.enemies)
+            print(f"Enemy count changed: {old_count} → {new_count}")
+            
+            # Debug successful spawn
+            print(f"Created {enemy_type} at edge: {edge}, position: ({spawn_x}, {spawn_y})")
+        except Exception as e:
+            print(f"Error creating enemy {enemy_type}: {e}")
     
     def render(self, screen, camera=None):
         """Render all enemies
@@ -479,4 +580,12 @@ class EnemyManager:
         Returns:
             bool: True if complete, False otherwise
         """
-        return self.current_wave >= len(self.waves_data.get("waves", [])) and len(self.enemies) == 0 
+        waves_count = len(self.day_waves.get("waves", []))
+        enemies_count = len(self.enemies)
+        is_complete = self.current_wave >= waves_count and enemies_count == 0
+        
+        # Debug info to help troubleshoot
+        if is_complete:
+            print(f"Night complete: current_wave={self.current_wave}, total_waves={waves_count}, enemies={enemies_count}")
+        
+        return is_complete 

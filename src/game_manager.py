@@ -715,10 +715,37 @@ class GameManager:
 
         print("GameManager: Save all game data process finished.")
 
+    def handle_player_level_up(self, level):
+        """Handle player level up - show a spell selection UI
+        
+        Args:
+            level (int): The new player level
+        """
+        print(f"GameManager: Player leveled up to level {level}! Opening spell selection UI.")
+        
+        # We'll create a LevelUpState that will handle spell selection
+        from src.spell_system import LevelUpState
+        
+        # If we're in WorldMapState or any other state, push the LevelUpState on top
+        # This pauses the current state and creates a modal dialog for spell selection
+        try:
+            current_state = self.current_state
+            # Get player instance from current state
+            player = None
+            if hasattr(current_state, 'player'):
+                player = current_state.player
+            
+            # Create new level up state
+            level_up_state = LevelUpState(self, player, level)
+            self.push_state(level_up_state)
+        except Exception as e:
+            print(f"Error creating LevelUpState: {e}")
+    
     @property
     def current_state(self):
-        """Get the current state"""
-        if self.state_stack:
-            return self.state_stack[-1]
-        else:
-            return None 
+        """Get the current state
+        
+        Returns:
+            GameState: Current game state
+        """
+        return self.state_stack[-1] if self.state_stack else None 

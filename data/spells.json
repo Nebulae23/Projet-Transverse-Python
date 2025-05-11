@@ -25,6 +25,7 @@
         "name": "Fireball",
         "description": "Launches a fiery explosion.",
         "type": "PROJECTILE_AOE",
+        "automatic": true,
         "damage": 25,
         "cooldown": 2.0,
         "range": 400,
@@ -248,8 +249,7 @@
                 255,
                 150
             ]
-        },
-        "upgrades": {}
+        }
     },
     "growing_orb_spell": {
         "name": "Growing Orb",
@@ -320,6 +320,38 @@
                 "projectile_speed_increase": 5,
                 "is_divergence": true,
                 "description": "Speed +5"
+            }
+        }
+    },
+    "ice_shard": {
+        "name": "Ice Shard",
+        "description": "Fires a freezing shard that slows enemies.",
+        "type": "PROJECTILE",
+        "automatic": true,
+        "damage": 12,
+        "cooldown": 1.5,
+        "range": 350,
+        "speed": 280,
+        "projectile_sprite": "ice_shard.png",
+        "trajectory_properties": {
+            "type": "STRAIGHT",
+            "radius": 5,
+            "color": [
+                150,
+                200,
+                255
+            ]
+        },
+        "upgrades": {
+            "level_2": {
+                "damage": 16,
+                "slow_effect": 0.3,
+                "slow_duration": 1.5
+            },
+            "level_3": {
+                "damage": 22,
+                "slow_effect": 0.5,
+                "slow_duration": 2.5
             }
         }
     }
