@@ -100,4 +100,4 @@ Développé par :
 
 ---
 
-*Arcana Survivor - Version 7.0 - Mai 2025*
+*Magic Survivor - Version 7.0 - Mai 2025*
